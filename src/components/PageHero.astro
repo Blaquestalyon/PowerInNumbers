@@ -8,8 +8,11 @@ interface Props {
   headline: string;
   lede?: string;
   meta?: string;
+  metaLeft?: string;
+  metaRight?: string;
 }
-const { eyebrow, headline, lede, meta } = Astro.props;
+const { eyebrow, headline, lede, meta, metaLeft, metaRight } = Astro.props;
+const hasMetaPair = Boolean(metaLeft || metaRight);
 ---
 
 <section class="phero" aria-labelledby="phero-h">
@@ -23,6 +26,12 @@ const { eyebrow, headline, lede, meta } = Astro.props;
     )}
     {meta && (
       <p class="phero__meta" data-reveal>{meta}</p>
+    )}
+    {hasMetaPair && (
+      <div class="phero__metarow" data-reveal>
+        {metaLeft && <span class="phero__metaitem">{metaLeft}</span>}
+        {metaRight && <span class="phero__metaitem phero__metaitem--right">{metaRight}</span>}
+      </div>
     )}
     <slot />
   </div>
@@ -77,5 +86,26 @@ const { eyebrow, headline, lede, meta } = Astro.props;
     padding-top: 18px;
     margin: 24px 0 0;
     max-width: 680px;
+  }
+  .phero__metarow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 48px;
+    align-items: baseline;
+    justify-content: space-between;
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+    margin: 24px 0 0;
+    max-width: 880px;
+  }
+  .phero__metaitem {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--subtext);
+  }
+  .phero__metaitem--right {
+    color: var(--oxblood);
   }
 </style>
