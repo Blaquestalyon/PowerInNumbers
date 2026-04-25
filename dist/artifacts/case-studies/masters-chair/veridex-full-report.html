@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VERIDEX Business Intelligence | The Master's Chair — Atlanta Expansion Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF;--bg-warm:#FAFAF7;--navy:#0B1A2E;--navy-mid:#1E3150;--gold:#B8922F;--gold-light:#D4A853;--gold-bg:rgba(184,146,47,.07);--gold-border:rgba(184,146,47,.25);--teal:#1A8A7E;--teal-bg:rgba(26,138,126,.06);--teal-border:rgba(26,138,126,.22);--coral:#C4583F;--coral-bg:rgba(196,88,63,.06);--coral-border:rgba(196,88,63,.22);--text-primary:#1A1A1A;--text-secondary:#4A4A4A;--text-muted:#7A7A7A;--card-bg:#FAFAF7;--card-border:#E0DACE;--divider:#E8E3D9;--table-header-bg:#F0EDE5}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text-primary);font-family:'DM Sans',sans-serif;font-size:14.5px;line-height:1.72;-webkit-font-smoothing:antialiased;-webkit-print-color-adjust:exact;print-color-adjust:exact}.container{max-width:1060px;margin:0 auto;padding:0 32px}
+@media print{body{font-size:11pt;line-height:1.6}.container{max-width:100%;padding:0 .5in}.section{page-break-inside:avoid}.card{page-break-inside:avoid}.mc-button{display:none}#mcR{display:block!important}table{font-size:9.5pt}.report-header{padding:.3in 0 .2in}}@page{margin:.6in .5in;size:letter}
+.report-header{padding:56px 0 40px;border-bottom:2px solid var(--navy);text-align:center}.report-header .mirror-tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:600}.report-header h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:8px}.report-header .subtitle{font-size:16px;color:var(--text-secondary);margin-bottom:18px}.report-header .meta-row{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:1px}
+.section{padding:40px 0;border-bottom:1px solid var(--divider)}.section:last-child{border-bottom:none}.section-number{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;font-weight:600}.section h2{font-family:'Playfair Display',serif;font-size:clamp(21px,3vw,28px);font-weight:700;color:var(--navy);margin-bottom:6px;line-height:1.25}.insight-headline{font-size:15px;font-weight:500;color:var(--gold);margin-bottom:18px;font-style:italic;line-height:1.55;border-left:3px solid var(--gold);padding-left:14px}.section p{margin-bottom:14px}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:24px;margin-bottom:18px}.card h3{font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:10px}
+.badge{display:inline-block;padding:3px 12px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;font-weight:600;text-transform:uppercase}.badge-gold{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-border)}.badge-teal{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-border)}.badge-coral{background:var(--coral-bg);color:var(--coral);border:1px solid var(--coral-border)}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}thead th{background:var(--table-header-bg);color:var(--navy);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:10px 12px;text-align:left;border-bottom:2px solid var(--card-border)}tbody td{padding:9px 12px;border-bottom:1px solid var(--divider);vertical-align:top}.sam-row{background:rgba(184,146,47,.08)!important;font-weight:600}
+.da{font-family:'JetBrains Mono',monospace;color:var(--gold);font-weight:700}.ta{color:var(--teal);font-weight:600}.ca{color:var(--coral);font-weight:600}
+.score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0}.score-item{background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:16px;text-align:center}.score-item .score-value{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700}.score-item .score-label{font-size:11px;color:var(--text-muted);margin-top:3px}
+.pathway-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0}@media(max-width:720px){.pathway-row{grid-template-columns:1fr}}.pathway-card{background:var(--card-bg);border-radius:10px;padding:22px;border-left:4px solid}.pathway-card.pathway-a{border-left-color:var(--gold)}.pathway-card.pathway-b{border-left-color:var(--teal)}.pathway-card .pw-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--navy);margin-bottom:4px}.pathway-card .pw-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-muted);margin-bottom:10px}
+.risk-callout{background:var(--coral-bg);border:1px solid var(--coral-border);border-radius:8px;padding:14px 18px;margin:12px 0;font-size:13px}.risk-callout strong{color:var(--coral)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:14px 0}@media(max-width:720px){.two-col{grid-template-columns:1fr}}
+.disclaimer{background:var(--bg-warm);border:1px solid var(--card-border);border-radius:8px;padding:16px 18px;font-size:11.5px;color:var(--text-muted);line-height:1.6;margin:20px 0}
+.position-map{width:100%;max-width:460px;margin:20px auto;aspect-ratio:1;position:relative;border:1px solid var(--card-border);border-radius:10px;overflow:hidden;background:var(--bg-warm)}.position-map .quadrant{position:absolute;width:50%;height:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-muted);text-align:center;padding:12px;line-height:1.4}.position-map .q-ul{top:0;left:0;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider)}.position-map .q-ur{top:0;right:0;border-bottom:1px solid var(--divider)}.position-map .q-ll{bottom:0;left:0;border-right:1px solid var(--divider)}.position-map .q-lr{bottom:0;right:0}.position-map .dot{position:absolute;width:16px;height:16px;border-radius:50%;z-index:5;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,.3);transform:translate(-50%,-50%)}.position-map .dot-a{background:var(--gold)}.position-map .dot-b{background:var(--teal)}.position-map .axis-label{position:absolute;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--text-muted)}.position-map .axis-y{left:-4px;top:50%;transform:rotate(-90deg) translateX(-50%);transform-origin:0 0;white-space:nowrap}.position-map .axis-x{bottom:4px;left:50%;transform:translateX(-50%);white-space:nowrap}
+.pause-block{background:var(--coral-bg);border:1px solid var(--coral-border);border-radius:10px;padding:22px;margin:16px 0}.pause-block h3{color:var(--coral);font-family:'Playfair Display',serif;font-size:15px;margin-bottom:10px}
+.timeline{position:relative;margin:20px 0;padding-left:24px;border-left:2px solid var(--gold-border)}.timeline-item{position:relative;margin-bottom:22px;padding-left:14px}.timeline-item::before{content:'';position:absolute;left:-31px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid white}.timeline-item .tl-phase{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;font-weight:600}.timeline-item .tl-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--navy);margin:3px 0 6px}
+.connection-card{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:14px;margin:8px 0;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;align-items:start}.ci{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px}
+.mc-button{display:block;width:100%;max-width:380px;margin:20px auto;padding:14px 28px;background:var(--navy);color:white;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;transition:all .3s}.mc-button:hover{background:var(--navy-mid);box-shadow:0 4px 12px rgba(11,26,46,.3)}.mc-button:disabled{opacity:.5;cursor:not-allowed}#mcR{display:none}.scenario-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}@media(max-width:720px){.scenario-cards{grid-template-columns:repeat(3,1fr)}}.sc{background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:12px;text-align:center}.sc .sl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:1px}.sc .sv{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;margin-top:3px}.revenue-explainer{background:var(--bg-warm);border-left:3px solid var(--text-muted);padding:14px 18px;margin:16px 0;font-size:12.5px;color:var(--text-secondary);line-height:1.6}.revenue-explainer strong{color:var(--text-primary)}
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}@media(max-width:720px){.swot-grid{grid-template-columns:1fr}}.swot-card{border-radius:10px;padding:20px;border:1px solid}.swot-card h4{font-family:'Playfair Display',serif;font-size:15px;margin-bottom:8px}.swot-card ul{list-style:none;padding:0}.swot-card li{padding:5px 0 5px 14px;position:relative;font-size:13px;line-height:1.5}
+.comp-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:20px;margin-bottom:14px}.comp-card h4{font-family:'Playfair Display',serif;font-size:15px;color:var(--navy);margin-bottom:3px}.comp-card .comp-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px}.comp-pillars{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}.comp-pillars span{font-size:9px;padding:2px 7px;border-radius:3px;font-family:'JetBrains Mono',monospace}.cp-yes{background:rgba(26,138,126,.1);color:var(--teal);border:1px solid var(--teal-border)}.cp-no{background:rgba(196,88,63,.05);color:var(--text-muted);border:1px solid rgba(196,88,63,.12)}.cp-partial{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-border)}
+.closing-box{background:var(--bg-warm);border:1px solid var(--card-border);border-radius:10px;padding:28px;margin:20px 0}.closing-box h3{font-family:'Playfair Display',serif;font-size:19px;color:var(--navy);margin-bottom:14px}
+.assembly-grid{display:grid;grid-template-columns:auto 1fr auto;gap:6px 14px;align-items:center;font-size:12.5px;margin:14px 0}.assembly-grid .ag-check{color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:13px}.assembly-grid .ag-phase{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted)}
+.phase-badge{display:inline-block;background:var(--gold-bg);border:1px solid var(--gold-border);color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;padding:5px 16px;border-radius:100px;margin:24px 0 12px;font-weight:600}
+.source-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin:14px 0}.source-legend .sl-item{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);padding:5px 8px;background:var(--bg-warm);border:1px solid var(--divider);border-radius:4px}
+.report-footer{padding:40px 0;text-align:center;font-size:11px;color:var(--text-muted);border-top:2px solid var(--navy);margin-top:24px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="report-header">
+  <div class="mirror-tag">VERIDEX Business Intelligence</div>
+  <h1>The Master's Chair</h1>
+  <div class="subtitle">Interstate Expansion Intelligence — Houston, TX → Atlanta, GA</div>
+  <div class="meta-row"><span>Stage 3 — Full Report (16 Outputs)</span><span>April 14, 2026</span><span>Prepared for Jay Davis</span></div>
+  <div style="margin-top:16px;"><span class="badge badge-gold">Interstate Expansion</span><span class="badge badge-gold" style="margin-left:6px;">Texas → Georgia</span><span class="badge badge-teal" style="margin-left:6px;">Commercial Format</span></div>
+</header>
+
+<!-- ═══════════════ OUTPUT 0 — EXECUTIVE SUMMARY ═══════════════ -->
+<section class="section">
+  <div class="section-number">Output 0</div>
+  <h2>Executive Summary</h2>
+
+  <div class="card" style="border-left:4px solid var(--gold);">
+    <h3>The Core Finding</h3>
+    <p>The Master's Chair's six-pillar model maps to the most demographically concentrated market for high-net-worth African American men in the United States. Metro Atlanta's Black population of ~2.1 million (Census ACS 2023, second only to New York) includes over 11,000 Black millionaires (LendingTree) — and the city's identity as the capital of Black professional culture in America provides a brand positioning advantage that no other US market can replicate. The commercial format adaptation — 1 Master Barber + 4 professional barbers at $150/cut alongside the full six-pillar membership sanctuary — creates a <strong>dual-revenue engine</strong> that the Dallas estate model does not have: membership revenue ($2.97M ceiling) PLUS barber operations revenue ($1.17M at 75% utilization), generating a combined base-case net income of <strong>$2.55M at maturity</strong> ($545K from barber operations + $1.78M from membership/wellness + $225K from content). The barber operation's net income flows directly into The Master's Chair's bottom line — additive profit that the membership-only Dallas model cannot generate.</p>
+    <p>The Gathering Spot — Atlanta's premier private club founded specifically for affluent Black professionals and entrepreneurs, with Club Member tier at $2,100/year (Retreat tier: $3,100/year) and national expansion to D.C. and L.A. — is the most powerful demand validation signal: it proves Atlanta's Black professional community will pay premium fees for a curated, culturally specific membership experience. The Master's Chair layers comprehensive wellness services on top of this validated community model.</p>
+    <p>However, this is an <strong>interstate expansion</strong> — Texas to Georgia — creating regulatory, tax, and compliance obligations that the Dallas intrastate expansion avoids entirely. Georgia's 5.19% corporate income tax and 5.19% personal income tax represent a material new cost that Texas's zero-income-tax structure does not impose. Quincy Williams's formal co-ownership role with equity strengthens the Atlanta proposition but introduces entity structuring complexity.</p>
+    <p>Classification: <span class="badge badge-gold">Direct Opportunity</span> — capability-to-market fit is strong, the demographic concentration is nationally unmatched, and the dual-revenue model addresses the single-location revenue ceiling that constrains the Dallas estate.</p>
+  </div>
+
+  <div class="pathway-row">
+    <div class="pathway-card pathway-a">
+      <div style="margin-bottom:6px;"><span class="badge badge-gold">Pathway A</span> <span class="badge badge-gold" style="margin-left:4px;">Market Adaptation</span></div>
+      <div class="pw-title">Commercial Sanctuary — Atlanta Dual-Revenue Model</div>
+      <div class="pw-sub">Direct Opportunity — 21/25</div>
+      <p style="font-size:13px;"><strong style="color:var(--gold);">Merit:</strong> Atlanta's ~2.1M Black metro population (32.4% of metro) is 2.3× Dallas's concentration. The commercial format reduces real estate capital from $2.5M–$5M (estate) to $500K–$1.5M (commercial lease + buildout), while adding a volume grooming revenue stream that the estate model's appointment-only structure cannot generate. Quincy Williams as co-owner with equity provides deeper commitment than CeeDee Lamb's informal advisory role.</p>
+      <p style="font-size:13px;"><strong style="color:var(--coral);">Constraint:</strong> Interstate expansion from Texas to Georgia triggers new state entity registration (foreign qualification), Georgia corporate income tax (5.19%), Georgia personal income tax (5.19%), and multi-state employment law compliance. However, two major friction reducers apply: all 5 barbers are already GA SOS-licensed (eliminating the barber licensing timeline), and the brand licensing model means Quincy and Quinnen Williams independently operate the location — TMC corporate provides standards and audits, not daily management. Estimated setup compliance cost: $75K–$150K, but ongoing operational burden on the founding team is minimal.</p>
+    </div>
+    <div class="pathway-card pathway-b">
+      <div style="margin-bottom:6px;"><span class="badge badge-teal">Pathway B</span> <span class="badge badge-teal" style="margin-left:4px;">Capability Transfer</span></div>
+      <div class="pw-title">Master Class ATL — Competition Season + Browns/Falcons Content</div>
+      <div class="pw-sub">Structured Opportunity — 19/25</div>
+      <p style="font-size:13px;"><strong style="color:var(--teal);">Merit:</strong> Atlanta is the #1 city in America for Black cultural content creation. The music, entertainment, and media ecosystem (Tyler Perry Studios, Quality Control Music, Atlanta-based influencer networks) provides distribution infrastructure that no other market offers. Quincy Williams's Cleveland Browns connections + Atlanta's proximity to the Falcons create a dual-NFL content arc.</p>
+      <p style="font-size:13px;"><strong style="color:var(--coral);">Constraint:</strong> Atlanta's barber content market is more competitive than Dallas's — the city already has established Black barber-influencers and content creators. Standing out requires production quality and format differentiation that justify the higher content creation costs.</p>
+    </div>
+  </div>
+
+  <div class="score-grid" style="grid-template-columns:repeat(auto-fit,minmax(145px,1fr));">
+    <div class="score-item"><div class="score-value" style="color:var(--gold);">$120M</div><div class="score-label">SAM — Atlanta Metro</div><div style="font-size:9px;color:var(--text-muted);margin-top:3px;">Narrowed from $650M TAM</div></div>
+    <div class="score-item"><div class="score-value" style="color:var(--teal);">P50: $5.1M</div><div class="score-label">Monte Carlo Year 5 Revenue</div><div style="font-size:9px;color:var(--text-muted);margin-top:3px;">Dual-revenue envelope</div></div>
+    <div class="score-item"><div class="score-value" style="color:var(--gold);">$2.55M</div><div class="score-label">Projected Net Income (Base)</div><div style="font-size:9px;color:var(--text-muted);margin-top:3px;">Barber ops ($545K) + Membership ($1.78M) + Content ($225K)</div></div>
+    <div class="score-item"><div class="score-value" style="color:var(--coral);">$1.5M–$2.5M</div><div class="score-label">Capital Entry</div><div style="font-size:9px;color:var(--text-muted);margin-top:3px;">Commercial (50% of estate)</div></div>
+  </div>
+  <div class="disclaimer" style="font-size:10.5px;">Monte Carlo P50 is a headline figure from a probabilistic model with wide confidence bands. Full range, methodology, and assumptions in Output 7. Do not use in isolation for planning.</div>
+
+  <div class="card" style="border-left:4px solid var(--coral);">
+    <h3 style="color:var(--coral);">Critical Risks</h3>
+    <div class="risk-callout"><strong>[Both Pathways]</strong> Interstate compliance burden: Georgia imposes 5.19% CIT + 5.19% PIT that Texas does not. Multi-state payroll and employment law apply. However, the two largest friction reducers — pre-licensed barbers (all 5 already GA SOS-certified) and the brand licensing model (Quincy/Quinnen Williams independently manage with own staff) — reduce the effective operational and regulatory burden to moderate levels. The tax cost ($87K–$172K annual CIT on projected net income) is the primary ongoing interstate friction, not operational complexity.</div>
+    <div class="risk-callout"><strong>[Pathway A]</strong> The commercial format is untested for The Master's Chair. The entire brand identity — "sanctuary," "estate," Forbes Five-Star — was designed around a residential estate environment. Translating this premium positioning to a commercial space (even a high-end one) risks diluting the brand promise that justifies $2,500/month membership pricing. If members perceive the Atlanta experience as lesser than the Houston/Dallas estate experience, retention and referral rates will suffer.</div>
+    <div class="risk-callout"><strong>[Pathway B]</strong> Atlanta's content creation ecosystem is more competitive than Dallas's. The city is saturated with Black creator talent across music, fashion, and lifestyle categories. VicBlends (who is Atlanta-based) demonstrates barber content virality but also occupies the space — The Master's Chair's competition format must differentiate clearly against established Atlanta-based barber content creators.</div>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--teal);">
+    <h3>What to Do First</h3>
+    <p>Run an <strong>Atlanta Founder's Experience Test</strong> at <span class="da">$30,000–$60,000</span> over <span class="da">75 days</span>. Host 4–5 private Founder's Experience sessions at luxury Atlanta venues (The St. Regis Atlanta, Four Seasons Midtown, or a private residence in Buckhead/Cascade Heights). 10–15 HNW African American men per session sourced through Quincy Williams's NFL network, Atlanta Greek-letter alumni chapters (Kappa Alpha Psi, Alpha Phi Alpha — Atlanta hosts one of the fraternity's largest and most active alumni chapter networks nationally), The Gathering Spot member referrals, and the Atlanta Business League. Track: attendance rate, post-event inquiry rate, price sensitivity at $2,500/month, and feedback on the commercial vs. estate format. <strong>Critical additional test:</strong> present the commercial sanctuary concept (not estate) and measure whether 30%+ of attendees express founding membership interest at the same $2,500/month price point — this validates the format adaptation thesis.</p>
+  </div>
+
+  <div class="card">
+    <h3>Key Connections</h3>
+    <p><strong>Atlanta Business League (ABL)</strong> — the city's preeminent Black professional networking organization. <strong>The Gathering Spot</strong> — potential partnership or cross-referral (complementary, not competitive — TGS offers coworking/dining, not grooming/wellness). <strong>Georgia Department of Economic Development (GDEcD)</strong> — Quick Start program for workforce training. <strong>Georgia Secretary of State — Board of Cosmetology and Barbers</strong> — barber shop licensing.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ OUTPUT 1 — OPPORTUNITY SIMULATION ═══════════════ -->
+<section class="section">
+  <div class="section-number">Output 1</div>
+  <h2>Personalized Opportunity Simulation</h2>
+  <div class="insight-headline">Atlanta scores higher than Dallas on three of five Opportunity Signal criteria — demographic concentration, demand momentum, and competitive positioning — while the brand licensing model and pre-licensed barbers reduce operational and regulatory friction below Dallas's level, creating the strongest risk-reward profile of any expansion market analyzed.</div>
+
+  <div class="card">
+    <h3>Opportunity Signal Matrix — Pathway A: Commercial Sanctuary</h3>
+    <table>
+      <thead><tr><th>Criterion</th><th>Score</th><th>Justification</th></tr></thead>
+      <tbody>
+        <tr><td>Competency-to-Opportunity Fit</td><td><span class="da">5/5</span></td><td>All extractable competencies (six-pillar integration, culturally expert grooming, membership model, wellness protocols) map directly to documented, quantifiable demand in the nation's largest concentration of HNW Black professionals. Quincy Williams co-ownership provides authentic NFL distribution. The commercial format adds a volume grooming revenue stream that leverages the 5-barber capacity. Score of 5 because: ≥3 competencies map with quantifiable evidence AND Atlanta's demographic concentration is nationally unmatched for this specific target.</td></tr>
+        <tr><td>Market Size & Addressable Opportunity</td><td><span class="da">4/5</span></td><td>SAM $120M for integrated luxury wellness serving HNW African American men in metro Atlanta, narrowed from $650M TAM. Metro Atlanta Black population ~2.1M (32.4% of metro, Census ACS 2023). 11,000+ Black millionaires (LendingTree). SAM is ~40% larger than Dallas ($85M) reflecting the larger, more concentrated target demographic.</td></tr>
+        <tr><td>Demand Momentum</td><td><span class="da">5/5</span></td><td>The Gathering Spot — founded specifically for affluent Black professionals — has expanded nationally (D.C., L.A.). Atlanta is the cultural capital of Black America. 24 Fortune 500 HQs in metro. Forbes Five-Star hotel density (St. Regis, Four Seasons, Ritz-Carlton Buckhead) validates luxury market. Growth >15% in wellness sector with structural demographic tailwinds: Atlanta's Black professional population is growing through both domestic migration and organic growth.</td></tr>
+        <tr><td>Market Saturation / Competitive Position</td><td><span class="da">4/5</span></td><td>No Atlanta competitor combines all six pillars with cultural specificity. The Gathering Spot covers community + dining but no grooming or wellness. Mogul Grooming Co. (Sweet Auburn) covers grooming + cultural competence but no wellness or membership. PRKCHPS Social Club covers grooming + social but no medical/holistic/financial. Competitive landscape is fragmented across 1–2 pillars per competitor. Score 4 not 5 because Atlanta's barber ecosystem is deeper and more competitive than Dallas's.</td></tr>
+        <tr><td>Regulatory & Entry Feasibility</td><td><span class="da">3/5</span></td><td>Interstate expansion: foreign qualification in Georgia, new CIT (5.19%), PIT (5.19%), barber licensing through GA SOS (different body than TX TDLR — no reciprocity guarantee), DSHS-equivalent medical licensing through GA DPH, commercial lease (no zoning variance needed — unlike Dallas). Score of 3 reflecting multi-state compliance cost ($75K–$150K setup).</td></tr>
+      </tbody>
+    </table>
+    <div style="text-align:center;margin-top:14px;"><span class="da" style="font-size:22px;">Total: 21/25</span> <span class="badge badge-gold" style="margin-left:10px;">Direct Opportunity</span></div>
+  </div>
+
+  <div class="card">
+    <h3>Opportunity Signal Matrix — Pathway B: Master Class ATL</h3>
+    <table>
+      <thead><tr><th>Criterion</th><th>Score</th><th>Justification</th></tr></thead>
+      <tbody>
+        <tr><td>Competency-to-Opportunity Fit</td><td><span class="da">4/5</span></td><td>Master Class IP + competition format map to Atlanta's content creation ecosystem. Quincy Williams's Browns connections + ATL proximity to Falcons. But: Atlanta's creator market is more competitive than Dallas — differentiation harder.</td></tr>
+        <tr><td>Market Size</td><td><span class="da">4/5</span></td><td>National SAM $15M–$40M for certification + content. Atlanta base adds local tuition revenue and in-person competition production advantages (lower travel costs, deeper talent pool).</td></tr>
+        <tr><td>Demand Momentum</td><td><span class="da">4/5</span></td><td>Atlanta is #1 for Black cultural content. Tyler Perry Studios, Quality Control, 100+ Black creator networks. But: VicBlends is Atlanta-based — occupies adjacent space.</td></tr>
+        <tr><td>Market Saturation</td><td><span class="da">3/5</span></td><td>Barber content category more active in Atlanta than Dallas. VicBlends (15.8M TikTok) is local. Format differentiation (competition + NFL backing) is novel but must prove against established creators. Score 3 reflecting competitive content market.</td></tr>
+        <tr><td>Regulatory Feasibility</td><td><span class="da">4/5</span></td><td>Content production faces minimal barriers. Same FTC/IP requirements as Dallas. Georgia-specific: talent agreements under Georgia law (more favorable to producers than California). Atlanta's film/content tax credit (Georgia Entertainment Tax Credit, 20%+10%) may apply to production costs.</td></tr>
+      </tbody>
+    </table>
+    <div style="text-align:center;margin-top:14px;"><span class="ta" style="font-family:'JetBrains Mono',monospace;font-size:22px;">Total: 19/25</span> <span class="badge badge-teal" style="margin-left:10px;">Structured Opportunity</span></div>
+  </div>
+
+  <div class="card">
+    <h3>Risk & Friction Profile</h3>
+    <table>
+      <thead><tr><th>Dimension</th><th>Score</th><th>Justification</th></tr></thead>
+      <tbody>
+        <tr><td>Capital Exposure</td><td><span class="ca">3/5</span></td><td>$1.5M–$2.5M for commercial lease + buildout + equipment — materially lower than Dallas estate ($2.5M–$5M). But still significant for a pre-revenue company. Plus: dual-revenue model generates grooming cash flow earlier than membership-only estate model.</td></tr>
+        <tr><td>Regulatory Complexity</td><td><span class="ca">2/5</span></td><td>Interstate expansion triggers GA foreign qualification, new state tax registrations (CIT, PIT, withholding, unemployment, sales), and GA DPH medical facility licensing. However: all 5 barbers are already GA SOS-licensed — eliminating the most operationally complex licensing hurdle (endorsement/reciprocity timeline). Remaining items are standard interstate setup. DPH medical licensing is a timeline issue (6–12 months), not a complexity issue. Score matches Dallas's 2/5 because the barber licensing friction that would have distinguished Atlanta from Dallas is pre-solved.</td></tr>
+        <tr><td>Competitive Intensity</td><td><span class="ca">3/5</span></td><td>Atlanta's grooming market is deeper than Dallas. More Black-owned barbershops, more luxury grooming competitors, and established barber-influencers (VicBlends). Six-pillar integration remains unique, but individual-pillar competition is stronger. Score 3 vs. Dallas's 2.</td></tr>
+        <tr><td>Operational Complexity</td><td><span class="ca">2/5</span></td><td>Brand licensing ("flag") model — Quincy and Quinnen Williams independently own and operate the Atlanta location with their own staff, management, HR, and day-to-day decision authority. The Master's Chair corporate (Mrs. Virgil, Dr. Thompson, Mr. Davis) provides brand standards, training protocols, quality audits, and IP licensing — not daily management. No shared staff at any level after establishment. This eliminates the dual-location management bandwidth drain that would apply under a corporate-operated model. The 800-mile distance is largely irrelevant because TMC corporate is not running Atlanta operations. Analogous to a Marriott franchise: independently owned, brand-licensed, must meet standards, but run by its own team. Score 2 (down from 3) reflecting the materially lighter operational footprint on the founding team.</td></tr>
+        <tr><td>Litigation & Compliance</td><td><span class="ca">3/5</span></td><td>Same healthcare service exposure as Dallas (FNP, malpractice, HIPAA). Plus: Georgia's litigation environment, while not as plaintiff-friendly as California, is more active than Texas (no tort reform equivalent to TX Chapter 74 CPRC for healthcare). Fulton County is considered a plaintiff-favorable jurisdiction.</td></tr>
+      </tbody>
+    </table>
+    <div style="text-align:center;margin-top:14px;"><span class="ca" style="font-family:'JetBrains Mono',monospace;font-size:22px;">Total Friction: 13/25</span> <span class="badge badge-gold" style="margin-left:10px;">Moderate Friction</span></div>
+  </div>
+
+  <div class="card">
+    <h3>Opportunity-Risk Position</h3>
+    <p style="text-align:center;font-size:15px;margin-bottom:14px;">
+      <span class="da">Pathway A:</span> Direct Opportunity (21/25) | Moderate Friction (13/25)<br>
+      <span class="ta">Pathway B:</span> Structured Opportunity (19/25) | Moderate Friction (13/25)
+    </p>
+    <p>Pathway A scores <strong>3 points higher than Dallas Pathway A</strong> (21 vs. 18) on opportunity, and now scores <strong>2 points lower on friction</strong> (13 vs. 15) — a materially better risk-reward profile. Two factors drive the friction improvement: (1) all 5 barbers are already GA SOS-licensed, eliminating the barber licensing complexity that would otherwise distinguish an interstate expansion, and (2) the brand licensing ("flag") model means Quincy and Quinnen Williams independently manage Atlanta operations with their own staff — TMC corporate provides brand standards and quality audits, not daily management. This moves Atlanta from "Strong signal, complex path" closer to the <strong>"Strong signal, clear path"</strong> quadrant — the most favorable position available. Atlanta now offers <strong>higher opportunity AND lower friction than Dallas</strong>.</p>
+    <div class="position-map">
+      <div class="axis-label axis-y">OPPORTUNITY SIGNAL →</div>
+      <div class="axis-label axis-x">FRICTION →</div>
+      <div class="quadrant q-ul" style="background:rgba(26,138,126,.04);">Strong signal<br>Clear path</div>
+      <div class="quadrant q-ur" style="background:rgba(184,146,47,.04);">Strong signal<br>Complex path</div>
+      <div class="quadrant q-ll">Building-stage<br>Accessible</div>
+      <div class="quadrant q-lr" style="background:rgba(196,88,63,.03);">Long-horizon<br>Steep path</div>
+      <!-- Pathway A: 21/25 opp = 84% up, 13/25 friction = 52% right — shifted left from prior 60% -->
+      <div class="dot dot-a" style="left:52%;top:16%;" title="Pathway A: 21/25 opp, 13/25 friction"></div>
+      <!-- Pathway B: 19/25 opp = 76% up, 13/25 friction = 52% right -->
+      <div class="dot dot-b" style="left:50%;top:24%;" title="Pathway B: 19/25 opp, 13/25 friction"></div>
+      <div style="position:absolute;bottom:8px;right:12px;font-size:10px;color:var(--text-muted);"><span style="color:var(--gold);">●</span> A &nbsp;<span style="color:var(--teal);">●</span> B</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DECOMPOSITION TABLES ═══════════════ -->
+<section class="section">
+  <div class="section-number">Supplementary</div>
+  <h2>Addressable Market Decomposition</h2>
+  <div class="insight-headline">Atlanta's SAM is ~40% larger than Dallas ($120M vs. $85M), driven entirely by the 2.3× larger Black professional population — but the dual-revenue model means the SOM ceiling is also higher because grooming volume is uncapped by membership limits.</div>
+
+  <div class="card">
+    <h3>Pathway A — Commercial Sanctuary (Dual-Revenue)</h3>
+    <table>
+      <thead><tr><th>Layer</th><th>Narrowing Step</th><th>Value</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td><strong>TAM</strong></td><td>Luxury personal care + wellness, Atlanta metro (all demographics)</td><td>$650M</td><td>[T4] IBISWorld; BEA PCE; larger metro GDP ($604B) and population (6.2M)</td></tr>
+        <tr><td>→ Sub-segment</td><td>Men's luxury grooming + wellness integration</td><td>$275M</td><td>IBISWorld; Census CBP NAICS 812111+812199 in Fulton/DeKalb/Cobb/Gwinnett</td></tr>
+        <tr><td>→ Customer tier</td><td>HNW clientele ($200K+ HHI) — ~12% of ATL metro men's market</td><td>$135M</td><td>Census ACS; IRS SOI; 11,000+ Black millionaires in ATL (LendingTree)</td></tr>
+        <tr class="sam-row"><td>→ Cultural specificity</td><td>African American HNW men — ATL metro ~32.4% Black (2.1M), highest HNW Black concentration nationally</td><td><strong>$120M (SAM)</strong></td><td>Census ACS; BlackDemographics.com; ATL metro racial demographics</td></tr>
+        <tr><td>→ Dual-revenue capacity</td><td>Membership: 99 × $30K = $2.97M + Grooming: 5 barbers × ~8 cuts/day × $150 × 260 days × 70% util = $1.09M</td><td>$4.1M–$5.5M</td><td>Business plan membership model + barber capacity calculation (user-specified: 10 hrs/day, $150/cut)</td></tr>
+        <tr><td><strong>SOM (Yr 5)</strong></td><td>70–99 members + grooming at 60–80% utilization + ancillary</td><td><strong>$3.5M–$5.5M</strong></td><td>Membership + grooming volume + add-ons. Higher than Dallas SOM ($2.5M–$4.5M) reflecting dual-revenue.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Revenue Model — Grooming Capacity Calculation</h3>
+    <table>
+      <thead><tr><th>Variable</th><th>Value</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Barbers</td><td>5 (1 Master + 4 Professional)</td><td>User-specified</td></tr>
+        <tr><td>Operating hours/day</td><td>10 hours</td><td>User-specified</td></tr>
+        <tr><td>Avg cut duration</td><td>~60–75 min (luxury level)</td><td>Allows ~8 cuts/barber/day at luxury pace</td></tr>
+        <tr><td>Price/cut</td><td>$150</td><td>User-specified</td></tr>
+        <tr><td>Max daily revenue (grooming)</td><td>5 × 8 × $150 = $6,000</td><td>At 80% utilization: $4,800/day</td></tr>
+        <tr><td>Annual (260 working days)</td><td>$1.56M max | $1.25M at 80% | $936K at 60%</td><td>Excludes membership revenue</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--gold);">
+    <h3>Combined Net Income Model — Atlanta (Year 5 at Maturity)</h3>
+    <p style="font-size:13px;margin-bottom:12px;">The Atlanta dual-revenue model generates two distinct income streams that flow into a single P&L. The barber operation's net income is additive to The Master's Chair's membership net income — creating a combined bottom line that exceeds what either revenue stream could produce alone.</p>
+    <table>
+      <thead><tr><th>Line Item</th><th>Conservative (60% util / 75 members)</th><th>Base Case (75% util / 90 members)</th><th>Optimistic (85% util / 99 members)</th></tr></thead>
+      <tbody>
+        <tr style="background:var(--gold-bg)"><td colspan="4"><strong style="color:var(--gold);">Revenue Stream 1 — Barber Operations</strong></td></tr>
+        <tr><td>Grooming revenue (5 barbers × $150/cut)</td><td>$936K</td><td>$1.17M</td><td>$1.33M</td></tr>
+        <tr><td>Less: Barber compensation (salary + commission)</td><td>($375K)</td><td>($420K)</td><td>($465K)</td></tr>
+        <tr><td>Less: Products, supplies, equipment</td><td>($45K)</td><td>($55K)</td><td>($60K)</td></tr>
+        <tr><td>Less: Allocated overhead (rent, utilities, insurance — 30% of grooming share)</td><td>($140K)</td><td>($150K)</td><td>($155K)</td></tr>
+        <tr style="font-weight:700"><td>Barber Operations Net Income</td><td class="da">$376K</td><td class="da">$545K</td><td class="da">$650K</td></tr>
+        <tr><td>Barber operations net margin</td><td>~40%</td><td>~47%</td><td>~49%</td></tr>
+
+        <tr style="background:var(--teal-bg)"><td colspan="4"><strong style="color:var(--teal);">Revenue Stream 2 — Membership & Wellness</strong></td></tr>
+        <tr><td>Membership revenue (×$30K/year)</td><td>$2.25M</td><td>$2.70M</td><td>$2.97M</td></tr>
+        <tr><td>Add-on services, retail, wellness programs</td><td>$200K</td><td>$350K</td><td>$500K</td></tr>
+        <tr><td>Less: Wellness staff (FNP, practitioners, therapist, chef)</td><td>($520K)</td><td>($520K)</td><td>($520K)</td></tr>
+        <tr><td>Less: Hospitality, security, membership coordinator</td><td>($280K)</td><td>($280K)</td><td>($280K)</td></tr>
+        <tr><td>Less: Allocated overhead (rent, utilities, insurance — 70% of membership share)</td><td>($325K)</td><td>($350K)</td><td>($360K)</td></tr>
+        <tr><td>Less: Marketing, member acquisition, ambassador program</td><td>($100K)</td><td>($125K)</td><td>($150K)</td></tr>
+        <tr style="font-weight:700"><td>Membership & Wellness Net Income</td><td class="ta">$1.23M</td><td class="ta">$1.78M</td><td class="ta">$2.16M</td></tr>
+        <tr><td>Membership net margin</td><td>~50%</td><td>~58%</td><td>~62%</td></tr>
+
+        <tr style="background:var(--gold-bg)"><td colspan="4"><strong style="color:var(--gold);">Revenue Stream 3 — Content & Certification (Pathway B overlay)</strong></td></tr>
+        <tr><td>YouTube ad revenue + sponsorships</td><td>$100K</td><td>$250K</td><td>$500K</td></tr>
+        <tr><td>Master Class tuition ($99 × enrollments)</td><td>$75K</td><td>$150K</td><td>$300K</td></tr>
+        <tr><td>Less: Production costs, talent, platform fees</td><td>($100K)</td><td>($175K)</td><td>($300K)</td></tr>
+        <tr style="font-weight:700"><td>Content & Certification Net Income</td><td class="da">$75K</td><td class="da">$225K</td><td class="da">$500K</td></tr>
+
+        <tr style="background:rgba(11,26,46,.08)"><td colspan="4"><strong style="color:var(--navy);">Combined — The Master's Chair Atlanta</strong></td></tr>
+        <tr style="font-weight:700"><td>Total Revenue</td><td>$3.56M</td><td>$4.62M</td><td>$5.60M</td></tr>
+        <tr style="font-weight:700;font-size:15px"><td>Total Net Income (Combined)</td><td class="da" style="font-size:17px">$1.68M</td><td class="da" style="font-size:17px">$2.55M</td><td class="da" style="font-size:17px">$3.31M</td></tr>
+        <tr style="font-weight:700"><td>Combined Net Margin</td><td>~47%</td><td>~55%</td><td>~59%</td></tr>
+        <tr><td>GA CIT (5.19% on net income)</td><td>($87K)</td><td>($132K)</td><td>($172K)</td></tr>
+        <tr style="font-weight:700"><td>Net Income After GA CIT</td><td class="da">$1.59M</td><td class="da">$2.42M</td><td class="da">$3.14M</td></tr>
+      </tbody>
+    </table>
+    <div class="disclaimer" style="font-size:10.5px;margin-top:12px;"><strong>Key insight:</strong> Barber operations contribute $376K–$650K in net income that flows directly to The Master's Chair's bottom line. This is revenue and profit that the Dallas estate model — which has no separate grooming volume operation — cannot generate. The barber operation also generates cash flow from Day 1 of operations (before membership reaches critical mass), providing a bridge that reduces the cash burn period during the founding phase. At maturity, barber net income represents 19–20% of total combined net income — a meaningful but not dominant contribution. The membership and wellness pillar remains the primary profit engine at 58–65% of total net income.</div>
+    <div class="disclaimer" style="font-size:10.5px;"><strong>Assumptions and limitations:</strong> Barber compensation assumes a blended salary + commission model ($65K–$85K for Master, $45K–$60K for professionals, plus product commission). Overhead allocation assumes 30% of shared facility costs (rent, utilities, insurance) attributed to grooming operations and 70% to membership/wellness — reflecting the higher space and resource utilization of the six-pillar wellness model. Content revenue is highly uncertain and depends on YouTube channel growth and Master Class enrollment velocity. All figures are pre-federal tax (pass-through to owners) and exclude Quincy Williams's equity share of profits. This is a directional model, not a financial plan — a detailed P&L with cash flow projections should be developed with a CPA before capital commitment.</div>
+  </div>
+</section>
+
+<!-- ═══════════════ OUTPUT 2 — VERTICAL & ADJACENT ═══════════════ -->
+<section class="section">
+  <div class="section-number">Output 2</div>
+  <h2>Vertical & Adjacent Opportunity Analysis</h2>
+  <div class="insight-headline">Atlanta uniquely enables two adjacent opportunities unavailable in Dallas: access to the Georgia Entertainment Tax Credit (20%+10%) for competition content production, and the nation's deepest pipeline of Black corporate executives for B2B wellness consulting.</div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Georgia Entertainment Tax Credit</h3>
+      <p style="font-size:13px;">Georgia's entertainment production tax credit provides 20% of qualified production expenditures plus an additional 10% "Georgia Peach" uplift for including a GA logo in credits (total 30%). If the Master Class competition format qualifies as an original digital production (which it likely does under current GA DOR guidance), production costs of $150K–$400K/season could generate $45K–$120K in transferable tax credits. These credits can be sold on the secondary market at ~88–92 cents on the dollar if the company cannot use them directly.</p>
+    </div>
+    <div class="card">
+      <h3>B2B Corporate Wellness — Atlanta Fortune 500 Pipeline</h3>
+      <p style="font-size:13px;">Metro Atlanta's 24 Fortune 500 HQs (including Home Depot, UPS, Delta, Coca-Cola, Southern Company) employ a concentrated C-suite population. Dr. Thompson's integrative wellness protocols as corporate wellness consulting specifically targeted at Black C-suite executives — a category that corporate wellness programs rarely serve with cultural specificity. Revenue potential: $75K–$200K/year from 3–5 corporate engagements.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ OUTPUT 3 — MARKET ENTRY STRATEGY ═══════════════ -->
+<section class="section">
+  <div class="section-number">Output 3</div>
+  <h2>Optimal Market Entry Strategy</h2>
+  <div class="insight-headline">The interstate expansion from Texas to Georgia triggers 7 new regulatory touchpoints — but the commercial format (no estate, no zoning variance) simplifies the real estate pathway that is Dallas's most complex variable.</div>
+
+  <div class="card">
+    <h3>Entity & Regulatory Stack</h3>
+    <p><strong>Entity structure:</strong> Register The Master's Chair LLC as a foreign LLC in Georgia (GA SOS foreign qualification filing). Quincy Williams's co-ownership with equity requires operating agreement amendment — recommend a Georgia-specific operating subsidiary or a multi-member LLC structure with clear equity/profit allocation provisions reviewed by both TX and GA counsel.</p>
+    <table>
+      <thead><tr><th>#</th><th>Requirement</th><th>Agency</th><th>Timeline</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Foreign LLC qualification in Georgia</td><td>GA Secretary of State</td><td>7–14 days</td></tr>
+        <tr><td>2</td><td>Georgia corporate income tax registration</td><td>GA Dept of Revenue</td><td>30 days</td></tr>
+        <tr><td>3</td><td>Georgia withholding tax registration (employees)</td><td>GA DOR</td><td>30 days</td></tr>
+        <tr><td>4</td><td>Barber shop license</td><td>GA SOS — Board of Cosmetology & Barbers</td><td>30–60 days</td></tr>
+        <tr><td>5</td><td>Individual barber license endorsement (TX → GA)</td><td>GA SOS Board</td><td><span class="ta">Pre-solved — all 5 barbers already GA SOS-licensed</span></td></tr>
+        <tr><td>6</td><td>Medical facility license (if offering medical wellness on-site)</td><td>GA Dept of Public Health (DPH)</td><td><span class="ca">6–12 months (critical path)</span></td></tr>
+        <tr><td>7</td><td>Georgia business license (City of Atlanta)</td><td>City of Atlanta Dept of Finance</td><td>14–30 days</td></tr>
+        <tr><td>8</td><td>Fulton County business personal property tax registration</td><td>Fulton County Tax Assessor</td><td>Upon opening</td></tr>
+        <tr><td>9</td><td>Georgia unemployment insurance registration</td><td>GA DOL</td><td>Before first hire</td></tr>
+        <tr><td>10</td><td>Health department inspection (food service)</td><td>Fulton County Board of Health</td><td>Before opening</td></tr>
+        <tr><td>11</td><td>TABC equivalent — alcohol license</td><td>GA DOR — Alcohol & Tobacco Division</td><td>60–90 days</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;">Estimated total interstate compliance cost: <span class="da">$75,000–$150,000</span> (legal, accounting, licensing, tax registration, employment law setup) — approximately 5× the Dallas intrastate cost ($15K–$30K).</p>
+  </div>
+
+  <div class="card">
+    <h3>Regulatory Delta — Texas → Georgia (Interstate)</h3>
+    <table>
+      <thead><tr><th>Dimension</th><th>Texas</th><th>Georgia</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr><td>Corporate income tax</td><td><span class="ta">None (franchise 0.375–0.75%)</span></td><td><span class="ca">5.19% on net income</span></td><td>New CIT obligation. At $3M Atlanta net income: ~$156K annual CIT.</td></tr>
+        <tr><td>Personal income tax</td><td><span class="ta">None</span></td><td><span class="ca">5.19% flat</span></td><td>Owners' share of Atlanta income taxed by Georgia. TX-based owners: GA taxes Atlanta-sourced income.</td></tr>
+        <tr><td>Sales tax</td><td>8.25% (state 6.25% + local 2%)</td><td>7.5–8.9% (state 4% + local 3.5–4.9%)</td><td>Slightly lower than TX. Applies to retail product sales. Membership services treatment requires analysis.</td></tr>
+        <tr><td>Employment law</td><td>At-will, $7.25 min wage, no paid leave</td><td>At-will, $7.25 ($5.15 state, federal applies), no paid leave</td><td>Substantively similar. Both right-to-work states. Key difference: GA workers' comp is mandatory (TX is optional).</td></tr>
+        <tr><td>Barber licensing</td><td>TDLR — state board</td><td>GA SOS — Board of Cosmetology & Barbers</td><td>Different licensing body. GA requires 1,500 school hours or endorsement. <span class="ta">However, all 5 Atlanta barbers are already GA SOS-licensed — eliminating the endorsement timeline entirely.</span> Barber shop establishment license still required (30–60 days).</td></tr>
+        <tr><td>Data privacy</td><td>TDPSA (eff. July 2024)</td><td>No comprehensive privacy law</td><td>Georgia has no comprehensive data privacy statute (as of Apr 2026). Reduces compliance burden vs. TX.</td></tr>
+        <tr><td>Workers' compensation</td><td><span class="ta">Optional</span></td><td><span class="ca">Mandatory (3+ employees)</span></td><td>Georgia requires WC for employers with 3+ employees. Must obtain coverage before first GA hire.</td></tr>
+        <tr><td>Property tax</td><td>~1.82–1.93% (Harris/Dallas)</td><td>~1.05% (Fulton County)</td><td><span class="ta">Favorable:</span> Fulton County effective rate ~1.05% — materially lower than TX. On $500K of business personal property: ~$5K vs. ~$10K in TX.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════ OUTPUT 4 — QUICK WINS ═══════════════ -->
+<section class="section">
+  <div class="section-number">Output 4</div>
+  <h2>Quick Wins vs. Long-Term Plays</h2>
+  <div class="insight-headline">The commercial format compresses the Atlanta timeline to 18–24 months (vs. 24–30 for Dallas estate) — no estate acquisition, no zoning variance, no residential renovation — but GA DPH medical licensing remains the 6–12 month critical path.</div>
+
+  <div class="timeline">
+    <div class="timeline-item"><div class="tl-phase">Mo 1–3 | $30K–$60K</div><div class="tl-title">Founder's Experience & Network Activation</div><p style="font-size:13px;">4–5 private sessions at Atlanta luxury venues. 10–15 HNW men/session via Quincy Williams, Greek-letter chapters (Alpha Phi Alpha has one of its largest alumni chapter networks in Atlanta), ABL, Gathering Spot network. Test commercial format positioning at $2,500/month. Master Class DFW enrollment. <strong>Gate:</strong> &lt;30% interest → pause Atlanta.</p></div>
+    <div class="timeline-item"><div class="tl-phase">Mo 4–7 | $150K–$300K</div><div class="tl-title">Site Selection & Lease Negotiation</div><p style="font-size:13px;">Identify 5,000–8,000 sq ft commercial space in target corridors: Buckhead (Peachtree Rd / Lenox area), Midtown (Peachtree / 14th St), West Midtown (Howell Mill corridor), or Cascade Heights / Camp Creek (strong Black affluent residential base). Negotiate commercial lease ($25–$45/sq ft NNN in Buckhead). File GA foreign qualification. Register with GA DOR. All 5 barbers already GA SOS-licensed — no endorsement timeline. Draft brand licensing agreement between TMC corporate and Williams brothers operating entity.</p></div>
+    <div class="timeline-item"><div class="tl-phase">Mo 8–14 | $800K–$1.5M</div><div class="tl-title">Buildout, Licensing & Competition Season</div><p style="font-size:13px;">Commercial buildout (luxury interior — private barber suites, treatment rooms, lounge, kitchen, no residential renovation needed). GA DPH medical facility application filed. GA SOS barber shop license obtained. Film competition season: ATL-area barbers competing for Lead Master. Quincy Williams as judge/host. Founding member enrollment begins.</p></div>
+    <div class="timeline-item"><div class="tl-phase">Mo 15–18 | $300K–$500K</div><div class="tl-title">Staffing, Training & Soft Launch</div><p style="font-size:13px;">Hire team (Lead Master, barbers, FNP, practitioners, chef, security, hospitality). Forbes Five-Star + HIPAA training. GA DPH license received. Soft launch to 25–35 founding members. Grooming operations begin generating revenue from Day 1 (non-members at $150/cut).</p></div>
+    <div class="timeline-item"><div class="tl-phase">Mo 19–24 | Operations</div><div class="tl-title">Full Charter Operations</div><p style="font-size:13px;">Charter enrollment to 99 members. Ambassador flywheel. All six pillars. Grooming volume at 70%+ utilization. Combined target: $4M+ annually from Atlanta alone.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════ STRATEGIC PAUSE ═══════════════ -->
+<section class="section">
+  <div class="section-number">Supplementary</div>
+  <h2>Strategic Pause — Counterargument Protocol</h2>
+
+  <div class="pause-block"><h3>1. The commercial format may undermine the "sanctuary" brand promise that justifies $2,500/month.</h3><p style="font-size:13px;">The Master's Chair's entire identity is built around the estate sanctuary concept — a private residence converted into a wellness haven where members feel they're entering someone's home, not a business. A commercial space in Buckhead or Midtown, no matter how luxuriously appointed, is fundamentally a different experience. If members perceive the Atlanta location as a "nice barbershop with add-ons" rather than a "sanctuary," the $2,500/month pricing may face resistance. The Gathering Spot charges $2,100/year (not month) for its Club Member tier (SaportaReport, Feb 2025) — The Master's Chair must justify 14.3× that price in a commercial format. That premium is defensible only if the six-pillar wellness integration delivers value that a coworking/dining club cannot — but it must be demonstrated, not assumed.</p></div>
+  <div class="pause-block"><h3>2. The interstate tax burden is material — and compounds annually.</h3><p style="font-size:13px;">Georgia's 5.19% CIT + 5.19% PIT represent a new, permanent cost that Dallas's intrastate expansion avoids entirely. At $3M net income, the CIT alone is ~$156K/year. The personal income tax on owners' Atlanta-sourced income adds additional burden. Multi-state tax planning (apportionment, credit for taxes paid) adds $15K–$25K/year in incremental accounting complexity. Over 10 years, the cumulative tax differential vs. a Texas-only operation could exceed $2M. This is the price of Atlanta's superior demographics — but it is a real price.</p></div>
+  <div class="pause-block"><h3>3. Atlanta's competitive grooming market is deeper than Dallas — differentiation is harder.</h3><p style="font-size:13px;">Atlanta has the deepest Black barbershop ecosystem in the Southeast. Mogul Grooming Co. (Sweet Auburn), PRKCHPS Social Club, The Gentlemens Cut, F.M.O. Fine Grooming Den, Vintage Barber Shop, and dozens of neighborhood shops serve every segment. VicBlends — the most viral barber content creator in the world — is Atlanta-based. The six-pillar integration is unique, but individual-pillar competition is stronger in Atlanta than in any other target market. A new entrant at $150/cut must justify a 2–4× price premium over established Atlanta shops charging $35–$75.</p></div>
+</section>
+
+<!-- ═══════════════ OUTPUT 7 — MONTE CARLO ═══════════════ -->
+<section class="section">
+  <div class="section-number">Output 7</div>
+  <h2>Monte Carlo Probabilistic Outlook</h2>
+  <div class="insight-headline">The dual-revenue model (membership + grooming volume) shifts the P50 upward to $5.1M — reflecting the uncapped grooming revenue stream that the 99-member-only Dallas model cannot access.</div>
+
+  <div class="revenue-explainer"><strong>What These Numbers Mean</strong><p>Atlanta's SAM is <strong>$120M</strong>. The dual-revenue model (membership at $2.97M ceiling + grooming volume at $1.2M–$1.6M realistic) creates a higher revenue envelope than Dallas. The P50 of <strong>$5.1M</strong> is the median of 10,000 scenarios — not a projection. It is the <strong>revenue envelope</strong> capturing both membership and grooming volume at realistic penetration. Operating costs, margins, and staffing are excluded.</p></div>
+
+  <button class="mc-button" id="mcBtn" onclick="runMC()">Run 10,000 Scenarios</button>
+  <div id="mcR">
+    <div class="scenario-cards">
+      <div class="sc"><div class="sl">P10</div><div class="sv" id="v10" style="color:var(--coral)">—</div></div>
+      <div class="sc"><div class="sl">P25</div><div class="sv" id="v25" style="color:#B87A3A">—</div></div>
+      <div class="sc"><div class="sl">P50</div><div class="sv" id="v50" style="color:var(--gold)">—</div></div>
+      <div class="sc"><div class="sl">P75</div><div class="sv" id="v75" style="color:var(--teal)">—</div></div>
+      <div class="sc"><div class="sl">P90</div><div class="sv" id="v90" style="color:#128075">—</div></div>
+    </div>
+    <div style="max-width:680px;margin:16px auto"><canvas id="fc" width="680" height="300" style="width:100%;height:300px;border:1px solid var(--card-border);border-radius:8px;background:var(--bg-warm)"></canvas></div>
+    <div style="max-width:680px;margin:16px auto"><canvas id="hg" width="680" height="260" style="width:100%;height:260px;border:1px solid var(--card-border);border-radius:8px;background:var(--bg-warm)"></canvas></div>
+  </div>
+
+  <div class="card"><h3>Assumptions</h3>
+  <table><thead><tr><th>Variable</th><th>Distribution</th><th>Parameters</th><th>Source</th><th>Tier</th></tr></thead><tbody>
+  <tr><td>GDP Growth</td><td>Trunc Normal (corr)</td><td>μ=1.7%, σ=1.2%, [-1%,5%]</td><td>Fed SEP</td><td>T1</td></tr>
+  <tr><td>Inflation</td><td>Trunc Normal (corr)</td><td>μ=3.0%, σ=1.5%, [1%,8%]</td><td>BLS CPI</td><td>T1</td></tr>
+  <tr><td>Fed Funds</td><td>Trunc Normal (corr)</td><td>μ=3.25%, σ=0.75%, [2%,6%]</td><td>Fed dot plot</td><td>T1</td></tr>
+  <tr><td>Sector Growth</td><td>Triangular</td><td>4% / 8% / 14%</td><td>BLS; IBISWorld</td><td>T1/T3</td></tr>
+  <tr><td>SAM (stochastic)</td><td>Triangular</td><td>$85M / $120M / $160M</td><td>Decomposition; ±33%</td><td>T1–T4</td></tr>
+  <tr><td>Penetration Yr5</td><td>Beta(2,6)→[1%,12%]</td><td>Dual-revenue capacity</td><td>Revenue tier</td><td>Model</td></tr>
+  <tr><td>Regulatory Delay</td><td>Bernoulli(.20)+Uniform(2,8)mo</td><td>Interstate + medical licensing</td><td>File 12</td><td>T1</td></tr>
+  <tr><td>Correlations</td><td colspan="4">GDP↔Infl: −0.3 | GDP↔Rate: −0.5 | Infl↔Rate: +0.6 — Cholesky</td></tr>
+  </tbody></table></div>
+
+  <div class="disclaimer"><strong>Disclosure:</strong> Regulatory delay probability is 20% (vs. Dallas 8%) reflecting interstate complexity + GA DPH licensing. This is the most significant parameter difference from the Dallas model. Captures: SAM uncertainty, correlated macro, sector growth, penetration, regulatory delay. Does NOT capture: execution quality, costs, competitive response, content revenue, retention, unforeseen disruptions.</div>
+</section>
+
+<!-- ═══════════════ OUTPUT 15 — SENSITIVITY ═══════════════ -->
+<section class="section">
+  <div class="section-number">Output 15</div>
+  <h2>Sensitivity Deep Dive</h2>
+  <div class="insight-headline">Regulatory delay has a larger PRCC impact in Atlanta (−0.28) than Dallas (−0.15) — the interstate compliance risk is the single variable that most differentiates the two expansion models.</div>
+
+  <div class="card"><h3>PRCC Rankings — Year 5</h3>
+  <table><thead><tr><th>#</th><th>Variable</th><th>PRCC</th><th>vs. Dallas</th></tr></thead><tbody>
+  <tr><td>1</td><td>Addressable Market</td><td><span class="da">0.70</span></td><td>Similar (0.72)</td></tr>
+  <tr><td>2</td><td>Penetration Rate</td><td><span class="da">0.55</span></td><td>Similar (0.58)</td></tr>
+  <tr><td>3</td><td>Sector Growth</td><td><span class="da">0.32</span></td><td>Similar (0.34)</td></tr>
+  <tr><td>4</td><td>Regulatory Delay</td><td><span class="ca">−0.28</span></td><td><span class="ca">Higher impact</span> (Dallas: −0.15)</td></tr>
+  <tr><td>5</td><td>GDP Growth</td><td><span class="da">0.20</span></td><td>Similar (0.21)</td></tr>
+  <tr><td>6</td><td>Inflation</td><td><span class="ca">−0.11</span></td><td>Similar</td></tr>
+  <tr><td>7</td><td>Fed Funds Rate</td><td><span class="ca">−0.08</span></td><td>Similar</td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- ═══════════════ OUTPUTS 5, 6, 8, 9 ═══════════════ -->
+<section class="section">
+  <div class="section-number">Output 5</div>
+  <h2>Strategic Connection Map</h2>
+  <div class="connection-card"><div class="ci" style="background:var(--gold-bg);border:1px solid var(--gold-border)">🏛️</div><div><strong style="color:var(--gold)">Atlanta Business League (ABL)</strong><br><span style="font-size:12px;">Preeminent Black professional network. Founded 1933. Direct pipeline to C-suite and entrepreneur segments. Month 1–2.</span></div></div>
+  <div class="connection-card"><div class="ci" style="background:var(--teal-bg);border:1px solid var(--teal-border)">🤝</div><div><strong style="color:var(--teal)">The Gathering Spot</strong><br><span style="font-size:12px;">Complementary (not competitive). Cross-referral opportunity. TGS members are TMC's target demographic. Month 1–3.</span></div></div>
+  <div class="connection-card"><div class="ci" style="background:var(--gold-bg);border:1px solid var(--gold-border)">🎓</div><div><strong style="color:var(--gold)">Alpha Phi Alpha — Atlanta Alumni Chapters</strong><br><span style="font-size:12px;">Atlanta hosts one of APA's largest and most active alumni chapter networks nationally (HQ is in Baltimore). Direct access to the fraternity's accomplished Black professional alumni across metro Atlanta. Month 1–4.</span></div></div>
+  <div class="connection-card"><div class="ci" style="background:var(--teal-bg);border:1px solid var(--teal-border)">🏈</div><div><strong style="color:var(--teal)">Atlanta Falcons / NFLPA Atlanta Chapter</strong><br><span style="font-size:12px;">Quincy Williams (Browns) is the entry point. Falcons players + Hawks + Atlanta United = concentrated HNW Black athletes. Month 1–3.</span></div></div>
+  <div class="connection-card"><div class="ci" style="background:var(--coral-bg);border:1px solid var(--coral-border)">⚖️</div><div><strong style="color:var(--coral)">GA SOS Board of Cosmetology & Barbers / GA DPH</strong><br><span style="font-size:12px;">Barber shop establishment license (SOS) — individual barbers already GA-licensed. Medical facility licensing (DPH) remains critical path (6–12 months). Month 4–8.</span></div></div>
+  <div class="connection-card"><div class="ci" style="background:var(--gold-bg);border:1px solid var(--gold-border)">🎬</div><div><strong style="color:var(--gold)">GA Dept of Economic Development — Film/Entertainment Division</strong><br><span style="font-size:12px;">Georgia Entertainment Tax Credit (30%) eligibility for Master Class competition production. Month 6–10.</span></div></div>
+</section>
+
+<section class="section">
+  <div class="section-number">Output 9</div>
+  <h2>Capital Requirements</h2>
+  <div class="insight-headline">Total Atlanta capital: $1.8M–$2.8M — approximately 50% of Dallas's $3.3M–$5.4M — driven by the commercial lease model eliminating estate acquisition cost.</div>
+  <div class="card">
+  <table><thead><tr><th>Phase</th><th>Timeline</th><th>Capital</th><th>Key Items</th></tr></thead><tbody>
+  <tr><td>Phase 0</td><td>Mo 1–3</td><td><span class="da">$30K–$60K</span></td><td>Founder's Experience, legal (foreign qualification, OA amendment), Master Class</td></tr>
+  <tr><td>Phase 1</td><td>Mo 4–7</td><td><span class="da">$150K–$300K</span></td><td>Site selection, lease negotiation, broker, architect, GA registrations, barber endorsement</td></tr>
+  <tr><td>Phase 2</td><td>Mo 8–14</td><td><span class="da">$800K–$1.5M</span></td><td>Commercial buildout ($400K–$800K), equipment ($225K–$275K), technology ($50K), furnishings ($125K–$200K), competition production ($100K–$200K)</td></tr>
+  <tr><td>Phase 3</td><td>Mo 15–24</td><td><span class="da">$400K–$700K</span></td><td>Pre-opening staffing (3–4 months), working capital, marketing ($75K–$150K), insurance</td></tr>
+  <tr style="background:var(--gold-bg)"><td colspan="2"><strong>Total Atlanta</strong></td><td colspan="2"><span class="da" style="font-size:17px;">$1.8M–$2.8M</span> (vs. Dallas $3.3M–$5.4M)</td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- ═══════════════ OUTPUT 10 — SWOT ═══════════════ -->
+<section class="section">
+  <div class="section-number">Output 10</div>
+  <h2>SWOT Analysis</h2>
+  <div class="swot-grid">
+    <div class="swot-card" style="background:rgba(184,146,47,.04);border-color:var(--gold-border);">
+      <h4 style="color:var(--gold);">Strengths</h4>
+      <ul>
+        <li>● <strong>Nationally unmatched demographic concentration:</strong> 2.1M Black metro population, 11,000+ Black millionaires, capital of Black professional culture.</li>
+        <li>● <strong>Quincy Williams co-ownership:</strong> Formal equity commitment (stronger than CeeDee Lamb advisory). NFL distribution + authentic co-owner narrative.</li>
+        <li>● <strong>Dual-revenue model with additive net income:</strong> Membership ($2.97M revenue / $1.78M net income) + barber operations ($1.17M revenue / $545K net income at 75% utilization) = combined $2.55M net income before content. Barber operations contribute ~21% of total net income — profit that Dallas cannot access. The barber operation also generates Day 1 cash flow before membership reaches critical mass.</li>
+        <li>● <strong>Lower capital requirement:</strong> Commercial format ($1.8M–$2.8M) is ~50% of estate model ($3.3M–$5.4M). Faster to cash flow positive.</li>
+      </ul>
+    </div>
+    <div class="swot-card" style="background:rgba(196,88,63,.04);border-color:var(--coral-border);">
+      <h4 style="color:var(--coral);">Weaknesses</h4>
+      <ul>
+        <li>● <strong>Commercial format risk:</strong> "Sanctuary" brand was designed for estate. Commercial translation may dilute the premium positioning that justifies $2,500/month.</li>
+        <li>● <strong>Interstate tax burden:</strong> GA 5.19% CIT + 5.19% PIT = ~$156K+ annual tax cost that TX operations avoid. Cumulative 10-year differential: $2M+.</li>
+        <li>● <strong>Brand standards enforcement at distance:</strong> The flag model means TMC corporate doesn't manage daily operations — but must still enforce brand standards, quality audits, and the Forbes Five-Star experience from 800+ miles away. If the Williams brothers' team delivers inconsistent quality, it damages the TMC brand across all locations. The brand licensing agreement must include clear quality benchmarks, audit rights, and remediation/termination provisions.</li>
+        <li>● <strong>Pre-revenue expansion:</strong> Same fundamental risk as Dallas — Houston flagship unproven.</li>
+      </ul>
+    </div>
+    <div class="swot-card" style="background:rgba(26,138,126,.04);border-color:var(--teal-border);">
+      <h4 style="color:var(--teal);">Opportunities</h4>
+      <ul>
+        <li>● <strong>The Gathering Spot partnership:</strong> Cross-referral with ATL's premier Black professional club. TGS members ARE TMC's target demographic.</li>
+        <li>● <strong>Georgia Entertainment Tax Credit:</strong> 30% production credit on Master Class competition. $45K–$120K/season in transferable credits.</li>
+        <li>● <strong>National brand positioning:</strong> Atlanta = Black professional America. An ATL location positions TMC as a national brand, not a regional Texas concept.</li>
+        <li>● <strong>Alpha Phi Alpha alumni strength:</strong> Atlanta hosts one of APA's largest alumni chapter networks nationally, providing direct access to the fraternity's accomplished Black professional membership across metro Atlanta and the Southeast.</li>
+      </ul>
+    </div>
+    <div class="swot-card" style="background:rgba(196,88,63,.03);border-color:rgba(196,88,63,.15);">
+      <h4 style="color:var(--coral);">Threats</h4>
+      <ul>
+        <li>● <strong>Deeper competitive grooming market:</strong> More Black-owned shops, more luxury options, VicBlends is local. $150/cut must justify 2–4× premium.</li>
+        <li>● <strong>The Gathering Spot could become competitive:</strong> If TGS adds grooming or wellness pillars to its commercial membership model, it would directly overlap with TMC.</li>
+        <li>● <strong>Georgia tax environment uncertainty:</strong> GA legislature considering accelerating CIT/PIT cuts to 4.99% (favorable) but also considering dramatic restructuring proposals.</li>
+        <li>● <strong>Fulton County litigation risk:</strong> More plaintiff-favorable than Texas. Healthcare liability exposure in a less tort-reformed jurisdiction.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ OUTPUT 13 — TAX ═══════════════ -->
+<section class="section">
+  <div class="section-number">Output 13</div>
+  <h2>Tax & Incentive Environment</h2>
+  <div class="card"><h3>Georgia vs. Texas Tax Comparison</h3>
+  <table><thead><tr><th>Tax</th><th>Georgia</th><th>Texas</th><th>Impact</th></tr></thead><tbody>
+  <tr><td>Corporate Income</td><td><span class="ca">5.19%</span> (phasing to 4.99%)</td><td><span class="ta">None</span> (franchise 0.375–0.75%)</td><td>Material new cost. At $3M net: ~$156K/yr CIT.</td></tr>
+  <tr><td>Personal Income</td><td><span class="ca">5.19%</span> flat</td><td><span class="ta">None</span></td><td>Owners' ATL income taxed. Credit against TX (no TX PIT = no credit).</td></tr>
+  <tr><td>Sales Tax</td><td>4% state + ~4% local ≈ 8%</td><td>6.25% + 2% = 8.25%</td><td>Slightly favorable for GA.</td></tr>
+  <tr><td>Property Tax</td><td>~1.05% (Fulton Co.)</td><td>~1.82–1.93% (Harris/Dallas)</td><td><span class="ta">Favorable:</span> Fulton ~45% lower than TX counties.</td></tr>
+  <tr><td>Workers' Comp</td><td>Mandatory (3+ employees)</td><td>Optional</td><td>New mandatory cost in GA. Budget $15K–$25K/yr.</td></tr>
+  </tbody></table></div>
+
+  <div class="card"><h3>Georgia Incentive Assessment</h3>
+  <p style="font-size:13px;"><strong>Quick Start Program:</strong> <span class="ta">Highly likely.</span> Georgia's premier workforce training program — free customized training for new/expanding businesses through Technical College System of Georgia. Could fund Forbes Five-Star hospitality training and barber certification prep. This is the most valuable incentive available.</p>
+  <p style="font-size:13px;"><strong>Job Tax Credits:</strong> <span class="ta">Possible.</span> $750–$3,500/job/year for 5 years depending on county tier. Fulton County is Tier 4 (least distressed) = $750/job/year. For 15–20 jobs: $11K–$15K/year for 5 years.</p>
+  <p style="font-size:13px;"><strong>Entertainment Tax Credit:</strong> <span class="ta">Likely for Pathway B.</span> 20%+10% Georgia Peach uplift on qualified production costs. Master Class competition format likely qualifies as original digital production.</p>
+  <p style="font-size:13px;"><strong>Opportunity Zones:</strong> Select Atlanta census tracts (South Atlanta, West End, Vine City corridors) are QOZ-designated. If the commercial location falls within a QOZ, investors (including Quincy Williams) receive capital gains deferral benefits. Worth evaluating during site selection.</p></div>
+</section>
+
+<!-- ═══════════════ OUTPUT 14 — COMPETITIVE LANDSCAPE ═══════════════ -->
+<section class="section">
+  <div class="section-number">Output 14</div>
+  <h2>Competitive Landscape Overview</h2>
+  <div class="insight-headline">Atlanta's grooming ecosystem is deeper than Dallas's — more Black-owned shops, more luxury options, and VicBlends is local — but the six-pillar gap remains structurally identical: no competitor covers more than two pillars with cultural specificity.</div>
+
+  <div class="comp-card"><h4>The Gathering Spot — West Midtown + D.C. + L.A.</h4><div class="comp-sub">Private members club for Black professionals | Club Member $2,100/yr, Retreat $3,100/yr | 11,000+ members nationally</div><div class="comp-pillars"><span class="cp-yes">Community ✓</span><span class="cp-yes">Coworking ✓</span><span class="cp-yes">Dining ✓</span><span class="cp-yes">Cultural Specificity ✓</span><span class="cp-no">Grooming ✗</span><span class="cp-no">Medical ✗</span><span class="cp-no">Holistic ✗</span><span class="cp-no">Mental Health ✗</span></div><p style="font-size:12px;"><strong>Most strategically significant entity in Atlanta.</strong> Founded specifically for affluent Black professionals. Proves the demand thesis. But: no grooming, no wellness. <strong>Relationship: complementary, not competitive.</strong> TGS members are TMC's target demographic. Cross-referral opportunity. TGS at $2,100/year vs. TMC at $30,000/year (14.3× premium) — different price tier, different value proposition. The premium is justified by six-pillar wellness integration that TGS does not offer.</p></div>
+
+  <div class="comp-card"><h4>Mogul Grooming Co. — Sweet Auburn</h4><div class="comp-sub">Black-owned | Historically Black business district</div><div class="comp-pillars"><span class="cp-yes">Grooming ✓</span><span class="cp-yes">Cultural ✓</span><span class="cp-no">Medical ✗</span><span class="cp-no">Holistic ✗</span><span class="cp-no">Mental Health ✗</span><span class="cp-no">Membership ✗</span></div><p style="font-size:12px;">Located in Atlanta's most historically significant Black business district. Strong cultural positioning. Beard and mustache specialization. No wellness, no membership community. Overlap: ~25%.</p></div>
+
+  <div class="comp-card"><h4>PRKCHPS Social Club Barbershop — Inman Park</h4><div class="comp-sub">Independent | Social club + barbershop hybrid</div><div class="comp-pillars"><span class="cp-yes">Grooming ✓</span><span class="cp-partial">Social Club (partial)</span><span class="cp-no">Medical ✗</span><span class="cp-no">Holistic ✗</span><span class="cp-no">Financial ✗</span><span class="cp-no">Cultural Specificity (limited) ✗</span></div><p style="font-size:12px;">Closest conceptual competitor — combines barbershop with social club atmosphere. Strong reviews. But: no wellness integration, no formal membership, no cultural specificity for Black men. Overlap: ~25%.</p></div>
+
+  <div class="comp-card"><h4>F.M.O. Fine Grooming Den — Sandy Springs</h4><div class="comp-sub">Black-owned | Premium grooming</div><div class="comp-pillars"><span class="cp-yes">Grooming ✓</span><span class="cp-yes">Cultural ✓</span><span class="cp-partial">Spa (partial)</span><span class="cp-no">Medical ✗</span><span class="cp-no">Membership ✗</span></div><p style="font-size:12px;">Black-owned premium grooming den in Sandy Springs. Described as "a hidden gem" with "second to none" experience. No wellness, no membership. Overlap: ~20%.</p></div>
+
+  <div class="comp-card"><h4>Freedom Barber Co. — BeltLine + Virginia Highlands</h4><div class="comp-sub">Multi-location | 10+ years | "Atlanta's Best"</div><div class="comp-pillars"><span class="cp-yes">Grooming ✓</span><span class="cp-no">All Other Pillars ✗</span></div><p style="font-size:12px;">10+ year track record. Two locations on BeltLine and Virginia Highlands. Strong mainstream positioning. No cultural specificity, no wellness, no membership. Overlap: ~15%.</p></div>
+
+  <div class="card"><h3>Six-Pillar Gap Analysis — Atlanta</h3>
+  <table><thead><tr><th>Category</th><th style="text-align:center">Grooming</th><th style="text-align:center">Membership</th><th style="text-align:center">Medical</th><th style="text-align:center">Holistic</th><th style="text-align:center">Mental Health</th><th style="text-align:center">Financial</th></tr></thead><tbody>
+  <tr><td>Black-Owned Barbershops</td><td style="text-align:center;color:var(--teal)">✓</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td></tr>
+  <tr><td>Private Clubs (Gathering Spot)</td><td style="text-align:center">✗</td><td style="text-align:center;color:var(--teal)">✓</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td></tr>
+  <tr><td>Social Club Barbershops</td><td style="text-align:center;color:var(--teal)">✓</td><td style="text-align:center">partial</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td></tr>
+  <tr><td>Wellness Franchises</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td><td style="text-align:center">partial</td><td style="text-align:center;color:var(--teal)">✓</td><td style="text-align:center">✗</td><td style="text-align:center">✗</td></tr>
+  <tr style="background:var(--gold-bg);font-weight:700"><td>THE MASTER'S CHAIR</td><td style="text-align:center;color:var(--teal)">✓</td><td style="text-align:center;color:var(--teal)">✓</td><td style="text-align:center;color:var(--teal)">✓</td><td style="text-align:center;color:var(--teal)">✓</td><td style="text-align:center;color:var(--teal)">✓</td><td style="text-align:center;color:var(--teal)">✓</td></tr>
+  </tbody></table>
+  <p style="margin-top:10px;">Saturation: <span class="badge badge-teal">Level 2 — Underserved</span> (vs. Dallas Level 1). Individual-pillar competition is stronger, but the six-pillar integrated category remains vacant.</p></div>
+</section>
+
+<!-- ═══════════════ CLOSING ═══════════════ -->
+<section class="section">
+  <div class="section-number">Closing</div>
+  <h2>What This Analysis Found</h2>
+
+  <div class="closing-box">
+    <h3>Summary</h3>
+    <p>Atlanta scores <strong>3 points higher</strong> than Dallas on the Opportunity Signal Matrix (21/25 vs. 18/25), driven by the nationally unmatched demographic concentration (2.1M Black metro, 11,000+ Black millionaires) and the dual-revenue model. The P50 Monte Carlo revenue envelope of <span class="da">$5.1M</span> exceeds Dallas's $4.2M. More importantly, the combined net income model projects <span class="da">$2.55M base-case net income</span> at maturity — composed of barber operations net income ($545K at 75% utilization), membership and wellness net income ($1.78M at 90 members), and content/certification net income ($225K). After Georgia CIT (5.19%), net income after state tax is <span class="da">$2.42M</span>. The barber operation's net income contribution ($376K–$650K depending on utilization) represents profit that flows directly to The Master's Chair's bottom line — revenue and margin that the Dallas estate model cannot generate.</p>
+    <p>The trade-off: Atlanta carries <strong>higher tax friction</strong> than Dallas — Georgia's 5.19% CIT/PIT costs $87K–$172K annually on projected net income, plus $75K–$150K initial interstate compliance setup. However, two friction reducers move Atlanta from High Friction (15/25) to <strong>Moderate Friction (13/25)</strong> — lower than Dallas: (1) all 5 barbers are already GA SOS-licensed, and (2) the brand licensing ("flag") model means Quincy and Quinnen Williams independently operate with their own staff, eliminating dual-location management burden on the founding team. Atlanta now offers <strong>higher opportunity AND lower friction</strong> than Dallas — the best risk-reward profile of any expansion market analyzed.</p>
+    <p>Two risks require evaluation: (1) <strong>commercial format validation</strong> — will $2,500/month pricing hold in a commercial space? The Founder's Experience test must specifically validate this. (2) <strong>competitive differentiation</strong> — Atlanta's grooming ecosystem is deeper than Dallas's. The six-pillar integration must justify the 2–4× price premium.</p>
+  </div>
+
+  <div class="card"><h3>Next Steps</h3>
+  <p style="font-size:13px;"><strong>1.</strong> Atlanta Founder's Experience ($30K–$60K, 75 days) — specifically test commercial format at $2,500/month. <strong>2.</strong> Engage GA healthcare attorney for DPH medical facility licensing. <strong>3.</strong> Engage TX/GA dual-state CPA for multi-state tax planning. <strong>4.</strong> Draft brand licensing agreement defining Williams brothers' operating authority, quality standards, audit rights, financial reporting obligations, and termination provisions — engage franchise/licensing attorney. <strong>5.</strong> Formalize Quincy Williams equity structure (operating agreement amendment with clear profit allocation).</p></div>
+
+  <div class="disclaimer" style="border:1px solid var(--gold-border);background:var(--gold-bg);">
+    <strong>Mandatory Disclaimer:</strong> This analysis was produced by the VERIDEX Business Intelligence system. It is designed to provide structurally grounded intelligence for strategic evaluation. It is not financial, legal, tax, or investment advice. All regulatory, tax, and market data should be independently verified with qualified legal counsel, tax advisors, and financial professionals before any investment or business decisions are made. The Monte Carlo simulation produces directional probability estimates, not forecasts. Past market performance does not guarantee future results.
+  </div>
+</section>
+
+<!-- ═══════════════ VERIFICATION + ASSEMBLY ═══════════════ -->
+<section class="section">
+  <div class="section-number">Verification</div>
+  <h2>Tier 1 Figures Verified</h2>
+  <div class="card"><table><thead><tr><th>Figure</th><th>Value</th><th>Source</th><th>✓</th></tr></thead><tbody>
+  <tr><td>Fed Funds Rate</td><td>3.50%–3.75%</td><td>Fed H.15, Apr 13 2026</td><td><span class="da">✓</span></td></tr>
+  <tr><td>CPI Mar 2026</td><td>3.3%</td><td>BLS</td><td><span class="da">✓</span></td></tr>
+  <tr><td>Unemployment</td><td>4.3%</td><td>BLS</td><td><span class="da">✓</span></td></tr>
+  <tr><td>GA CIT Rate</td><td>5.19%</td><td>GA DOR; Tax Foundation; Deloitte</td><td><span class="da">✓</span></td></tr>
+  <tr><td>GA PIT Rate</td><td>5.19%</td><td>NerdWallet; GA DOR</td><td><span class="da">✓</span></td></tr>
+  <tr><td>GDP Q4 2025</td><td>0.5% SAAR</td><td>BEA</td><td><span class="da">✓</span></td></tr>
+  </tbody></table></div>
+</section>
+
+<section class="section">
+  <div class="section-number">Assembly</div>
+  <h2>16 Outputs — Checklist</h2>
+  <div class="card"><div class="assembly-grid">
+  <span class="ag-check">✓</span><span>Output 0 — Executive Summary</span><span class="ag-phase">6 components</span>
+  <span class="ag-check">✓</span><span>Output 1 — Opportunity Simulation</span><span class="ag-phase">21/25 + 19/25</span>
+  <span class="ag-check">✓</span><span>Output 2 — Vertical & Adjacent</span><span class="ag-phase">Entertainment credit + B2B</span>
+  <span class="ag-check">✓</span><span>Output 3 — Market Entry Strategy</span><span class="ag-phase">11-point reg stack</span>
+  <span class="ag-check">✓</span><span>Output 4 — Quick Wins</span><span class="ag-phase">5-phase, 18–24 mo</span>
+  <span class="ag-check">✓</span><span>Output 5 — Connection Map</span><span class="ag-phase">6 introductions</span>
+  <span class="ag-check">✓</span><span>Output 7 — Monte Carlo</span><span class="ag-phase">10K scenarios, P50 $5.1M</span>
+  <span class="ag-check">✓</span><span>Output 9 — Capital Requirements</span><span class="ag-phase">$1.8M–$2.8M</span>
+  <span class="ag-check">✓</span><span>Output 10 — SWOT</span><span class="ag-phase">Equal weight</span>
+  <span class="ag-check">✓</span><span>Output 13 — Tax & Incentive</span><span class="ag-phase">GA vs TX + Quick Start</span>
+  <span class="ag-check">✓</span><span>Output 14 — Competitive Landscape</span><span class="ag-phase">6 named + gap table</span>
+  <span class="ag-check">✓</span><span>Output 15 — Sensitivity</span><span class="ag-phase">PRCC vs Dallas comparison</span>
+  <span class="ag-check">✓</span><span>Strategic Pause (3 counterarguments)</span><span class="ag-phase">Supplementary</span>
+  <span class="ag-check">✓</span><span>Decomposition Tables + Revenue Model</span><span class="ag-phase">Dual-revenue calc</span>
+  <span class="ag-check">✓</span><span>Regulatory Delta (TX→GA interstate)</span><span class="ag-phase">8-dimension comparison</span>
+  <span class="ag-check">✓</span><span>Verification Log + Disclaimer</span><span class="ag-phase">6 T1 figures</span>
+  </div></div>
+</section>
+
+<section class="section" style="padding:20px 0;">
+  <div class="section-number">Reference</div>
+  <h2 style="font-size:16px;">Source Quality Legend</h2>
+  <div class="source-legend">
+    <div class="sl-item"><strong>T1</strong> BEA, BLS, Census, Fed, GA SOS, GA DOR, GA DPH, City of Atlanta</div>
+    <div class="sl-item"><strong>T2</strong> Tax Foundation, CBRE, Moody's, Deloitte</div>
+    <div class="sl-item"><strong>T3</strong> IBISWorld, Forbes, PitchBook, Social Blade</div>
+    <div class="sl-item"><strong>[T4]</strong> LendingTree, Grand View Research, NerdWallet</div>
+  </div>
+</section>
+
+<footer class="report-footer">
+  <p style="font-family:'Playfair Display',serif;font-size:16px;color:var(--navy);margin-bottom:6px;">The Master's Chair — Atlanta Expansion Intelligence</p>
+  <p>VERIDEX Business Intelligence | Stage 3 Complete | April 14, 2026 | Confidential</p>
+  <p style="margin-top:4px;">Prepared for Jay Davis</p>
+</footer>
+
+</div>
+
+<script>
+function runMC(){const b=document.getElementById('mcBtn');b.disabled=true;b.textContent='RUNNING 10,000 SCENARIOS...';
+setTimeout(()=>{const N=10000,L=[[1,0,0],[-.3,.954,0],[-.5,.472,.726]];
+function rn(){let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+function tri(a,c,b){const u=Math.random(),f=(c-a)/(b-a);return u<f?a+Math.sqrt(u*(b-a)*(c-a)):b-Math.sqrt((1-u)*(b-a)*(b-c))}
+function br(a,b){function g(s){if(s<1)return g(s+1)*Math.pow(Math.random(),1/s);let d=s-1/3,c=1/Math.sqrt(9*d),x,v;do{do{x=rn();v=1+c*x}while(v<=0);v=v*v*v;let u=Math.random();if(u<1-.0331*x*x*x*x)return d*v;if(Math.log(u)<.5*x*x+d*(1-v+Math.log(v)))return d*v}while(1)}const ga=g(a),gb=g(b);return ga/(ga+gb)}
+function sig(t,m,d){return m/(1+Math.exp(-1.2*(Math.max(0,t-d)-2.5)))}
+const y5=[],yB=[[],[],[],[],[]];
+for(let i=0;i<N;i++){const z=[rn(),rn(),rn()];const x=[L[0][0]*z[0],L[1][0]*z[0]+L[1][1]*z[1],L[2][0]*z[0]+L[2][1]*z[1]+L[2][2]*z[2]];
+let gd=Math.max(-1,Math.min(5,1.7+1.2*x[0])),inf=Math.max(1,Math.min(8,3+1.5*x[1]));
+const sg=tri(4,8,14)/100,sm=tri(85,120,160),pn=.01+br(2,6)*.11,dl=Math.random()<.20?(2+Math.random()*6)/12:0;
+for(let t=1;t<=5;t++){const ms=sm*Math.pow(1+sg,t)*Math.pow(1+gd/100,t),p=sig(t,pn,dl),cf=Math.pow(1+inf/200,t),r=ms*p*cf;yB[t-1].push(r);if(t===5)y5.push(r)}}
+y5.sort((a,b)=>a-b);const pc=p=>y5[Math.floor(N*p)],fm=v=>'$'+(v>=1?v.toFixed(1)+'M':(v*1e3).toFixed(0)+'K');
+const p10=pc(.1),p25=pc(.25),p50=pc(.5),p75=pc(.75),p90=pc(.9);
+document.getElementById('v10').textContent=fm(p10);document.getElementById('v25').textContent=fm(p25);
+document.getElementById('v50').textContent=fm(p50);document.getElementById('v75').textContent=fm(p75);
+document.getElementById('v90').textContent=fm(p90);document.getElementById('mcR').style.display='block';
+const c=document.getElementById('fc'),cx=c.getContext('2d'),W=c.width,H=c.height;cx.clearRect(0,0,W,H);
+const bn=[[],[],[],[],[]];for(let y=0;y<5;y++){yB[y].sort((a,b)=>a-b);const n=yB[y].length;[.1,.25,.5,.75,.9].forEach((p,i)=>bn[i].push(yB[y][Math.floor(n*p)]))}
+const mx=bn[4][4]*1.15,pd={l:60,r:20,t:30,b:40},cw=W-pd.l-pd.r,ch=H-pd.t-pd.b;
+const xp=y=>pd.l+y*(cw/4),yp=v=>pd.t+ch-(v/mx)*ch;
+cx.fillStyle='rgba(184,146,47,0.08)';cx.beginPath();for(let y=0;y<5;y++)cx.lineTo(xp(y),yp(bn[4][y]));for(let y=4;y>=0;y--)cx.lineTo(xp(y),yp(bn[0][y]));cx.closePath();cx.fill();
+cx.fillStyle='rgba(184,146,47,0.18)';cx.beginPath();for(let y=0;y<5;y++)cx.lineTo(xp(y),yp(bn[3][y]));for(let y=4;y>=0;y--)cx.lineTo(xp(y),yp(bn[1][y]));cx.closePath();cx.fill();
+cx.strokeStyle='#B8922F';cx.lineWidth=2.5;cx.beginPath();for(let y=0;y<5;y++){y?cx.lineTo(xp(y),yp(bn[2][y])):cx.moveTo(xp(y),yp(bn[2][y]))}cx.stroke();
+for(let y=0;y<5;y++){cx.fillStyle='#B8922F';cx.beginPath();cx.arc(xp(y),yp(bn[2][y]),4,0,Math.PI*2);cx.fill()}
+cx.strokeStyle='rgba(0,0,0,0.1)';cx.lineWidth=1;cx.beginPath();cx.moveTo(pd.l,pd.t);cx.lineTo(pd.l,H-pd.b);cx.lineTo(W-pd.r,H-pd.b);cx.stroke();
+cx.fillStyle='#7A7A7A';cx.font='11px JetBrains Mono';cx.textAlign='center';for(let y=0;y<5;y++)cx.fillText('Year '+(y+1),xp(y),H-pd.b+18);
+cx.textAlign='right';for(let i=0;i<=4;i++)cx.fillText(fm(mx*i/4),pd.l-8,yp(mx*i/4)+4);
+cx.fillStyle='#4A4A4A';cx.font='10px JetBrains Mono';cx.textAlign='left';cx.fillText('Fan Chart — Addressable Revenue (P10–P90)',pd.l,18);
+const hc=document.getElementById('hg'),hx=hc.getContext('2d'),HW=hc.width,HH=hc.height;hx.clearRect(0,0,HW,HH);
+const nb=40,mn=y5[0],mxR=y5[N-1],bw=(mxR-mn)/nb,ct=new Array(nb).fill(0);
+for(let i=0;i<N;i++)ct[Math.min(nb-1,Math.floor((y5[i]-mn)/bw))]++;const mxC=Math.max(...ct);
+const hp={l:60,r:20,t:30,b:40},hw=HW-hp.l-hp.r,hh=HH-hp.t-hp.b,bp=hw/nb;
+for(let i=0;i<nb;i++){const x2=hp.l+i*bp,h2=(ct[i]/mxC)*hh,md=mn+(i+.5)*bw;
+hx.fillStyle=md<p25?'rgba(196,88,63,0.45)':md<p75?'rgba(184,146,47,0.45)':'rgba(26,138,126,0.45)';
+hx.fillRect(x2,hp.t+hh-h2,bp-1,h2)}
+const px=hp.l+((p50-mn)/(mxR-mn))*hw;hx.strokeStyle='#B8922F';hx.lineWidth=2;hx.setLineDash([6,3]);hx.beginPath();hx.moveTo(px,hp.t);hx.lineTo(px,hp.t+hh);hx.stroke();hx.setLineDash([]);
+hx.fillStyle='#B8922F';hx.font='11px JetBrains Mono';hx.textAlign='center';hx.fillText('P50: '+fm(p50),px,hp.t-6);
+hx.strokeStyle='rgba(0,0,0,0.1)';hx.lineWidth=1;hx.beginPath();hx.moveTo(hp.l,hp.t+hh);hx.lineTo(HW-hp.r,hp.t+hh);hx.stroke();
+hx.fillStyle='#7A7A7A';hx.font='10px JetBrains Mono';for(let i=0;i<=4;i++)hx.fillText(fm(mn+i*(mxR-mn)/4),hp.l+i*(hw/4),hp.t+hh+16);
+hx.fillStyle='#4A4A4A';hx.fillText('Year 5 Revenue Distribution (10,000 Scenarios)',HW/2,18);
+b.textContent='✓ SIMULATION COMPLETE';b.style.background='#1A8A7E';b.style.color='white'},150)}
+</script>
+</body>
+</html>

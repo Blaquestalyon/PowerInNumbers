@@ -1,23 +1,14 @@
 {
   "name": "power-in-numbers",
-  "version": "1.0.0",
-  "description": "Power In Numbers — public-facing site. A strategic consultancy practiced as decision cartography.",
+  "version": "1.1.0",
+  "description": "Power In Numbers — pre-built static deploy. Built artifact only — no Astro build step.",
   "private": true,
-  "type": "module",
   "engines": { "node": ">=20.0.0" },
   "scripts": {
-    "dev": "astro dev --host 0.0.0.0",
-    "start": "serve -s dist -l $PORT",
-    "build": "astro check && astro build",
-    "preview": "astro preview --host 0.0.0.0",
-    "astro": "astro"
+    "start": "serve dist -l ${PORT:-3000}",
+    "build": "echo 'Pre-built — skipping build step'"
   },
   "dependencies": {
-    "astro": "^5.0.0",
     "serve": "^14.2.0"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.0",
-    "typescript": "^5.4.0"
   }
 }

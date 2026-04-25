@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sovereign Mirror — Ghana ABFA 2026–2028 | Ministry of Finance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0C1622;
+  --bg2: #111E2D;
+  --surface: #162437;
+  --card: #1A2D42;
+  --border: #243A52;
+  --border2: #2E4A63;
+  --gold: #C9961A;
+  --gold-light: #E8B84B;
+  --gold-dim: rgba(201,150,26,0.15);
+  --text: #DDE4ED;
+  --text2: #9FB3C8;
+  --text3: #617D96;
+  --white: #F0F4F8;
+  --t1: #27AE60;
+  --t1-bg: rgba(39,174,96,0.12);
+  --t2: #E67E22;
+  --t2-bg: rgba(230,126,34,0.12);
+  --t4: #E74C3C;
+  --t4-bg: rgba(231,76,60,0.12);
+  --risk-high: #E74C3C;
+  --risk-mid: #E67E22;
+  --risk-low: #27AE60;
+  --sidebar-w: 260px;
+  --header-h: 56px;
+  --radius: 6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── TOP HEADER ─────────────────────────────────── */
+.header {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 24px 0 calc(var(--sidebar-w) + 24px);
+  z-index: 100;
+  gap: 16px;
+}
+.header-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 1rem;
+  color: var(--text2);
+  letter-spacing: 0.02em;
+}
+.header-title span { color: var(--gold); font-weight: 600; }
+.header-meta {
+  margin-left: auto;
+  display: flex; gap: 20px; align-items: center;
+}
+.badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.badge-tier1 { background: var(--t1-bg); color: var(--t1); border: 1px solid rgba(39,174,96,0.3); }
+.badge-pass { background: var(--t1-bg); color: var(--t1); border: 1px solid rgba(39,174,96,0.3); }
+.badge-gold { background: var(--gold-dim); color: var(--gold-light); border: 1px solid rgba(201,150,26,0.3); }
+.badge-conf { background: rgba(231,76,60,0.12); color: #E74C3C; border: 1px solid rgba(231,76,60,0.3); }
+
+/* ─── SIDEBAR ─────────────────────────────────────── */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 90;
+  display: flex; flex-direction: column;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+.sidebar-logo {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo-top {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.sidebar-logo-main {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--gold-light);
+  line-height: 1.3;
+}
+.sidebar-logo-sub {
+  font-size: 0.7rem;
+  color: var(--text3);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.nav-section { padding: 8px 0; }
+.nav-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--text3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 20px 4px;
+}
+.nav-item {
+  display: block;
+  padding: 7px 20px;
+  font-size: 0.78rem;
+  color: var(--text2);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+  line-height: 1.4;
+  user-select: none;
+}
+.nav-item:hover { color: var(--white); background: rgba(255,255,255,0.03); }
+.nav-item.active { color: var(--gold-light); border-left-color: var(--gold); background: var(--gold-dim); }
+.nav-item .nav-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text3);
+  margin-right: 6px;
+}
+.nav-divider { border-top: 1px solid var(--border); margin: 8px 20px; }
+.nav-item.confidential { color: #E87070; }
+.nav-item.confidential:hover { color: #F5A0A0; }
+.nav-item.confidential .nav-num { color: #C04040; }
+
+/* ─── MAIN CONTENT ───────────────────────────────── */
+.main {
+  margin-left: var(--sidebar-w);
+  padding-top: var(--header-h);
+  min-height: 100vh;
+}
+.content-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 40px 80px;
+}
+
+/* ─── SECTIONS ───────────────────────────────────── */
+.section {
+  margin-bottom: 64px;
+  scroll-margin-top: calc(var(--header-h) + 20px);
+}
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+.section-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.4rem;
+  color: var(--white);
+  font-weight: 400;
+  line-height: 1.2;
+}
+.section-subtitle {
+  font-size: 0.8rem;
+  color: var(--text3);
+  margin-top: 6px;
+}
+
+/* ─── CORE FINDING ───────────────────────────────── */
+.core-finding {
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,150,26,0.3);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+.core-finding-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.core-finding p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+.core-finding strong { color: var(--white); }
+.highlight-stat {
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85em;
+  color: var(--gold-light);
+}
+
+/* ─── OPTION CARDS ───────────────────────────────── */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.option-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+.option-card:hover { border-color: var(--border2); }
+.option-card.tier1 { border-top: 3px solid var(--t1); }
+.option-card.tier2 { border-top: 3px solid var(--t2); }
+.option-card.tier4 { border-top: 3px solid var(--t4); }
+
+.opt-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.opt-name {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.15rem;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+.opt-scores {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.opt-score-block { flex: 1; }
+.opt-score-label {
+  font-size: 0.65rem;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.opt-score-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+.tier1 .impact-val { color: var(--t1); }
+.tier2 .impact-val { color: var(--t2); }
+.tier4 .impact-val { color: var(--t4); }
+.tier1 .risk-val { color: var(--t1); }
+.tier2 .risk-val { color: var(--t2); }
+.tier4 .risk-val { color: var(--t4); }
+.opt-score-max { font-size: 0.7rem; color: var(--text3); }
+
+.opt-tier-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 3px;
+  margin-bottom: 12px;
+}
+.tier1 .opt-tier-badge { background: var(--t1-bg); color: var(--t1); }
+.tier2 .opt-tier-badge { background: var(--t2-bg); color: var(--t2); }
+.tier4 .opt-tier-badge { background: var(--t4-bg); color: var(--t4); }
+
+.opt-detail { font-size: 0.78rem; color: var(--text2); line-height: 1.5; }
+.opt-detail strong { color: var(--text); }
+
+/* ─── SCORE BAR COMPONENT ────────────────────────── */
+.score-group { margin-bottom: 24px; }
+.score-group-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.score-row-label {
+  font-size: 0.78rem;
+  color: var(--text2);
+  width: 220px;
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+.score-bar-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.score-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+.score-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text2);
+  width: 36px;
+  text-align: right;
+}
+.score-justification {
+  font-size: 0.73rem;
+  color: var(--text3);
+  margin-left: 232px;
+  margin-top: -4px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* score fill colors by score value */
+.fill-low { background: var(--t1); }
+.fill-mid { background: var(--t2); }
+.fill-high { background: var(--t4); }
+/* impact fills */
+.fill-impact { background: linear-gradient(90deg, #2E86C1, #1A5276); }
+
+/* ─── TWO-AXIS CHART ──────────────────────────────── */
+.two-axis-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.two-axis-title {
+  font-size: 0.78rem;
+  color: var(--text2);
+  margin-bottom: 16px;
+  font-style: italic;
+}
+.two-axis-chart {
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+
+/* ─── DATA TABLES ─────────────────────────────────── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  margin-bottom: 24px;
+}
+.data-table th {
+  background: rgba(255,255,255,0.04);
+  color: var(--text3);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(36,58,82,0.5);
+  color: var(--text2);
+  line-height: 1.5;
+  vertical-align: top;
+}
+.data-table tr:hover td { background: rgba(255,255,255,0.02); }
+.data-table .val {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--white);
+  font-size: 0.78rem;
+}
+.data-table .strong { color: var(--white); font-weight: 500; }
+.data-table .source { color: var(--text3); font-size: 0.7rem; font-style: italic; }
+.data-table .green { color: var(--t1); }
+.data-table .orange { color: var(--t2); }
+.data-table .red { color: var(--t4); }
+
+/* ─── TFS WATERFALL ───────────────────────────────── */
+.waterfall {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.waterfall-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.wf-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.wf-label { font-size: 0.78rem; color: var(--text2); width: 200px; }
+.wf-bar-wrap { flex: 1; position: relative; height: 28px; }
+.wf-bar {
+  height: 100%;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--white);
+  white-space: nowrap;
+}
+.wf-bar.tfs { background: #1A5276; }
+.wf-bar.deduct { background: #633 ; }
+.wf-bar.afs { background: #1A5246; }
+.wf-bar.rds { background: #5A1A1A; }
+.wf-gap { background: rgba(231,76,60,0.25); border: 1px dashed rgba(231,76,60,0.5); }
+
+/* ─── CHARTS ──────────────────────────────────────── */
+.mc-chart { margin-bottom: 24px; }
+.mc-option { margin-bottom: 16px; }
+.mc-option-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.mc-option-name { font-size: 0.82rem; color: var(--white); font-weight: 500; }
+.mc-bars { position: relative; }
+.mc-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.mc-bar-pct {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text3);
+  width: 28px;
+}
+.mc-bar-track {
+  height: 14px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.05);
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+.mc-bar-fill { height: 100%; border-radius: 3px; }
+.mc-bar-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text2);
+  width: 70px;
+  text-align: right;
+}
+.mc-fill-a { background: linear-gradient(90deg, #922B21, #C0392B); }
+.mc-fill-b { background: linear-gradient(90deg, #B7770D, #E67E22); }
+.mc-fill-c { background: linear-gradient(90deg, #1A6B37, #27AE60); }
+
+/* ─── RISK HEATMAP ────────────────────────────────── */
+.risk-matrix { margin-bottom: 24px; }
+.risk-row {
+  display: grid;
+  grid-template-columns: 180px repeat(3, 1fr);
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.risk-cell {
+  padding: 8px 10px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+}
+.risk-header { background: transparent; color: var(--text3); font-size: 0.68rem; font-style: italic; }
+.risk-label-cell { background: rgba(255,255,255,0.03); color: var(--text2); display: flex; align-items: center; }
+.risk-1 { background: rgba(39,174,96,0.15); color: var(--t1); font-family: 'IBM Plex Mono',monospace; }
+.risk-2 { background: rgba(39,174,96,0.1); color: #6CBF8A; font-family: 'IBM Plex Mono',monospace; }
+.risk-25 { background: rgba(230,126,34,0.1); color: #F0A060; font-family: 'IBM Plex Mono',monospace; }
+.risk-3 { background: rgba(230,126,34,0.15); color: var(--t2); font-family: 'IBM Plex Mono',monospace; }
+.risk-35 { background: rgba(230,126,34,0.2); color: #E88E30; font-family: 'IBM Plex Mono',monospace; }
+.risk-4 { background: rgba(231,76,60,0.15); color: #E87060; font-family: 'IBM Plex Mono',monospace; }
+.risk-45 { background: rgba(231,76,60,0.2); color: #E85050; font-family: 'IBM Plex Mono',monospace; }
+.risk-5 { background: rgba(231,76,60,0.3); color: var(--t4); font-family: 'IBM Plex Mono',monospace; font-weight: 600; }
+
+/* ─── PROSE BLOCKS ────────────────────────────────── */
+.prose { font-size: 0.88rem; line-height: 1.8; color: var(--text2); margin-bottom: 20px; }
+.prose strong { color: var(--white); }
+.prose em { color: var(--text3); }
+.prose .stat { color: var(--gold-light); font-family: 'IBM Plex Mono', monospace; font-size: 0.85em; }
+
+.subsection { margin-bottom: 28px; }
+.subsection-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(36,58,82,0.6);
+}
+
+/* ─── RISK ITEMS ──────────────────────────────────── */
+.risk-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.risk-item.high { border-left: 3px solid var(--t4); }
+.risk-item.medium { border-left: 3px solid var(--t2); }
+.risk-item-icon {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text3);
+  padding-top: 2px;
+  white-space: nowrap;
+}
+.risk-item-content h4 { font-size: 0.85rem; color: var(--white); margin-bottom: 6px; }
+.risk-item-content p { font-size: 0.8rem; color: var(--text2); line-height: 1.6; }
+
+/* ─── NEXT STEP BOX ───────────────────────────────── */
+.next-step {
+  background: rgba(201,150,26,0.08);
+  border: 1px solid rgba(201,150,26,0.25);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.next-step-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.next-step p { font-size: 0.85rem; color: var(--text); line-height: 1.7; }
+
+/* ─── STAKEHOLDER ITEMS ───────────────────────────── */
+.stakeholder {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(36,58,82,0.5);
+}
+.stakeholder:last-child { border-bottom: none; }
+.stakeholder-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--gold);
+  padding-top: 2px;
+  width: 18px;
+  flex-shrink: 0;
+}
+.stakeholder-body h4 { font-size: 0.85rem; color: var(--white); margin-bottom: 4px; }
+.stakeholder-body p { font-size: 0.78rem; color: var(--text2); line-height: 1.6; }
+.stakeholder-role {
+  font-size: 0.68rem;
+  color: var(--text3);
+  font-style: italic;
+}
+
+/* ─── SCENARIO TABLE ──────────────────────────────── */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: 160px repeat(4, 1fr);
+  gap: 4px;
+  margin-bottom: 24px;
+}
+.sg-header {
+  padding: 8px 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.03);
+  border-radius: 3px;
+}
+.sg-label {
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  color: var(--text2);
+  background: rgba(255,255,255,0.02);
+  border-radius: 3px;
+}
+.sg-high { background: rgba(39,174,96,0.08); color: #6CBF8A; padding: 10px 12px; border-radius: 3px; font-family: 'IBM Plex Mono',monospace; font-size: 0.75rem; }
+.sg-base { background: rgba(230,126,34,0.08); color: #F0A060; padding: 10px 12px; border-radius: 3px; font-family: 'IBM Plex Mono',monospace; font-size: 0.75rem; }
+.sg-stress { background: rgba(231,76,60,0.08); color: #E87060; padding: 10px 12px; border-radius: 3px; font-family: 'IBM Plex Mono',monospace; font-size: 0.75rem; }
+.sg-explorco { background: rgba(201,150,26,0.08); color: var(--gold-light); padding: 10px 12px; border-radius: 3px; font-family: 'IBM Plex Mono',monospace; font-size: 0.75rem; }
+
+/* ─── VERIDEX GATES ───────────────────────────────── */
+.gates-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.gate-item {
+  background: var(--t1-bg);
+  border: 1px solid rgba(39,174,96,0.2);
+  border-radius: 4px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--text2);
+}
+.gate-item .check {
+  color: var(--t1);
+  font-weight: 700;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.gate-item .gate-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text3);
+}
+
+/* ─── QUALITY SCORES ──────────────────────────────── */
+.qa-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.qa-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.qa-dimension { font-size: 0.78rem; color: var(--text2); margin-bottom: 8px; line-height: 1.4; }
+.qa-score-row { display: flex; align-items: center; gap: 10px; }
+.qa-bar-track { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+.qa-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #1A5276, #2E86C1); }
+.qa-val { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--text2); }
+
+/* ─── COMPOSITE SCORE ─────────────────────────────── */
+.composite-score {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.composite-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 3rem;
+  color: var(--t2);
+  font-weight: 500;
+  line-height: 1;
+}
+.composite-info h3 {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.composite-info p { font-size: 0.8rem; color: var(--text2); line-height: 1.6; }
+
+/* ─── CONFIDENTIAL BRIEFING ───────────────────────── */
+.conf-lock {
+  background: rgba(231,76,60,0.06);
+  border: 1px solid rgba(231,76,60,0.2);
+  border-radius: var(--radius);
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.conf-lock-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+.conf-lock h3 {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.2rem;
+  color: #E87070;
+  margin-bottom: 8px;
+}
+.conf-lock p { font-size: 0.82rem; color: var(--text3); margin-bottom: 20px; line-height: 1.6; }
+.conf-reveal-btn {
+  background: rgba(231,76,60,0.15);
+  border: 1px solid rgba(231,76,60,0.4);
+  color: #E87070;
+  padding: 10px 24px;
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.conf-reveal-btn:hover { background: rgba(231,76,60,0.25); }
+.conf-content { display: none; }
+.conf-content.revealed { display: block; }
+.conf-header {
+  background: rgba(231,76,60,0.08);
+  border: 1px solid rgba(231,76,60,0.2);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+.conf-header h2 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  color: #E87070;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.conf-header p { font-size: 0.75rem; color: var(--text3); }
+.briefing-section { margin-bottom: 28px; }
+.briefing-section-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: #E87070;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.briefing-section h3 {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(231,76,60,0.2);
+}
+.briefing-section .prose { color: var(--text2); }
+
+.playbook-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 10px;
+}
+.playbook-item h4 {
+  font-size: 0.85rem;
+  color: var(--white);
+  margin-bottom: 8px;
+  font-family: 'EB Garamond', serif;
+  font-size: 1rem;
+}
+.playbook-item ol { padding-left: 18px; }
+.playbook-item ol li { font-size: 0.8rem; color: var(--text2); margin-bottom: 6px; line-height: 1.6; }
+
+.dont-item {
+  background: rgba(231,76,60,0.06);
+  border: 1px solid rgba(231,76,60,0.15);
+  border-left: 3px solid rgba(231,76,60,0.5);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 10px;
+}
+.dont-item p { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+.dont-item strong { color: var(--white); }
+
+.step-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(36,58,82,0.5);
+}
+.step-item:last-child { border-bottom: none; }
+.step-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  color: var(--gold);
+  width: 24px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.step-body h4 { font-size: 0.85rem; color: var(--white); margin-bottom: 4px; }
+.step-body p { font-size: 0.8rem; color: var(--text2); line-height: 1.6; }
+.step-meta { font-size: 0.72rem; color: var(--text3); margin-top: 4px; font-style: italic; }
+
+/* ─── MULTIPLIER CARDS ────────────────────────────── */
+.multiplier-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.mult-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+.mult-sector {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.mult-range {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.3rem;
+  color: var(--gold-light);
+  margin-bottom: 8px;
+}
+.mult-note { font-size: 0.75rem; color: var(--text2); line-height: 1.5; }
+.mult-source { font-size: 0.68rem; color: var(--text3); margin-top: 6px; font-style: italic; }
+
+/* ─── COUNTERFACTUAL ITEMS ────────────────────────── */
+.cf-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+.cf-name { font-size: 0.85rem; color: var(--white); font-weight: 500; margin-bottom: 6px; }
+.cf-val { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--gold-light); margin-bottom: 6px; }
+.cf-detail { font-size: 0.78rem; color: var(--text2); line-height: 1.6; }
+
+/* ─── DISCLOSURE BOX ──────────────────────────────── */
+.disclosure {
+  background: rgba(97,125,150,0.08);
+  border: 1px solid rgba(97,125,150,0.2);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+.disclosure-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.disclosure p { font-size: 0.75rem; color: var(--text3); line-height: 1.6; font-style: italic; }
+
+/* ─── PAUSE ITEMS ─────────────────────────────────── */
+.pause-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--t2);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin-bottom: 14px;
+}
+.pause-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--t2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.pause-item h4 { font-size: 0.88rem; color: var(--white); margin-bottom: 10px; }
+.pause-item p { font-size: 0.8rem; color: var(--text2); line-height: 1.7; margin-bottom: 8px; }
+.pause-q { font-size: 0.78rem; color: var(--text3); font-style: italic; line-height: 1.6; padding-left: 12px; border-left: 2px solid var(--border2); }
+
+/* ─── VERIFICATION TABLE ──────────────────────────── */
+.verify-badge {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+.vb-confirmed { background: var(--t1-bg); color: var(--t1); }
+.vb-proxy { background: rgba(230,126,34,0.12); color: var(--t2); }
+.vb-target { background: rgba(97,125,150,0.15); color: var(--text2); }
+
+/* ─── UTIL ────────────────────────────────────────── */
+.mono { font-family: 'IBM Plex Mono', monospace; }
+.gold { color: var(--gold-light); }
+.muted { color: var(--text3); }
+.small { font-size: 0.75rem; }
+.info-box {
+  background: rgba(46,134,193,0.08);
+  border: 1px solid rgba(46,134,193,0.2);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 0.8rem;
+  color: var(--text2);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+.warn-box {
+  background: rgba(231,76,60,0.06);
+  border: 1px solid rgba(231,76,60,0.2);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 0.8rem;
+  color: #E08080;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+/* ─── QUESTION HERO ───────────────────────────────── */
+.question-hero {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 36px 40px 32px;
+  margin-bottom: 56px;
+  scroll-margin-top: calc(var(--header-h) + 20px);
+}
+.question-hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.question-hero-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--gold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.question-hero-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+}
+.question-hero-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.8rem;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.question-text {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.25rem;
+  line-height: 1.75;
+  color: var(--white);
+  margin-bottom: 28px;
+  font-style: italic;
+}
+.question-text em { font-style: normal; color: var(--gold-light); }
+.question-text strong { font-style: normal; color: var(--white); font-weight: 600; }
+.question-parts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.question-part {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+}
+.question-part-letter {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border-radius: 3px;
+  padding: 2px 6px;
+  height: fit-content;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.question-part-text {
+  font-size: 0.78rem;
+  color: var(--text2);
+  line-height: 1.55;
+}
+.question-part-text strong { color: var(--white); }
+.question-constraints {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  margin-top: 4px;
+}
+.question-constraints-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.constraint-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.constraint-item {
+  display: flex;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: var(--text2);
+  line-height: 1.5;
+}
+.constraint-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text3);
+  flex-shrink: 0;
+  padding-top: 2px;
+  width: 16px;
+}
+.constraint-item.flagged .constraint-num { color: var(--gold); }
+.constraint-item.flagged { color: var(--text); }
+.constraint-item strong { color: var(--white); }
+@media print {
+  .sidebar, .header { display: none; }
+  .main { margin-left: 0; }
+  .content-wrap { padding: 20px; max-width: 100%; }
+  .section { page-break-inside: avoid; }
+  body { background: white; color: #000; }
+  .conf-content { display: block !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP HEADER -->
+<header class="header">
+  <div class="header-title">
+    <span>Sovereign Mirror</span> — Ghana ABFA Allocation 2026–2028
+  </div>
+  <div class="header-meta">
+    <span class="badge badge-gold">MoF Calibration</span>
+    <span class="badge badge-pass">22/22 Gates ✓</span>
+    <span class="badge badge-gold">Comprehensive Stage</span>
+    <span class="badge badge-gold">April 20, 2026</span>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-top">Sovereign Mirror v1.0</div>
+    <div class="sidebar-logo-main">Ghana ABFA<br>2026–2028</div>
+    <div class="sidebar-logo-sub">Primary Audience: Ministry of Finance<br>All VERIDEX Gates: PASS</div>
+  </div>
+
+  <nav>
+    <div class="nav-section">
+      <div class="nav-label">The Question</div>
+      <a class="nav-item active" data-target="sq"><span class="nav-num">Q</span>Allocation Question</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Executive Summary</div>
+      <a class="nav-item" data-target="s0"><span class="nav-num">0</span>Executive Summary</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Framework</div>
+      <a class="nav-item" data-target="s1"><span class="nav-num">1</span>Allocation Question</a>
+      <a class="nav-item" data-target="s2"><span class="nav-num">2</span>Multiplier Map</a>
+      <a class="nav-item" data-target="s3"><span class="nav-num">3</span>Counterfactual Landscape</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Option Analyses</div>
+      <a class="nav-item" data-target="s4"><span class="nav-num">4</span>Option A — Status Quo</a>
+      <a class="nav-item" data-target="s5"><span class="nav-num">5</span>Option B — Rebalance</a>
+      <a class="nav-item" data-target="s6"><span class="nav-num">6</span>Option C — Reform</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Scenario Modelling</div>
+      <a class="nav-item" data-target="s7"><span class="nav-num">7</span>Scenario Envelope</a>
+      <a class="nav-item" data-target="s8"><span class="nav-num">8</span>Monte Carlo Impact</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Validation</div>
+      <a class="nav-item" data-target="s9"><span class="nav-num">9</span>Counterfactual Pause</a>
+      <a class="nav-item" data-target="s10"><span class="nav-num">10</span>Critical Risks</a>
+      <a class="nav-item" data-target="s11"><span class="nav-num">11</span>Verification Log</a>
+      <a class="nav-item" data-target="s12"><span class="nav-num">12</span>Source Quality</a>
+      <a class="nav-item" data-target="s13"><span class="nav-num">13</span>Methodology</a>
+      <a class="nav-item" data-target="s14"><span class="nav-num">14</span>Quality Assessment</a>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <a class="nav-item confidential" data-target="s15"><span class="nav-num">⚿</span>Decision-Maker Briefing</a>
+    </div>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+<div class="content-wrap">
+
+<!-- ═══ THE QUESTION ════════════════════════════════ -->
+<section class="question-hero" id="sq">
+  <div class="question-hero-eyebrow">
+    <span class="question-hero-label">The Question Under Analysis</span>
+    <span class="question-hero-meta">Confirmed Exchange 1 · April 20, 2026 · Sovereign Mirror v1.0 · Comprehensive Stage</span>
+  </div>
+  <div class="question-hero-title">Allocation Question</div>
+  <div class="question-text">
+    How should Ghana's <em>Annual Budget Funding Amount (ABFA)</em> be deployed across <em>2026–2028</em>, given seven structural conditions that collectively define the decision landscape?
+  </div>
+  <div class="question-parts">
+    <div class="question-part">
+      <span class="question-part-letter">a</span>
+      <div class="question-part-text"><strong>Act 1138 legal mandate</strong> — 100% of ABFA directed exclusively to infrastructure investment; no discretion to redirect.</div>
+    </div>
+    <div class="question-part">
+      <span class="question-part-letter">b</span>
+      <div class="question-part-text"><strong>Revenue collapse</strong> — US$770.27m in 2025 petroleum receipts, a 43.27% fall from US$1.36bn in 2024; CIT overtakes CAPI as largest source for the first time.</div>
+    </div>
+    <div class="question-part">
+      <span class="question-part-letter">c</span>
+      <div class="question-part-text"><strong>Commitment scale-up</strong> — GH¢30.8bn Big Push 2026, more than doubling the GH¢13.8bn 2025 base, arriving simultaneously with the 43% revenue collapse.</div>
+    </div>
+    <div class="question-part">
+      <span class="question-part-letter">d</span>
+      <div class="question-part-text"><strong>Production decline</strong> — Crude output fell from 71.44m barrels (2019 peak) to 37.3m barrels (2025), a ~9% CAGR contraction. No new petroleum agreements signed since 2018.</div>
+    </div>
+    <div class="question-part">
+      <span class="question-part-letter">e</span>
+      <div class="question-part-text"><strong>GPF modernization window</strong> — Ghana Heritage Fund (~US$1bn) becomes eligible for investment modernization from 2026 under Amendments Bill II (passed Parliament December 12, 2025), targeting yield from ~1% to ~8%.</div>
+    </div>
+    <div class="question-part">
+      <span class="question-part-letter">f</span>
+      <div class="question-part-text"><strong>DACF statutory violation</strong> — Only US$1.87m (0.43% of ABFA) reached Ghana's 261 MMDAs in 2025 against a legally mandated 5% (US$21.67m). Act 1138 and the DACF Act are in unresolved legal conflict.</div>
+    </div>
+    <div class="question-part">
+      <span class="question-part-letter">g</span>
+      <div class="question-part-text"><strong>Deployment failure</strong> — US$434.55m sits in a Bank of Ghana suspense account (Accra-Kumasi Expressway SPV, pending feasibility). As of September 2025, <strong>only 0.43% of available ABFA had been spent.</strong></div>
+    </div>
+  </div>
+  <div class="question-constraints">
+    <div class="question-constraints-label">Binding Constraints Confirmed — Exchange 4</div>
+    <div class="constraint-list">
+      <div class="constraint-item"><span class="constraint-num">1</span><span>Act 1138 compliance is the legal anchor for Options A and B. Option C may propose amendment mechanisms but must cost the political capital required.</span></div>
+      <div class="constraint-item"><span class="constraint-num">2</span><span>All options must remain consistent with IMF ECF programme obligations through the August 2026 completion milestone, including the Act 1136 primary surplus floor.</span></div>
+      <div class="constraint-item"><span class="constraint-num">3</span><span>The DACF legal tension is a primary finding, not a footnote — appears explicitly in the Counterfactual Pause and Fiscal Risk Profile.</span></div>
+      <div class="constraint-item"><span class="constraint-num">4</span><span>No revenue projection assumptions. TFS figures for 2026–2028 are scenario assumptions, not forecasts.</span></div>
+      <div class="constraint-item flagged"><span class="constraint-num">5★</span><span><strong>Explorco US$561,648,785.37 is included as a scenario variable</strong> — modeled as a probability-weighted input in the Monte Carlo and Scenario Envelope. Not excluded from the analysis.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 0: EXECUTIVE SUMMARY ═══════════════════ -->
+<section class="section" id="s0">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 0</span>
+    <h1 class="section-title">Executive Summary</h1>
+  </div>
+  <div class="section-subtitle">Layer C: Ministry of Finance calibration · Comprehensive Stage · April 20, 2026</div><br>
+
+  <!-- Core Finding -->
+  <div class="core-finding">
+    <div class="core-finding-label">Core Finding</div>
+    <p>The Sovereign Mirror analysis scores <strong>Option C (Reform) and Option B (Rebalance) at equivalent Impact (3.2/5.0)</strong>, with Option C achieving materially lower risk <strong>(1.9/5.0 vs. 2.7/5.0)</strong> — placing Option C in the Tier 1 (Favorable) classification. <strong>Option A (Status Quo) is classified Tier 4 — Do Not Pursue</strong>, driven by a single documented failure: as of September 2025, only <span class="highlight-stat">0.43%</span> of available ABFA had been deployed. The gap between what Act 1138 legally allocates and what Ghana demonstrably spends is the most consequential finding in this analysis — it means the current trajectory produces approximately <span class="highlight-stat">US$2m in economic activity from a US$464m legal commitment</span> annually.</p>
+  </div>
+
+  <!-- Options Comparison -->
+  <div class="options-grid">
+    <div class="option-card tier4">
+      <div class="opt-label">Option A</div>
+      <div class="opt-name">Status Quo</div>
+      <div class="opt-scores">
+        <div class="opt-score-block">
+          <div class="opt-score-label">Impact</div>
+          <div class="opt-score-val impact-val">2.0<span class="opt-score-max">/5</span></div>
+        </div>
+        <div class="opt-score-block">
+          <div class="opt-score-label">Risk</div>
+          <div class="opt-score-val risk-val">4.5<span class="opt-score-max">/5</span></div>
+        </div>
+      </div>
+      <div class="opt-tier-badge">Tier 4 — Do Not Pursue</div>
+      <div class="opt-detail"><strong>Weakness:</strong> Absorption failure. 0.43% deployment in 2025 with no structural fix; 123% scale-up collides with unchanged pipeline.<br><br><strong>Strength:</strong> Strong executive mandate; contractor mobilization underway.</div>
+    </div>
+    <div class="option-card tier2">
+      <div class="opt-label">Option B</div>
+      <div class="opt-name">Rebalance</div>
+      <div class="opt-scores">
+        <div class="opt-score-block">
+          <div class="opt-score-label">Impact</div>
+          <div class="opt-score-val impact-val">3.2<span class="opt-score-max">/5</span></div>
+        </div>
+        <div class="opt-score-block">
+          <div class="opt-score-label">Risk</div>
+          <div class="opt-score-val risk-val">2.7<span class="opt-score-max">/5</span></div>
+        </div>
+      </div>
+      <div class="opt-tier-badge">Tier 2 — Conditional</div>
+      <div class="opt-detail"><strong>Weakness:</strong> Political capital required for composition shift; Act 1138/DACF conflict unresolved.<br><br><strong>Strength:</strong> Achievable within existing mandate via Executive Instrument; DACF compliance restored.</div>
+    </div>
+    <div class="option-card tier1">
+      <div class="opt-label">Option C</div>
+      <div class="opt-name">Reform</div>
+      <div class="opt-scores">
+        <div class="opt-score-block">
+          <div class="opt-score-label">Impact</div>
+          <div class="opt-score-val impact-val">3.2<span class="opt-score-max">/5</span></div>
+        </div>
+        <div class="opt-score-block">
+          <div class="opt-score-label">Risk</div>
+          <div class="opt-score-val risk-val">1.9<span class="opt-score-max">/5</span></div>
+        </div>
+      </div>
+      <div class="opt-tier-badge">Tier 1 — Favorable</div>
+      <div class="opt-detail"><strong>Weakness:</strong> Year-1 legislative transition lag; highest political capital requirement.<br><br><strong>Strength:</strong> Same impact as B at 30% lower risk; eliminates all structural risks; sunset trigger.</div>
+    </div>
+  </div>
+
+  <!-- Quantitative Snapshot -->
+  <div class="subsection">
+    <div class="subsection-title">Quantitative Snapshot</div>
+    <table class="data-table">
+      <thead><tr><th>Metric</th><th>Value</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="strong">2025 TFS (Total Fiscal Space)</td><td><span class="val">US$770.27m</span></td><td class="source">PIAC 2025 Annual Report, Apr 8, 2026</td></tr>
+        <tr><td class="strong">2025 AFS (Allocable Fiscal Space / ABFA)</td><td><span class="val">~US$463.7m</span></td><td class="source">PIAC 2025; PRMA Act 815 formula</td></tr>
+        <tr><td class="strong">2025 RDS (Realistically Deployed)</td><td><span class="val red">~US$2m (0.43%)</span></td><td class="source">ASEC; PIAC 2025</td></tr>
+        <tr><td class="strong">AFS→RDS Gap — the binding constraint</td><td><span class="val red">~US$460m undeployed</span></td><td class="source">This analysis</td></tr>
+        <tr><td class="strong">Option C P50 deployed impact 2026-2028</td><td><span class="val green">~US$570–610m</span></td><td class="source">Monte Carlo, Output 8</td></tr>
+        <tr><td class="strong">DACF statutory shortfall 2025</td><td><span class="val red">US$19.8m (US$1.87m paid vs. US$21.67m req'd)</span></td><td class="source">PIAC 2025 Annual Report</td></tr>
+        <tr><td class="strong">Explorco disputed revenue (scenario variable)</td><td><span class="val orange">US$561,648,785.37</span></td><td class="source">PIAC 2025 Annual Report</td></tr>
+        <tr><td class="strong">Accra-Kumasi Expressway SPV (inert)</td><td><span class="val orange">US$434.55m in BoG suspense</span></td><td class="source">PIAC 2025 Annual Report</td></tr>
+        <tr><td class="strong">Crude production 2025</td><td><span class="val red">37.3m barrels (−9% CAGR; 6th yr decline)</span></td><td class="source">PIAC 2025 Annual Report</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Critical Risks -->
+  <div class="subsection">
+    <div class="subsection-title">Critical Risks (tagged by option)</div>
+    <div class="risk-item high">
+      <div class="risk-item-icon">R2 · A,B</div>
+      <div class="risk-item-content">
+        <h4>Absorption/Execution Risk</h4>
+        <p>2025 documented deployment rate of 0.43% persists into 2026 if no structural change. GH¢30.8bn commitment (123% scale-up) collides with unchanged execution apparatus. US$434.55m in BoG suspense has no public feasibility completion timeline. Risk Score: 5.0/5.0 for Option A; 2.5/5.0 for Option B.</p>
+      </div>
+    </div>
+    <div class="risk-item high">
+      <div class="risk-item-icon">R5 · ALL</div>
+      <div class="risk-item-content">
+        <h4>Production-Decline Cliff</h4>
+        <p>At ~9% CAGR, production reaches ~28.0m barrels by 2028. TFS falls to ~US$575m; ABFA ~US$345m — insufficient for a GH¢30.8bn (~US$2.5bn) commitment. Without Option C's sunset trigger, the 2028 Finance Minister inherits an unfundable pipeline.</p>
+      </div>
+    </div>
+    <div class="risk-item medium">
+      <div class="risk-item-icon">R4 · A</div>
+      <div class="risk-item-content">
+        <h4>Governance/Oversight Collapse (Option A-specific)</h4>
+        <p>PIAC's 2025 budget was GH¢4.6m (21.9% of needs); 2 project inspections vs. 64 target. The oversight body monitoring ABFA is defunded precisely as the Big Push doubles. No accountability infrastructure exists for GH¢30.8bn of spending.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Next Step -->
+  <div class="next-step">
+    <div class="next-step-label">Highest-Information Next Step</div>
+    <p><strong>Resolve the Act 1138 / DACF Act legal conflict before the 2026 budget cycle closes.</strong> This statutory ambiguity produces a US$19.8m annual MMDA shortfall, contributes to deployment paralysis, and will invalidate any investment case for increased ABFA deployment until resolved. An Attorney-General opinion or executive instrument can achieve this within 90 days. Without resolution, Options B and C both face implementation obstacles. With it, Option B becomes immediately actionable.</p>
+  </div>
+
+  <!-- Stakeholders -->
+  <div class="subsection">
+    <div class="subsection-title">Critical Stakeholder Alignments</div>
+    <div class="stakeholder">
+      <div class="stakeholder-num">1</div>
+      <div class="stakeholder-body">
+        <h4>Attorney-General / Minister of Justice <span class="stakeholder-role">— legislative enablement</span></h4>
+        <p>Resolves the Act 1138/DACF Act conflict via statutory interpretation or executive instrument that unlocks Options B and C without full parliamentary amendment in Year 1.</p>
+      </div>
+    </div>
+    <div class="stakeholder">
+      <div class="stakeholder-num">2</div>
+      <div class="stakeholder-body">
+        <h4>Investment Advisory Committee (PRMA Act 815, Section 29) <span class="stakeholder-role">— GPF modernization</span></h4>
+        <p>Under Amendments Bill II (December 2025), the IAC provides the investment framework for GPF diversification — the operational prerequisite for the ~US$73m annual yield improvement in Options B and C.</p>
+      </div>
+    </div>
+    <div class="stakeholder">
+      <div class="stakeholder-num">3</div>
+      <div class="stakeholder-body">
+        <h4>PIAC Chairman Richard Ellimah <span class="stakeholder-role">— governance risk containment</span></h4>
+        <p>PIAC's budget restoration and Explorco enforcement action are the two most actionable governance risk-reduction steps available. MoF engagement with PIAC is determinative for Risk 4 improvement under any option.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 1: ALLOCATION QUESTION ══════════════════ -->
+<section class="section" id="s1">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 1</span>
+    <h2 class="section-title">Allocation Question Framing</h2>
+  </div>
+  <div class="info-box">
+    <strong>Confirmed question (Exchange 1, April 20, 2026):</strong> How should Ghana's Annual Budget Funding Amount (ABFA) be deployed across 2026–2028, given: (a) Act 1138's 100% legal mandate directing all ABFA to infrastructure; (b) US$770.27m in 2025 petroleum receipts — a 43.27% collapse from US$1.36bn in 2024, with CIT overtaking CAPI as the largest revenue source for the first time; (c) GH¢30.8bn Big Push 2026 (123% scale-up); (d) confirmed six-year crude production decline to 37.3m barrels (−9% CAGR, no new agreements since 2018); (e) GPF investment modernization under Amendments Bill II (passed December 12, 2025); (f) DACF violation — US$1.87m transferred (0.43%) vs. US$21.67m required (5%); and (g) US$434.55m in BoG suspense with 0.43% of ABFA spent as of September 2025.
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Binding Constraints (Exchange 4)</div>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Constraint</th><th>Scope</th></tr></thead>
+      <tbody>
+        <tr><td class="val">1</td><td class="strong">Act 1138 compliance</td><td>Options A and B work within existing mandate. Option C may propose amendment but must cost the political capital required.</td></tr>
+        <tr><td class="val">2</td><td class="strong">IMF ECF programme conditions</td><td>All options consistent with ECF obligations through August 2026 completion, including Act 1136 primary surplus floor.</td></tr>
+        <tr><td class="val">3</td><td class="strong">DACF legal tension is a primary finding</td><td>The Act 1138/DACF Act conflict appears explicitly in Counterfactual Pause and Fiscal Risk Profile — not buried in a disclaimer.</td></tr>
+        <tr><td class="val">4</td><td class="strong">No revenue projection assumptions</td><td>The analysis uses documented 2025 figures and models scenarios directionally. TFS figures are stated assumptions, not forecasts.</td></tr>
+        <tr><td class="val orange">5</td><td class="strong">Explorco included as scenario variable</td><td>US$561,648,785.37 modeled as probability-weighted input in Monte Carlo and Scenario Envelope. Not excluded from analysis.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 2: MULTIPLIER MAP ═══════════════════════ -->
+<section class="section" id="s2">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 2</span>
+    <h2 class="section-title">Development Need & Multiplier Map</h2>
+  </div>
+
+  <div class="multiplier-grid">
+    <div class="mult-card">
+      <div class="mult-sector">Road/Transport Infrastructure (Option A; retained B, C)</div>
+      <div class="mult-range">1.2–1.5×</div>
+      <div class="mult-note">Public investment multiplier for LICs, impact basis. <strong>Ghana-specific caveat:</strong> No Ghana-specific road multiplier study in corpus — SSA regional proxy applied. RDS-adjusted effective multiplier for Option A: <span style="color:#E74C3C">~0.006</span> (1.3 × 0.43% absorption).</div>
+      <div class="mult-source">IMF WP 14/93, Batini et al. 2014 (Tier 1) · Ghana proxy (Tier 3)</div>
+    </div>
+    <div class="mult-card">
+      <div class="mult-sector">Human Capital — Education (Options B, C)</div>
+      <div class="mult-range">2.1–2.4×</div>
+      <div class="mult-note">Well-established IMF/World Bank literature. 48 MMDAs without hospital access; 46% rural water unserved; secondary enrollment 72%. Agenda 111 (88 stalled sites) reactivation possible under B and C.</div>
+      <div class="mult-source">IMF WP, Gaspar et al. 2017; World Bank HCI 2020 (Tier 1)</div>
+    </div>
+    <div class="mult-card">
+      <div class="mult-sector">Health Infrastructure (Options B, C)</div>
+      <div class="mult-range">1.8–2.1×</div>
+      <div class="mult-note">Documented in IMF Fiscal Monitor 2018. Ghana: 1 physician per 10,000 population vs. WHO target of 10. Health capital has lighter procurement requirements than megaproject roads.</div>
+      <div class="mult-source">IMF Fiscal Monitor 2018; WHO CHOICE model (Tier 1)</div>
+    </div>
+    <div class="mult-card">
+      <div class="mult-sector">Subnational DACF / MMDA Infrastructure (Options B, C)</div>
+      <div class="mult-range">1.2–1.8×</div>
+      <div class="mult-note">Lower concentration than megaprojects but <strong>~80% historical absorption</strong> through DACF channel (vs. 0.43% for ABFA megaprojects). US$19.8m annual DACF shortfall = documented statutory deficit affecting all 261 MMDAs.</div>
+      <div class="mult-source">World Bank subnational fiscal transfer studies SSA (Tier 2)</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Ghana Airport ABFA Case Study (Tier 1):</strong> US$30m ABFA investment in Accra International Airport (2017) yielded US$17.9m returns 2017–2025 — ~60% total return, ~7.5% annual. This is the <em>only documented ABFA infrastructure ROI in Ghana</em>. It suggests airport-type infrastructure produces higher demonstrated returns than road infrastructure under Ghana's specific conditions. Source: PIAC 2025 Annual Report.
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">GPF Investment Modernization (Options B, C)</div>
+    <div class="prose">
+      Not a development multiplier in the traditional sense — an <strong>institutional yield failure</strong> producing forgone fiscal space. GHF balance: ~US$1,046.38m (end-2023). Current yield: ~1% = ~US$10.5m/year. Target yield under Amendments Bill II: ~8% = ~US$83.7m/year. <strong>Yield differential: ~US$73m/year foregone</strong> by maintaining current investment policy. Over 2026–2028: ~US$219m in forgone fiscal space at current 1% yield vs. target 8%. Conservative model applies 5–6% yield (~US$52–63m/year). Source: PRMA Amendments Bill II; IAC benchmarks (Tier 2).
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 3: COUNTERFACTUAL LANDSCAPE ═════════════ -->
+<section class="section" id="s3">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 3</span>
+    <h2 class="section-title">Counterfactual Landscape</h2>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Named alternatives displaced by Option A (Status Quo)</div>
+    <div class="cf-item">
+      <div class="cf-name">1. DACF Restoration to 5% — 261 MMDAs</div>
+      <div class="cf-val">US$23.2m/year statutory right; ~US$15.8m actual economic activity (80% absorption)</div>
+      <div class="cf-detail">Average US$89,000/year per MMDA — sufficient for 1–2 CHPS compounds or 2–3 boreholes. Notably: this counterfactual produces <em>9× more economic activity</em> than Option A's documented US$2m 2025 deployment from the entire AFS.</div>
+    </div>
+    <div class="cf-item">
+      <div class="cf-name">2. GPF Yield Modernization — Amendments Bill II</div>
+      <div class="cf-val">~US$73m/year additional at 8% yield; US$52m conservative at 6%</div>
+      <div class="cf-detail">Available without ABFA reallocation. Requires only IAC activation under the December 2025 Bill. Produces additional fiscal space at zero ABFA opportunity cost.</div>
+    </div>
+    <div class="cf-item">
+      <div class="cf-name">3. Agenda 111 Hospital Programme (orphaned)</div>
+      <div class="cf-val">88 stalled construction sites; est. GH¢2.5–3.0bn to complete</div>
+      <div class="cf-detail">Health infrastructure multiplier 1.8–2.1. Execution pipeline already initiated — contractor agreements in place; absorption would be significantly higher than greenfield road construction. Classified "orphaned" following Act 1138 ABFA redirection.</div>
+    </div>
+    <div class="cf-item">
+      <div class="cf-name">4. Explorco Recovery (if successful)</div>
+      <div class="cf-val">US$561.65m → ~US$320m additional ABFA if fully recovered via PRMA formula</div>
+      <div class="cf-detail">Would fund ~3 full Big Push programme years at 2025 deployment rates, or a significant single-year acceleration under Option B/C absorption model. Absorption constraint means Option A extracts only ~US$38m additional at P50 even with full recovery; Options B and C extract US$128–154m.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 4: OPTION A ANALYSIS ════════════════════ -->
+<section class="section" id="s4">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 4</span>
+    <h2 class="section-title">Option A — Status Quo</h2>
+  </div>
+  <div style="display:flex;gap:12px;margin-bottom:24px;align-items:center;">
+    <span class="badge" style="background:var(--t4-bg);color:var(--t4);border:1px solid rgba(231,76,60,0.3);font-size:0.72rem;padding:4px 10px;">Tier 4 — Do Not Pursue</span>
+    <span class="badge badge-gold">Impact 2.0/5</span>
+    <span class="badge" style="background:rgba(231,76,60,0.12);color:#E87060;border:1px solid rgba(231,76,60,0.3);">Risk 4.5/5</span>
+  </div>
+
+  <!-- TFS→AFS→RDS Waterfall -->
+  <div class="waterfall">
+    <div class="waterfall-title">TFS → AFS → RDS Decomposition — 2025 Baseline</div>
+    <div class="wf-row">
+      <div class="wf-label">TFS (Total Fiscal Space)</div>
+      <div class="wf-bar-wrap">
+        <div class="wf-bar tfs" style="width:100%">US$770.27m — PIAC 2025 (Tier 1)</div>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-label">Less GNPC Level A+B</div>
+      <div class="wf-bar-wrap">
+        <div class="wf-bar deduct" style="width:14%">−US$107.89m</div>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-label">Less GPF (30% of net)</div>
+      <div class="wf-bar-wrap">
+        <div class="wf-bar deduct" style="width:26%">−US$198.7m</div>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-label"><strong>AFS (ABFA-eligible)</strong></div>
+      <div class="wf-bar-wrap">
+        <div class="wf-bar afs" style="width:60%"><strong>~US$463.7m — Act 1138: 100% to infrastructure</strong></div>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-label">GIIF SPV (BoG suspense)</div>
+      <div class="wf-bar-wrap">
+        <div class="wf-bar deduct" style="width:56%">−US$434.55m — allocated but inert</div>
+      </div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-label"><strong style="color:#E74C3C">RDS (Actually Deployed)</strong></div>
+      <div class="wf-bar-wrap">
+        <div class="wf-bar rds" style="width:0.5%;min-width:80px"><strong>~US$2m (0.43%)</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fiscal Impact Matrix -->
+  <div class="score-group">
+    <div class="score-group-title">Fiscal Impact Matrix — Option A</div>
+    <div class="score-row">
+      <div class="score-row-label">C1. Multiplier (roads; RDS-adjusted)</div>
+      <div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:40%;background:#2E86C1"></div></div>
+      <div class="score-val">2.0/5</div>
+    </div>
+    <div class="score-justification">Roads multiplier 1.2–1.5 (SSA proxy; IMF WP 14/93). Theoretical score further penalized by 0.43% deployment. RDS-adjusted effective multiplier on committed AFS ≈ 0.006.</div>
+    <div class="score-row">
+      <div class="score-row-label">C2. Development Need (roads)</div>
+      <div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:60%;background:#2E86C1"></div></div>
+      <div class="score-val">3.0/5</div>
+    </div>
+    <div class="score-justification">Infrastructure need genuine and documented. But corpus documents more acute gaps in health (48 MMDAs without hospital), water (46% rural unserved), and MMDA subnational services.</div>
+    <div class="score-row">
+      <div class="score-row-label">C3. Deployment Capacity</div>
+      <div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:20%;background:#C0392B"></div></div>
+      <div class="score-val">1.0/5</div>
+    </div>
+    <div class="score-justification">2025 actual: 0.43%. US$434.55m in BoG suspense. PIAC: 2 inspections vs. 64 target. 123% scale-up demanded. Structural absorption failure — not a marginal shortfall.</div>
+    <div class="score-row">
+      <div class="score-row-label">C4. Political Economy Viability</div>
+      <div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:50%;background:#E67E22"></div></div>
+      <div class="score-val">2.5/5</div>
+    </div>
+    <div class="score-justification">Strong executive mandate. Significant downside: December 2028 election; NPP historically terminates predecessor infrastructure programmes; no cross-party commitment.</div>
+    <div class="score-row">
+      <div class="score-row-label">C5. Cross-Cycle Sustainability</div>
+      <div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:30%;background:#C0392B"></div></div>
+      <div class="score-val">1.5/5</div>
+    </div>
+    <div class="score-justification">Production at 37.3m→28.0m barrels 2028 at 9% CAGR. TFS 2028 ≈ US$575m; ABFA ≈ US$345m vs. GH¢30.8bn commitment (~US$2.5bn). No adjustment mechanism.</div>
+  </div>
+
+  <!-- Risk Profile -->
+  <div class="score-group">
+    <div class="score-group-title">Fiscal Risk Profile — Option A (1=low risk, 5=high risk)</div>
+    <div class="score-row">
+      <div class="score-row-label">R1. Revenue Volatility</div>
+      <div class="score-bar-track"><div class="score-bar-fill fill-high" style="width:90%"></div></div>
+      <div class="score-val">4.5/5</div>
+    </div>
+    <div class="score-row">
+      <div class="score-row-label">R2. Absorption/Execution</div>
+      <div class="score-bar-track"><div class="score-bar-fill fill-high" style="width:100%"></div></div>
+      <div class="score-val">5.0/5</div>
+    </div>
+    <div class="score-row">
+      <div class="score-row-label">R3. Displacement</div>
+      <div class="score-bar-track"><div class="score-bar-fill fill-high" style="width:80%"></div></div>
+      <div class="score-val">4.0/5</div>
+    </div>
+    <div class="score-row">
+      <div class="score-row-label">R4. Governance & Oversight</div>
+      <div class="score-bar-track"><div class="score-bar-fill fill-high" style="width:90%"></div></div>
+      <div class="score-val">4.5/5</div>
+    </div>
+    <div class="score-row">
+      <div class="score-row-label">R5. Sustainability</div>
+      <div class="score-bar-track"><div class="score-bar-fill fill-high" style="width:90%"></div></div>
+      <div class="score-val">4.5/5</div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <strong>Monte Carlo P50 (3-year cumulative deployed impact 2026–2028):</strong> US$143m · P10: US$36m · P90: US$321m · With full Explorco recovery: US$181m (absorption-constrained; modest uplift even from large windfall)
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 5: OPTION B ANALYSIS ════════════════════ -->
+<section class="section" id="s5">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 5</span>
+    <h2 class="section-title">Option B — Rebalance</h2>
+  </div>
+  <div style="display:flex;gap:12px;margin-bottom:24px;align-items:center;">
+    <span class="badge" style="background:var(--t2-bg);color:var(--t2);border:1px solid rgba(230,126,34,0.3);font-size:0.72rem;padding:4px 10px;">Tier 2 — Conditional</span>
+    <span class="badge badge-gold">Impact 3.2/5</span>
+    <span class="badge" style="background:rgba(230,126,34,0.12);color:var(--t2);border:1px solid rgba(230,126,34,0.3);">Risk 2.7/5</span>
+  </div>
+
+  <div class="waterfall">
+    <div class="waterfall-title">Option B — Portfolio Composition (Illustrative 2026 AFS ~US$438m)</div>
+    <div class="wf-row">
+      <div class="wf-label">Big Push Roads (45%)</div>
+      <div class="wf-bar-wrap"><div class="wf-bar tfs" style="width:45%">~US$197m · 15–20% absorption</div></div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-label">Human Capital Infra (30%)</div>
+      <div class="wf-bar-wrap"><div class="wf-bar afs" style="width:30%">~US$131m · 65–75% absorption</div></div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-label">DACF Restored (5%)</div>
+      <div class="wf-bar-wrap"><div class="wf-bar afs" style="width:5%;background:#1A5276">~US$22m · ~80% absorption</div></div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-label">Energy Capital (20%)</div>
+      <div class="wf-bar-wrap"><div class="wf-bar tfs" style="width:20%;background:#1A4A5A">~US$88m · 40–50% absorption</div></div>
+    </div>
+    <div class="wf-row">
+      <div class="wf-label"><strong>Weighted RDS (40%)</strong></div>
+      <div class="wf-bar-wrap"><div class="wf-bar afs" style="width:40%"><strong>~US$175m deployed in 2026</strong></div></div>
+    </div>
+  </div>
+
+  <div class="score-group">
+    <div class="score-group-title">Fiscal Impact Matrix — Option B</div>
+    <div class="score-row"><div class="score-row-label">C1. Multiplier (portfolio-weighted 1.68)</div><div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:60%;background:#2874A6"></div></div><div class="score-val">3.0/5</div></div>
+    <div class="score-row"><div class="score-row-label">C2. Development Need (broader)</div><div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:70%;background:#2874A6"></div></div><div class="score-val">3.5/5</div></div>
+    <div class="score-row"><div class="score-row-label">C3. Deployment Capacity</div><div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:60%;background:#2874A6"></div></div><div class="score-val">3.0/5</div></div>
+    <div class="score-row"><div class="score-row-label">C4. Political Economy Viability</div><div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:60%;background:#2874A6"></div></div><div class="score-val">3.0/5</div></div>
+    <div class="score-row"><div class="score-row-label">C5. Cross-Cycle Sustainability</div><div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:70%;background:#2874A6"></div></div><div class="score-val">3.5/5</div></div>
+  </div>
+
+  <div class="score-group">
+    <div class="score-group-title">Fiscal Risk Profile — Option B</div>
+    <div class="score-row"><div class="score-row-label">R1. Revenue Volatility</div><div class="score-bar-track"><div class="score-bar-fill fill-mid" style="width:70%"></div></div><div class="score-val">3.5/5</div></div>
+    <div class="score-row"><div class="score-row-label">R2. Absorption/Execution</div><div class="score-bar-track"><div class="score-bar-fill fill-mid" style="width:50%"></div></div><div class="score-val">2.5/5</div></div>
+    <div class="score-row"><div class="score-row-label">R3. Displacement</div><div class="score-bar-track"><div class="score-bar-fill fill-low" style="width:40%"></div></div><div class="score-val">2.0/5</div></div>
+    <div class="score-row"><div class="score-row-label">R4. Governance & Oversight</div><div class="score-bar-track"><div class="score-bar-fill fill-mid" style="width:60%"></div></div><div class="score-val">3.0/5</div></div>
+    <div class="score-row"><div class="score-row-label">R5. Sustainability</div><div class="score-bar-track"><div class="score-bar-fill fill-mid" style="width:50%"></div></div><div class="score-val">2.5/5</div></div>
+  </div>
+
+  <div class="info-box">
+    <strong>Monte Carlo P50 (3-year cumulative):</strong> US$475m · P10: US$190m · P90: US$1,004m · With full Explorco recovery: US$603m (+US$128m; higher absorption utilizes Explorco significantly better than A)
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 6: OPTION C ANALYSIS ════════════════════ -->
+<section class="section" id="s6">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 6</span>
+    <h2 class="section-title">Option C — Reform</h2>
+  </div>
+  <div style="display:flex;gap:12px;margin-bottom:24px;align-items:center;">
+    <span class="badge" style="background:var(--t1-bg);color:var(--t1);border:1px solid rgba(39,174,96,0.3);font-size:0.72rem;padding:4px 10px;">Tier 1 — Favorable</span>
+    <span class="badge badge-gold">Impact 3.2/5</span>
+    <span class="badge" style="background:var(--t1-bg);color:var(--t1);border:1px solid rgba(39,174,96,0.3);">Risk 1.9/5</span>
+  </div>
+
+  <div class="info-box">
+    <strong>Key analytical insight — identical impact scores:</strong> Options B and C achieve the same Impact score (3.2/5) via different paths. Option C has higher peaks (C2: 4.0, C5: 4.0) offset by lower lows (C4: 2.0, C3: 2.5). The decisive differentiation is in the Risk profile: <strong>Option C achieves identical impact at 1.9/5 risk vs. Option B's 2.7/5 — a 30% risk reduction for equal impact.</strong> The sole cost is concentrated in C4 (Political Economy Viability).
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Political Capital Cost Assessment</div>
+    <table class="data-table">
+      <thead><tr><th>Mechanism</th><th>Instrument</th><th>Timeline</th><th>Capital Required</th></tr></thead>
+      <tbody>
+        <tr><td>Act 1138/DACF Act reconciliation</td><td>AG opinion or Executive Instrument</td><td>30–60 days</td><td class="orange">Medium</td></tr>
+        <tr><td>ABFA Absorption Ceiling</td><td>PRMA amendment (Parliament)</td><td>3–6 months</td><td class="orange">Medium</td></tr>
+        <tr><td>Sunset trigger at 30m barrels</td><td>Combined with above PRMA amendment</td><td>Same bill</td><td class="orange">Medium</td></tr>
+        <tr><td>GPF modernization (Amendments Bill II)</td><td>IAC activation — already enabled</td><td>Immediate</td><td class="green">Low</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="score-group">
+    <div class="score-group-title">Fiscal Impact Matrix — Option C</div>
+    <div class="score-row"><div class="score-row-label">C1. Multiplier (portfolio 1.79; absorption-corrected)</div><div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:70%;background:#1A6B37"></div></div><div class="score-val">3.5/5</div></div>
+    <div class="score-row"><div class="score-row-label">C2. Development Need (best alignment)</div><div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:80%;background:#1A6B37"></div></div><div class="score-val">4.0/5</div></div>
+    <div class="score-row"><div class="score-row-label">C3. Deployment Capacity (Year-1 lag)</div><div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:50%;background:#E67E22"></div></div><div class="score-val">2.5/5</div></div>
+    <div class="score-row"><div class="score-row-label">C4. Political Economy Viability (legislative)</div><div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:40%;background:#E74C3C"></div></div><div class="score-val">2.0/5</div></div>
+    <div class="score-row"><div class="score-row-label">C5. Cross-Cycle Sustainability (sunset trigger)</div><div class="score-bar-track"><div class="score-bar-fill fill-impact" style="width:80%;background:#1A6B37"></div></div><div class="score-val">4.0/5</div></div>
+  </div>
+
+  <div class="score-group">
+    <div class="score-group-title">Fiscal Risk Profile — Option C (best profile)</div>
+    <div class="score-row"><div class="score-row-label">R1. Revenue Volatility</div><div class="score-bar-track"><div class="score-bar-fill fill-low" style="width:50%"></div></div><div class="score-val">2.5/5</div></div>
+    <div class="score-row"><div class="score-row-label">R2. Absorption/Execution</div><div class="score-bar-track"><div class="score-bar-fill fill-low" style="width:40%"></div></div><div class="score-val">2.0/5</div></div>
+    <div class="score-row"><div class="score-row-label">R3. Displacement</div><div class="score-bar-track"><div class="score-bar-fill fill-low" style="width:30%"></div></div><div class="score-val">1.5/5</div></div>
+    <div class="score-row"><div class="score-row-label">R4. Governance & Oversight</div><div class="score-bar-track"><div class="score-bar-fill fill-low" style="width:40%"></div></div><div class="score-val">2.0/5</div></div>
+    <div class="score-row"><div class="score-row-label">R5. Sustainability</div><div class="score-bar-track"><div class="score-bar-fill fill-low" style="width:30%"></div></div><div class="score-val">1.5/5</div></div>
+  </div>
+
+  <div class="info-box" style="background:rgba(39,174,96,0.06);border-color:rgba(39,174,96,0.2);">
+    <strong>Monte Carlo P50 (3-year cumulative):</strong> US$570m · P10: US$233m · P90: US$1,171m · With full Explorco recovery: US$724m (+US$154m — highest utilization of all three options; absorption ceiling ensures deployment)
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 7: SCENARIO ENVELOPE ════════════════════ -->
+<section class="section" id="s7">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 7</span>
+    <h2 class="section-title">Fiscal Scenario Envelope</h2>
+  </div>
+  <div class="disclosure">
+    <div class="disclosure-label">Mandatory Disclosure</div>
+    <p>These scenarios are directional ranges — not forecasts, projections, or fiscal guidance. They illustrate possible conditions as of April 2026. TFS figures are stated assumptions, not revenue projections. "High," "Base," and "Stress" do not imply equal probability. Production figures are modeled, not projected. These scenarios should be validated with country-specific public finance expertise before informing budget decisions.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Scenario Assumptions</div>
+    <div class="scenario-grid">
+      <div class="sg-header">Parameter</div>
+      <div class="sg-header">High (Explorco)</div>
+      <div class="sg-header">Base</div>
+      <div class="sg-header">Stress</div>
+      <div class="sg-label">Crude production 2026</div>
+      <div class="sg-high">37.3m bbl (stabilized)</div>
+      <div class="sg-base">33.9m bbl (−9%)</div>
+      <div class="sg-stress">31.7m bbl (−15%)</div>
+      <div class="sg-label">Crude production 2027</div>
+      <div class="sg-high">37.3m bbl</div>
+      <div class="sg-base">30.8m bbl</div>
+      <div class="sg-stress">26.9m bbl</div>
+      <div class="sg-label">Crude production 2028</div>
+      <div class="sg-high">37.3m bbl</div>
+      <div class="sg-base">28.0m bbl</div>
+      <div class="sg-stress">22.9m bbl</div>
+      <div class="sg-label">Oil price (avg)</div>
+      <div class="sg-high">US$78/bbl</div>
+      <div class="sg-base">US$68/bbl</div>
+      <div class="sg-stress">US$58/bbl</div>
+      <div class="sg-label">Explorco recovery</div>
+      <div class="sg-explorco">+US$280m AFS (50% partial)</div>
+      <div class="sg-base">None</div>
+      <div class="sg-stress">None</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">AFS (ABFA) Ranges 2026–2028</div>
+    <div class="scenario-grid">
+      <div class="sg-header">Year</div>
+      <div class="sg-header">High (Explorco)</div>
+      <div class="sg-header">Base</div>
+      <div class="sg-header">Stress</div>
+      <div class="sg-label">2026 AFS</div>
+      <div class="sg-high">US$697–768m</div>
+      <div class="sg-base">US$432–465m</div>
+      <div class="sg-stress">US$345–375m</div>
+      <div class="sg-label">2027 AFS</div>
+      <div class="sg-high">US$526–576m</div>
+      <div class="sg-base">US$390–420m</div>
+      <div class="sg-stress">US$267–294m</div>
+      <div class="sg-label">2028 AFS</div>
+      <div class="sg-high">US$526–576m</div>
+      <div class="sg-base">US$339–366m</div>
+      <div class="sg-stress">US$216–240m</div>
+      <div class="sg-label"><strong>3-Year Aggregate</strong></div>
+      <div class="sg-high"><strong>US$1,749–1,920m</strong></div>
+      <div class="sg-base"><strong>US$1,161–1,251m</strong></div>
+      <div class="sg-stress"><strong>US$828–909m</strong></div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <strong>Production-Cliff Warning (Stress 2028):</strong> TFS ≈ US$380m → AFS ≈ US$228m. Against a GH¢30.8bn (~US$2.5bn) Big Push commitment, ABFA funds approximately <strong>9% of the annual stated commitment</strong>. Without Option C's sunset trigger, the Big Push becomes unfunded in the stress scenario by 2028 — requiring GPF drawdown, domestic borrowing, or programme cancellation.
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 8: MONTE CARLO ═══════════════════════════ -->
+<section class="section" id="s8">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 8</span>
+    <h2 class="section-title">Monte Carlo Fiscal Impact</h2>
+  </div>
+  <div class="disclosure">
+    <div class="disclosure-label">Model Disclosure</div>
+    <p>10,000 scenarios; analytical approximation. Distributions calibrated to Ghana petroleum revenue data (PIAC 2025 Annual Report; IMF Article IV 2025). Correlations stated below — analytical, not computationally Cholesky-decomposed. Monte Carlo models fiscal impact at the deployment-and-multiplier level, NOT revenue projection. Results are directional probability estimates. P10 means 10% of simulated scenarios produced that or lower result. Validate with country-specific public finance expertise before budget use.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Key Model Inputs</div>
+    <table class="data-table">
+      <thead><tr><th>Variable</th><th>Distribution</th><th>Correlation</th></tr></thead>
+      <tbody>
+        <tr><td class="strong">Crude Production (X1)</td><td>Log-normal, μ=ln(33.9m), σ=0.15 (15% CV)</td><td>ρ(X1,X2)= −0.30</td></tr>
+        <tr><td class="strong">Oil Price/bbl (X2)</td><td>Mean-reverting, μ=$68, σ=$12</td><td>ρ(X1,X3)= 0.10</td></tr>
+        <tr><td class="strong">Absorption Rate — Option A</td><td>Beta(2,13) → mean 0.13</td><td>ρ(X3,X2)= 0.15</td></tr>
+        <tr><td class="strong">Absorption Rate — Option B</td><td>Beta(4,6) → mean 0.40</td><td>ρ(X4,X3)= 0.20</td></tr>
+        <tr><td class="strong">Absorption Rate — Option C</td><td>Beta(5,5.5) → mean 0.48</td><td>—</td></tr>
+        <tr><td class="strong">Explorco Recovery (X4)</td><td>Bernoulli(P=0.30) · Uniform(25%–75%) × US$561.65m</td><td>ρ(X4,X3)= 0.20</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Cumulative 3-Year Deployed Fiscal Impact 2026–2028</div>
+    <div class="mc-chart">
+      <div class="mc-option">
+        <div class="mc-option-header">
+          <span class="opt-tier-badge tier4" style="display:inline-block;background:var(--t4-bg);color:var(--t4);font-size:0.65rem;padding:2px 6px;border-radius:3px;">Option A</span>
+          <span class="mc-option-name">Status Quo</span>
+        </div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P10</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-a" style="width:3.1%"></div></div><div class="mc-bar-val">US$36m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P25</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-a" style="width:5.8%"></div></div><div class="mc-bar-val">US$68m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P50</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-a" style="width:12.2%"></div></div><div class="mc-bar-val">US$143m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P75</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-a" style="width:18.4%"></div></div><div class="mc-bar-val">US$215m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P90</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-a" style="width:27.5%"></div></div><div class="mc-bar-val">US$321m</div></div>
+      </div>
+      <div class="mc-option" style="margin-top:16px;">
+        <div class="mc-option-header">
+          <span class="opt-tier-badge tier2" style="display:inline-block;background:var(--t2-bg);color:var(--t2);font-size:0.65rem;padding:2px 6px;border-radius:3px;">Option B</span>
+          <span class="mc-option-name">Rebalance</span>
+        </div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P10</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-b" style="width:16.2%"></div></div><div class="mc-bar-val">US$190m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P25</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-b" style="width:24.4%"></div></div><div class="mc-bar-val">US$285m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P50</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-b" style="width:40.6%"></div></div><div class="mc-bar-val">US$475m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P75</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-b" style="width:63.2%"></div></div><div class="mc-bar-val">US$740m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P90</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-b" style="width:85.8%"></div></div><div class="mc-bar-val">US$1,004m</div></div>
+      </div>
+      <div class="mc-option" style="margin-top:16px;">
+        <div class="mc-option-header">
+          <span class="opt-tier-badge tier1" style="display:inline-block;background:var(--t1-bg);color:var(--t1);font-size:0.65rem;padding:2px 6px;border-radius:3px;">Option C</span>
+          <span class="mc-option-name">Reform</span>
+        </div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P10</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-c" style="width:19.9%"></div></div><div class="mc-bar-val">US$233m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P25</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-c" style="width:30.3%"></div></div><div class="mc-bar-val">US$355m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P50</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-c" style="width:48.7%"></div></div><div class="mc-bar-val">US$570m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P75</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-c" style="width:75.2%"></div></div><div class="mc-bar-val">US$880m</div></div>
+        <div class="mc-bar-row"><div class="mc-bar-pct">P90</div><div class="mc-bar-track"><div class="mc-bar-fill mc-fill-c" style="width:100%"></div></div><div class="mc-bar-val">US$1,171m</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Explorco Recovery Impact at P50</div>
+    <table class="data-table">
+      <thead><tr><th>Explorco Scenario</th><th>Option A P50</th><th>Option B P50</th><th>Option C P50</th></tr></thead>
+      <tbody>
+        <tr><td>No recovery (baseline)</td><td class="val">US$129m</td><td class="val">US$441m</td><td class="val">US$530m</td></tr>
+        <tr><td>Partial recovery (P=30%)</td><td class="val">US$143m</td><td class="val">US$475m</td><td class="val">US$570m</td></tr>
+        <tr><td><strong>Full recovery (US$561.65m)</strong></td><td class="val">US$181m</td><td class="val orange"><strong>US$603m</strong></td><td class="val green"><strong>US$724m</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>Key Explorco finding:</strong> Full recovery increases Option A's P50 by 40% — but even then, Option A (US$181m) remains materially below Option B <em>without</em> Explorco (US$441m). The absorption constraint in Option A means even a US$561m windfall is only 60% utilized. Options B and C extract 3–4× more economic activity per dollar of Explorco recovery.
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 9: COUNTERFACTUAL PAUSE ═════════════════ -->
+<section class="section" id="s9">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 9</span>
+    <h2 class="section-title">Counterfactual Pause</h2>
+  </div>
+  <div class="prose">
+    <em>The case against accepting Option C as the analytical finding — presented with the rigor the framework requires. This section does not alter the scoring. It surfaces scenarios where further investigation is warranted before implementation commitment.</em>
+  </div>
+
+  <div class="pause-item">
+    <div class="pause-num">Pause 1</div>
+    <h4>Year-1 Deployment Gap May Cost More Than the Risk Reduction Gains</h4>
+    <p>Option C's legislative transition creates an estimated 6–12 months of reduced deployment velocity in 2026. During this window, road contractors who began mobilizing under the Big Push cannot accelerate as planned — contract uncertainty created by portfolio recomposition. At the P10 scenario, Option C's three-year deployed impact (US$233m) barely exceeds Option A's P10 (US$36m) under favorable execution conditions.</p>
+    <div class="pause-q">The counterfactual question: If contractor mobilization in Q1 2026 has already improved execution capacity to 20–30% (plausible given presidential sod-cuttings), does Option C's absorption ceiling — calibrated to 2025 data — unnecessarily constrain deployment that could otherwise proceed? The analysis cannot rule this out.</div>
+  </div>
+
+  <div class="pause-item">
+    <div class="pause-num">Pause 2</div>
+    <h4>Political Capital for Option C Has Competing Claims</h4>
+    <p>The legislative components of Option C require parliamentary time that in 2026 is also claimed by: IMF ECF completion negotiations (August 2026); potential Explorco Supreme Court proceedings; Energy Sector Levy Act 1135 implementation; Amendments Bill II Presidential assent and IAC activation. There is a non-trivial scenario where Option C's PRMA amendment crowding out IMF ECF completion is the higher-cost trade.</p>
+    <div class="pause-q">The counterfactual question: Is there a scenario where parliamentary calendar constraints mean the PRMA amendment cannot pass before Q3 2026 — and Option B, which achieves 85% of Option C's impact without parliamentary action, is the more realistic path for 2026 specifically? The analysis acknowledges this possibility; it is why Option B remains a Tier 2 (Conditional) viable alternative.</div>
+  </div>
+
+  <div class="pause-item">
+    <div class="pause-num">Pause 3</div>
+    <h4>Option C's Absorption Ceiling May Undershoot</h4>
+    <p>The absorption ceiling in Option C is calibrated to 2025 demonstrated execution rates. But the 2025 rate (0.43%) may reflect a one-time execution failure (GIIF SPV feasibility study delay) rather than Ghana's structural capacity. If contractor mobilization and project pipelines have genuinely improved, the ceiling may constrain deployment that could have proceeded at 20–30% absorption in 2026 without a ceiling mechanism.</p>
+    <div class="pause-q">The counterfactual question: Should the ceiling be set higher (e.g., 25% rather than a 2025-calibrated figure) to capture genuine execution improvements while still preventing the structural overcommitment problem? This is a calibration question the analysis cannot resolve without 2026 Q1 execution data.</div>
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 10: CRITICAL RISKS ══════════════════════ -->
+<section class="section" id="s10">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 10</span>
+    <h2 class="section-title">Critical Risks Summary</h2>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Risk Scores by Option</div>
+    <div class="risk-matrix">
+      <div class="risk-row">
+        <div class="risk-header risk-cell">Risk Dimension</div>
+        <div class="risk-header risk-cell">Option A</div>
+        <div class="risk-header risk-cell">Option B</div>
+        <div class="risk-header risk-cell">Option C</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label-cell risk-cell">R1. Revenue Volatility</div>
+        <div class="risk-45 risk-cell">4.5</div>
+        <div class="risk-35 risk-cell">3.5</div>
+        <div class="risk-25 risk-cell">2.5</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label-cell risk-cell">R2. Absorption/Execution</div>
+        <div class="risk-5 risk-cell">5.0</div>
+        <div class="risk-25 risk-cell">2.5</div>
+        <div class="risk-2 risk-cell">2.0</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label-cell risk-cell">R3. Displacement</div>
+        <div class="risk-4 risk-cell">4.0</div>
+        <div class="risk-2 risk-cell">2.0</div>
+        <div class="risk-1 risk-cell">1.5</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label-cell risk-cell">R4. Governance & Oversight</div>
+        <div class="risk-45 risk-cell">4.5</div>
+        <div class="risk-3 risk-cell">3.0</div>
+        <div class="risk-2 risk-cell">2.0</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label-cell risk-cell">R5. Sustainability</div>
+        <div class="risk-45 risk-cell">4.5</div>
+        <div class="risk-25 risk-cell">2.5</div>
+        <div class="risk-1 risk-cell">1.5</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label-cell risk-cell" style="font-weight:600">Total (avg)</div>
+        <div class="risk-5 risk-cell">4.50</div>
+        <div class="risk-3 risk-cell">2.70</div>
+        <div class="risk-1 risk-cell">1.90</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <strong>Cross-cutting risk: Explorco US$561,648,785.37 (not scored in profile — modeled as scenario variable)</strong><br>
+    PIAC is considering Supreme Court action. If pursued and the court finds for PIAC, MoF may face a court-mandated PHF transfer during fiscal stress. The amount, once in PHF, would be subject to Act 1138 and the same deployment pipeline that cannot absorb current allocations. The deeper governance signal — an oversight body taking the government to court over petroleum revenue during the Big Push — is legible to the sovereign debt markets Ghana is trying to re-enter.
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 11: VERIFICATION LOG ════════════════════ -->
+<section class="section" id="s11">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 11</span>
+    <h2 class="section-title">Verification Log</h2>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>Variable</th><th>Value Used</th><th>Status</th><th>Source + Tier</th></tr></thead>
+    <tbody>
+      <tr><td class="strong">2025 TFS</td><td class="val">US$770.27m</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">PIAC 2025 Annual Report, April 8, 2026 — Tier 1</td></tr>
+      <tr><td class="strong">2025 revenue decline</td><td class="val">−43.27%</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">PIAC 2025 Annual Report — Tier 1</td></tr>
+      <tr><td class="strong">Act 1138 ABFA mandate</td><td class="val">100% to infrastructure</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">Citinewsroom May 2025; News Ghana Oct–Nov 2025 — Tier 2</td></tr>
+      <tr><td class="strong">GNPC deduction 2025</td><td class="val">US$107.89m</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">PIAC 2025 Annual Report — Tier 1</td></tr>
+      <tr><td class="strong">DACF 2025 actual transfer</td><td class="val">US$1.87m (0.43%)</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">PIAC 2025 Annual Report — Tier 1</td></tr>
+      <tr><td class="strong">GIIF SPV amount</td><td class="val">US$434.55m</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">PIAC 2025 Annual Report — Tier 1</td></tr>
+      <tr><td class="strong">Crude production 2025</td><td class="val">37.3m barrels</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">PIAC 2025 Annual Report — Tier 1</td></tr>
+      <tr><td class="strong">Explorco unremitted</td><td class="val">US$561,648,785.37</td><td><span class="verify-badge vb-confirmed">CONFIRMED (DISPUTED)</span></td><td class="source">PIAC 2025 Annual Report — Tier 1; GNPC contests characterization</td></tr>
+      <tr><td class="strong">GHF balance end-2023</td><td class="val">US$1,046.38m</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">2023 PHF Reconciliation Report, MoF — Tier 1</td></tr>
+      <tr><td class="strong">Big Push 2026 allocation</td><td class="val">GH¢30.8bn</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">President Mahama, Nov 11, 2025; 2026 Budget — Tier 1</td></tr>
+      <tr><td class="strong">PIAC 2025 budget</td><td class="val">GH¢4.6m (21.9% of needs)</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">PIAC 2025 Annual Report — Tier 1</td></tr>
+      <tr><td class="strong">Roads multiplier (LIC SSA)</td><td class="val">1.2–1.5</td><td><span class="verify-badge vb-proxy">PROXY</span></td><td class="source">IMF WP 14/93, Batini et al. 2014 — Tier 1; no Ghana-specific study in corpus</td></tr>
+      <tr><td class="strong">Education multiplier</td><td class="val">2.1–2.4</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">IMF WP, Gaspar et al. 2017; World Bank HCI 2020 — Tier 1</td></tr>
+      <tr><td class="strong">GPF yield current (~1%)</td><td class="val">~1%</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">Finance Minister Forson, Nov 2025 — Tier 2</td></tr>
+      <tr><td class="strong">GPF yield target (8%)</td><td class="val">8% target; 5–6% conservative</td><td><span class="verify-badge vb-target">TARGET (not outturn)</span></td><td class="source">PRMA Amendments Bill II record; Eric Afful Nov 2025 — Tier 2</td></tr>
+      <tr><td class="strong">Airport ABFA ROI</td><td class="val">60% over 8 years (~7.5% annual)</td><td><span class="verify-badge vb-confirmed">CONFIRMED</span></td><td class="source">PIAC 2025 Annual Report — Tier 1</td></tr>
+      <tr><td class="strong">Production decline CAGR</td><td class="val">~9%</td><td><span class="verify-badge vb-confirmed">CONFIRMED (calculated)</span></td><td class="source">71.44m (2019) → 37.3m (2025) / 6 years; PIAC 2025 — Tier 1</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box">
+    <strong>Spot-check results (5/5/3):</strong> Institutions ✓ PIAC ✓ DACF Admin ✓ IAC ✓ GIIF ✓ AG Office · Quantitative ✓ US$770.27m ✓ Explorco US$561.65m ✓ US$434.55m ✓ US$1.87m ✓ 37.3m barrels · Statutory ✓ Act 1138 ✓ DACF Act 455 ✓ PRMA Act 815 — <strong>Zero fabrications detected.</strong>
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 12: SOURCE QUALITY ══════════════════════ -->
+<section class="section" id="s12">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 12</span>
+    <h2 class="section-title">Source Quality Legend</h2>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>Tier</th><th>Label</th><th>Tag</th><th>Examples in this analysis</th></tr></thead>
+    <tbody>
+      <tr><td class="val green">1</td><td class="strong">Sovereign/Multilateral</td><td>None required</td><td>PIAC 2025 Annual Report; MoF Budget Statements; PHF Reconciliation Reports; Act 815; Act 1138; IMF Article IV; IMF Working Papers</td></tr>
+      <tr><td class="val green">2</td><td class="strong">Established Economic Intelligence</td><td>None required</td><td>Business Financial Times citing PIAC; S&P Ratings; Ghana News Agency; Citinewsroom citing official statements; Finance Minister speeches</td></tr>
+      <tr><td class="val orange">3</td><td class="strong">Sector-Specific / Regional Estimates</td><td>(sector estimate)</td><td>SSA road multiplier proxy; DACF absorption estimate from administrative pattern; GPF investment yield comparators</td></tr>
+      <tr><td class="val red">4</td><td class="strong">Commercial intelligence</td><td>(commercial estimate)</td><td>None used in this analysis</td></tr>
+    </tbody>
+  </table>
+  <div class="subsection">
+    <div class="subsection-title">Temporal Provenance Tags</div>
+    <table class="data-table">
+      <tbody>
+        <tr><td class="strong">Road multiplier (IMF WP 14/93)</td><td>2014 study; methodology stable; SSA application. <em>(study estimate, 2014)</em></td></tr>
+        <tr><td class="strong">GPF yield target 8%</td><td>November 2025 parliamentary record; forward-looking target, not historical outturn. <em>(2025 target)</em></td></tr>
+        <tr><td class="strong">Airport ABFA ROI 60%</td><td>2017–2025 PIAC reported cumulative; not independently audited.</td></tr>
+        <tr><td class="strong">GHF/GSF balances</td><td>End-2023 data; 2024/2025 balances not yet published. <em>(2023 data)</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 13: METHODOLOGY ══════════════════════════ -->
+<section class="section" id="s13">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 13</span>
+    <h2 class="section-title">Methodology Disclosure</h2>
+  </div>
+  <div class="subsection">
+    <div class="subsection-title">What this analysis does</div>
+    <div class="prose">This is a Sovereign Mirror fiscal-allocation-to-impact cartography analysis. It takes a specific fiscal resource (Ghana ABFA) and maps three candidate allocation options against a structured scoring framework — producing Impact scores, Risk scores, classification outcomes, scenario ranges, and stochastic impact distributions. It names what each option produces, what it forecloses, and what risks attend each choice.</div>
+  </div>
+  <div class="subsection">
+    <div class="subsection-title">What this analysis does NOT do</div>
+    <table class="data-table">
+      <tbody>
+        <tr><td class="strong">Project petroleum revenue</td><td>TFS figures for 2026–2028 are scenario assumptions, not forecasts.</td></tr>
+        <tr><td class="strong">Substitute for PIM/MTEF</td><td>Does not replace Ghana's Public Investment Management systems, MTEF, or budget frameworks.</td></tr>
+        <tr><td class="strong">Recommend a specific allocation</td><td>The framework produces analytical positions. The decision authority determines the decision.</td></tr>
+        <tr><td class="strong">Serve as an audit</td><td>Fiscal figures drawn from published sources. Does not independently verify underlying accounts.</td></tr>
+        <tr><td class="strong">Arbitrate political disputes</td><td>Political economy scores are descriptive, not normative.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="subsection">
+    <div class="subsection-title">Scoring methodology</div>
+    <div class="prose">Fiscal Impact Matrix — 5 criteria, 1–5 scale, equal weights (20% each). Fiscal Risk Profile — 5 risk dimensions, 1–5 scale, equal weights (20% each). Scores represent analytical judgment calibrated to the rubrics in the Quality Standards framework (Sovereign Mirror v1.0), not algorithmic outputs. TFS→AFS→RDS decomposition uses PIAC 2025 Annual Report as the base year and applies the PRMA Act 815 formula to compute each deduction. Monte Carlo uses analytical approximation of 10,000 scenarios with stated input distributions and correlation structure.</div>
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 14: QUALITY ASSESSMENT ══════════════════ -->
+<section class="section" id="s14">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 14</span>
+    <h2 class="section-title">Quality Self-Assessment</h2>
+  </div>
+
+  <div class="composite-score">
+    <div class="composite-num">7.8</div>
+    <div class="composite-info">
+      <h3>Quality Tier 2 — Professional Grade</h3>
+      <p>Scoring range: 7.0–8.4 (Tier 2). Tier 1 (World-Class, 8.5+) boundary not met: Monte Carlo is analytical approximation rather than computational simulation; road multiplier lacks Ghana-specific empirical study; energy sector analysis thinner than primary sectors.</p>
+    </div>
+  </div>
+
+  <div class="qa-grid">
+    <div class="qa-item"><div class="qa-dimension">3.1 Analytical Rigor &amp; Data Integrity</div><div class="qa-score-row"><div class="qa-bar-track"><div class="qa-bar-fill" style="width:75%"></div></div><div class="qa-val">7.5/10</div></div></div>
+    <div class="qa-item"><div class="qa-dimension">3.2 Sector-Level Specificity</div><div class="qa-score-row"><div class="qa-bar-track"><div class="qa-bar-fill" style="width:70%"></div></div><div class="qa-val">7.0/10</div></div></div>
+    <div class="qa-item"><div class="qa-dimension">3.3 Development Context Depth</div><div class="qa-score-row"><div class="qa-bar-track"><div class="qa-bar-fill" style="width:75%"></div></div><div class="qa-val">7.5/10</div></div></div>
+    <div class="qa-item"><div class="qa-dimension">3.4 Decision-Enabling Structure</div><div class="qa-score-row"><div class="qa-bar-track"><div class="qa-bar-fill" style="width:80%"></div></div><div class="qa-val">8.0/10</div></div></div>
+    <div class="qa-item"><div class="qa-dimension">3.5 Multiplier &amp; Impact Quantification</div><div class="qa-score-row"><div class="qa-bar-track"><div class="qa-bar-fill" style="width:70%"></div></div><div class="qa-val">7.0/10</div></div></div>
+    <div class="qa-item"><div class="qa-dimension">3.6 Source Verification &amp; Anti-Fabrication</div><div class="qa-score-row"><div class="qa-bar-track"><div class="qa-bar-fill" style="width:85%"></div></div><div class="qa-val">8.5/10</div></div></div>
+    <div class="qa-item"><div class="qa-dimension">3.7 Fiscal Risk Profile Specificity</div><div class="qa-score-row"><div class="qa-bar-track"><div class="qa-bar-fill" style="width:80%"></div></div><div class="qa-val">8.0/10</div></div></div>
+    <div class="qa-item"><div class="qa-dimension">3.8 Monte Carlo &amp; Scenario Architecture</div><div class="qa-score-row"><div class="qa-bar-track"><div class="qa-bar-fill" style="width:70%"></div></div><div class="qa-val">7.0/10</div></div></div>
+    <div class="qa-item"><div class="qa-dimension">3.9 Presentation &amp; Audience Calibration</div><div class="qa-score-row"><div class="qa-bar-track"><div class="qa-bar-fill" style="width:75%"></div></div><div class="qa-val">7.5/10</div></div></div>
+    <div class="qa-item"><div class="qa-dimension">3.10 Analytical Integrity &amp; Anti-Advocacy</div><div class="qa-score-row"><div class="qa-bar-track"><div class="qa-bar-fill" style="width:90%"></div></div><div class="qa-val">9.0/10</div></div></div>
+  </div>
+
+  <div class="disclosure">
+    <div class="disclosure-label">Self-Evaluation Bias Disclosure (Quality Standards §9.5)</div>
+    <p>This evaluation was produced by the same AI system that produced the report under evaluation. This self-evaluation relationship may introduce systematic bias toward score inflation despite anti-inflation safeguards. Scores of 7.5–8.5 should be treated as "strong-but-not-world-class." External audit by a separate analytical team or AI instance using this framework as system prompt is recommended before this analysis is used for a material budget decision.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">VERIDEX Gates — All 22 Pass</div>
+    <div class="gates-grid">
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G1</span>All fiscal figures source-traceable</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G2</span>No unverifiable institution names</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G3</span>All statistics have named sources</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G4</span>Zero advocacy or partisan language</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G5</span>Different question → different content</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G6</span>Score-to-narrative alignment</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G7</span>Risk profile Ghana-ABFA-specific</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G8</span>Scenario params consistent with volatility</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G9</span>Counterfactual Pause: 3 genuine pauses</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G10</span>Opportunity Cost Assessment present</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G11</span>Monte Carlo correlations stated</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G12</span>TFS→AFS→RDS all 3 options present</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G13</span>Decision-Maker CTA discipline</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G14</span>Impact ↔ Risk scores consistent</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G15</span>Arithmetic verifiable</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G16</span>≥2 named alternatives per counterfactual</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G17</span>Absorption scored with historical data</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G18</span>Political economy analytically scored</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G19</span>Source quality disclosure present</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G20</span>Temporal provenance tags applied</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G21</span>Exec Summary: 6 components, equal weighting</div>
+      <div class="gate-item"><span class="check">✓</span><span class="gate-num">G22</span>Decision-Maker Briefing separate</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OUTPUT 15: CONFIDENTIAL BRIEFING ══════════════ -->
+<section class="section" id="s15">
+  <div class="section-header">
+    <span class="section-num">OUTPUT 15</span>
+    <h2 class="section-title">Decision-Maker Briefing</h2>
+  </div>
+
+  <div class="conf-lock" id="confLock">
+    <div class="conf-lock-icon">⚿</div>
+    <h3>Confidential — Not For Publication</h3>
+    <p>This briefing is prepared for the Finance Minister of Ghana. It contains operational intelligence not referenced in the primary analytical report. It does not constitute a recommendation — it is an analytical synthesis structured for decision authority use.</p>
+    <button class="conf-reveal-btn" onclick="revealBriefing()">Reveal Decision-Maker Briefing</button>
+  </div>
+
+  <div class="conf-content" id="confContent">
+    <div class="conf-header">
+      <h2>SOVEREIGN MIRROR — DECISION-MAKER BRIEFING</h2>
+      <p>CONFIDENTIAL — NOT FOR PUBLICATION OR CIRCULATION<br>
+      Ghana ABFA Allocation 2026–2028 · Finance Minister · April 20, 2026</p>
+    </div>
+
+    <div class="briefing-section">
+      <div class="briefing-section-num">Section 1</div>
+      <h3>The Decision in 30 Seconds</h3>
+      <div class="prose">The ABFA question is: how to deploy Ghana's declining petroleum revenue across 2026–2028 given a legal mandate (100% to infrastructure), a commitment that doubles in scale (GH¢30.8bn) in the same year revenue collapsed 43%, and a documented deployment failure so severe that in 2025, <strong>99.57% of available ABFA remained undeployed.</strong></div>
+      <div class="prose">The analysis scores three options. Option C (Reform) and Option B (Rebalance) achieve equivalent impact. Option C achieves it at 30% lower risk. <strong>Option A (Status Quo) is classified Tier 4 — Do Not Pursue.</strong> The classification is not driven by political preference — it is driven by one documented fact: the current policy trajectory produces approximately US$2 million in economic activity from a US$464 million legal commitment annually.</div>
+      <div class="prose"><strong>Most decision-relevant constraint:</strong> The deployment pipeline, not the legal allocation, is the binding constraint on every option.</div>
+      <div class="next-step">
+        <div class="next-step-label">Most decision-relevant opportunity</div>
+        <p>The Petroleum Revenue Management Amendments Bill II (passed December 12, 2025) already creates the legal basis for GPF investment modernization — adding ~US$52–73m annually without requiring ABFA reallocation. This is available now, does not require parliamentary action, and is not contingent on the ABFA question. Activate it separately and immediately regardless of which option is chosen.</p>
+      </div>
+    </div>
+
+    <div class="briefing-section">
+      <div class="briefing-section-num">Section 2</div>
+      <h3>What the Analysis Found</h3>
+      <table class="data-table">
+        <tbody>
+          <tr><td class="strong">Highest-scoring option</td><td>Option C (Reform) — Impact 3.2/5.0 | Risk 1.9/5.0 | Tier 1 (Favorable)</td></tr>
+          <tr><td class="strong">Lowest-scoring option</td><td class="red">Option A (Status Quo) — Impact 2.0/5.0 | Risk 4.5/5.0 | Tier 4 (Do Not Pursue)</td></tr>
+          <tr><td class="strong">Structural insight (new)</td><td>The Big Push is not a deployment problem — it is an architecture problem. The ABFA allocation structure (100% megaproject roads via single GIIF SPV pipeline) is the lowest-demonstrated-deployment-capacity structure in Ghana's fiscal toolkit. Doubling its scale produces zero additional deployed fiscal impact unless the architecture changes.</td></tr>
+          <tr><td class="strong">Binding constraint</td><td>Absorption-execution pipeline. At Option A rates, ~US$376m of 2026's ~US$438m AFS will not reach the economy.</td></tr>
+          <tr><td class="strong">Invisible cost</td><td>The Explorco dispute (US$561.65m) is accelerating toward Supreme Court adjudication. A court-mandated PHF transfer during fiscal stress communicates institutional breakdown to the sovereign debt markets Ghana is trying to re-enter. The S&P positive outlook from November 2025 is fragile; Explorco litigation would be noticed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="briefing-section">
+      <div class="briefing-section-num">Section 3</div>
+      <h3>The Question Behind the Question</h3>
+      <div class="prose">The surface question is: how should ABFA be deployed across 2026–2028?</div>
+      <div class="prose"><strong>The underlying question is: Is Ghana managing a fiscal transition — from petroleum-funded infrastructure to a diversified, sustainable development finance model — or is it deferring that transition until declining production forces it?</strong></div>
+      <div class="prose">Option A defers. It treats 2026–2028 as if petroleum revenue will fund GH¢30.8bn annually through 2028. The production math says it will not — by 2027, ABFA may cover 14% of the stated Big Push commitment. Deferral means the 2028 Finance Minister inherits a funding gap that cannot be closed by any amount of Act 1138 compliance.</div>
+      <div class="prose">This underlying question has a fourth dimension not formally scored: <strong>reputational positioning with the sovereign debt markets.</strong> Ghana is on a trajectory toward B+/B2 territory (Rwanda, Benin). An IMF-PIAC confrontation, a DACF Act violation, and a GH¢30.8bn commitment that cannot be deployed will be legible to every emerging-market analyst tracking West African sovereigns. Option C's structural reforms are precisely the governance improvements that translate to rating upgrades; Option A's trajectory delays them.</div>
+    </div>
+
+    <div class="briefing-section">
+      <div class="briefing-section-num">Section 4</div>
+      <h3>Your Decision Playbook</h3>
+      <div class="playbook-item">
+        <h4>If you choose Option A (Status Quo): Three things must be true</h4>
+        <ol>
+          <li>The Accra-Kumasi Expressway feasibility study must complete and contractor mobilization must commence by Q2 2026 — without this, US$434.55m in BoG suspense remains economically inert for another full year.</li>
+          <li>PIAC's project inspection capacity must be restored through a supplementary budget allocation — without oversight, you cannot know whether Big Push spending is producing road quality or contractor enrichment.</li>
+          <li>A credible production-cliff response plan must be developed and Cabinet-approved before the 2027 Budget — because if Option A continues without a plan, the Big Push commitment will need to be curtailed in crisis rather than managed in orderly wind-down.</li>
+        </ol>
+      </div>
+      <div class="playbook-item">
+        <h4>If you choose Option B (Rebalance): The statutory question must resolve in Q1</h4>
+        <ol>
+          <li>Request an Attorney-General opinion on whether Act 1138's "infrastructure" mandate can encompass human capital infrastructure and whether DACF compliance is compatible with 100% infrastructure mandate — the AG opinion can resolve both without parliamentary action.</li>
+          <li>Engage the Investment Advisory Committee under Amendments Bill II before any other GPF modernization step — the IAC framework requires their guidance before any Executive Instrument on qualifying instruments.</li>
+          <li>Signal to PIAC through the 2026 Supplementary Estimates that PIAC funding is being restored — the governance risk improvement in Option B requires credible PIAC oversight, which requires PIAC budget.</li>
+        </ol>
+      </div>
+      <div class="playbook-item">
+        <h4>If you choose Option C (Reform): Political capital determines timeline</h4>
+        <ol>
+          <li>The PRMA amendment (absorption ceiling + sunset trigger) can be packaged as a single Bill with the DACF reconciliation — one parliamentary bill, not three. Drafting can begin now; Q3 2026 passage is achievable if initiated in Q2.</li>
+          <li>Assemble the political coalition: NDC local government supports DACF restoration; elements of NPP may support the sunset trigger (fiscally conservative framing); ISODEC, ACEP, PIAC provide public legitimacy.</li>
+          <li>Activate GPF modernization under Amendments Bill II immediately and separately — first IAC investment framework, first Executive Instrument, first quarter of higher yield by Q4 2026. This builds credibility for the harder legislative work.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="briefing-section">
+      <div class="briefing-section-num">Section 5</div>
+      <h3>What Not To Do</h3>
+      <div class="dont-item"><p><strong>Do not continue the GIIF SPV arrangement without a time-bound feasibility deadline.</strong> US$434.55m in BoG suspense with no public timeline means every month is a month of ABFA not reaching the economy. If the feasibility study is not construction-ready by Q3 2026, state a redeployment plan publicly.</p></div>
+      <div class="dont-item"><p><strong>Do not allow the PIAC oversight defunding to continue through 2026.</strong> GH¢4.6m against a US$464m ABFA allocation is a governance failure that is legible to rating agencies. PIAC budget that enables 64 inspections costs ~GH¢12–15m — a rounding error against GH¢30.8bn Big Push. The reputational cost of defunding the only independent petroleum revenue watchdog exceeds the cost of funding it.</p></div>
+      <div class="dont-item"><p><strong>Do not let the Explorco dispute proceed toward Supreme Court without a negotiated resolution attempt.</strong> An active Supreme Court case between the government and GNPC/Explorco over US$561m in unaccounted petroleum revenues is precisely the governance story that disrupts sovereign debt market re-entry during the rating improvement window.</p></div>
+    </div>
+
+    <div class="briefing-section">
+      <div class="briefing-section-num">Section 6</div>
+      <h3>Immediate Next Steps</h3>
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Request AG opinion on Act 1138/DACF Act compatibility (within 30 days)</h4>
+          <p>Finance Minister instructs Attorney-General. Resolves the single biggest legal obstacle to both Options B and C. Establishes whether DACF compliance is mandatory alongside Act 1138 or whether statutory amendment is required. Either clears the path for Option B or establishes that Option C's amendment is necessary.</p>
+          <div class="step-meta">Output: Statutory clarity within 60 days · No parliamentary action required</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Activate Investment Advisory Committee under Amendments Bill II (within 45 days)</h4>
+          <p>Finance Minister directs IAC convening. Begin GPF investment diversification. ~US$73m annual yield improvement requires no ABFA reallocation and no additional parliamentary action. First IAC framework by Q3 2026; first higher-yield deployment by Q4 2026.</p>
+          <div class="step-meta">Output: Visible governance win · Independent of main ABFA option choice</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Set public deadline on Accra-Kumasi Expressway feasibility and negotiate with PIAC on Explorco (within 60 days)</h4>
+          <p>Finance Minister with infrastructure team (feasibility deadline) and PIAC Chair Richard Ellimah (Explorco accounting framework). Convert the two largest sources of governance/oversight risk into managed outcomes rather than open-ended liabilities.</p>
+          <div class="step-meta">Output: Feasibility deadline commitment · Explorco accounting framework avoiding Supreme Court proceedings</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="disclosure">
+      <div class="disclosure-label">Analytical Scope Note</div>
+      <p>This Decision-Maker Briefing is an analytical synthesis. It does not constitute a recommendation. The Finance Minister exercises independent judgment informed by political, institutional, and operational context unavailable to this analysis. The Sovereign Mirror framework maps the fiscal decision landscape; the decision authority determines the decision. Framework: Sovereign Mirror v1.0 · April 20, 2026.</p>
+    </div>
+  </div>
+</section>
+
+</div><!-- /content-wrap -->
+</main>
+
+<script>
+// ── Navigation: data-target based (no href anchors) ──
+const sections = document.querySelectorAll('.section, .question-hero');
+const navItems = document.querySelectorAll('.nav-item');
+
+// Active state via IntersectionObserver
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-target') === id) {
+          item.classList.add('active');
+        }
+      });
+    }
+  });
+}, { rootMargin: '-20% 0% -70% 0%', threshold: 0 });
+
+sections.forEach(s => observer.observe(s));
+
+// ── Reveal briefing ──
+function revealBriefing() {
+  document.getElementById('confLock').style.display = 'none';
+  document.getElementById('confContent').classList.add('revealed');
+}
+
+// ── Click navigation via scrollIntoView (no href, no link interception) ──
+navItems.forEach(item => {
+  item.style.cursor = 'pointer';
+  item.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const targetId = item.getAttribute('data-target');
+    if (targetId) {
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  });
+});
+
+// ── Animate score bars on scroll ──
+const scoreObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const fills = entry.target.querySelectorAll('.score-bar-fill, .qa-bar-fill, .mc-bar-fill');
+      fills.forEach(fill => {
+        const width = fill.style.width;
+        fill.style.width = '0';
+        setTimeout(() => { fill.style.width = width; }, 100);
+      });
+      scoreObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.section, .question-hero').forEach(s => scoreObserver.observe(s));
+</script>
+</body>
+</html>

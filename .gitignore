@@ -1,21 +1,6 @@
-# build
-dist/
-.astro/
-
-# deps
 node_modules/
-
-# env
 .env
 .env.*
 !.env.example
-
-# editor
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-
-# logs
-npm-debug.log*
 *.log
+.DS_Store

@@ -2,10 +2,10 @@
 nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmds = ["npm ci"]
+cmds = ["npm ci --omit=dev"]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = ["echo 'Pre-built dist/ — no build step needed'"]
 
 [start]
 cmd = "npm start"
