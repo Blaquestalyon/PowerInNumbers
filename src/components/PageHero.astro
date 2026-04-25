@@ -8,8 +8,10 @@ interface Props {
   headline: string;
   lede?: string;
   meta?: string;
+  metaLeft?: string;
+  metaRight?: string;
 }
-const { eyebrow, headline, lede, meta } = Astro.props;
+const { eyebrow, headline, lede, meta, metaLeft, metaRight } = Astro.props;
 ---
 
 <section class="phero" aria-labelledby="phero-h">
@@ -23,6 +25,11 @@ const { eyebrow, headline, lede, meta } = Astro.props;
     )}
     {meta && (
       <p class="phero__meta" data-reveal>{meta}</p>
+    )}
+    {(metaLeft || metaRight) && (
+      <p class="phero__meta" data-reveal>
+        {metaLeft}{metaLeft && metaRight && ' · '}{metaRight}
+      </p>
     )}
     <slot />
   </div>
