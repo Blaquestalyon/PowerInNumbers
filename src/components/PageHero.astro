@@ -28,7 +28,7 @@ const { eyebrow, headline, lede, meta, metaLeft, metaRight } = Astro.props;
     )}
     {(metaLeft || metaRight) && (
       <p class="phero__meta" data-reveal>
-        {metaLeft}{metaLeft && metaRight && <span aria-hidden="true"> · </span>}{metaRight}
+        {metaLeft}{metaLeft && metaRight && ' · '}{metaRight}
       </p>
     )}
     <slot />
