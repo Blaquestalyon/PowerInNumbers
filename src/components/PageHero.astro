@@ -1,0 +1,81 @@
+---
+/**
+ * Page hero for interior pages — eyebrow, headline, lede.
+ * Restrained editorial register. No images.
+ */
+interface Props {
+  eyebrow: string;
+  headline: string;
+  lede?: string;
+  meta?: string;
+}
+const { eyebrow, headline, lede, meta } = Astro.props;
+---
+
+<section class="phero" aria-labelledby="phero-h">
+  <div class="frame">
+    <p class="phero__eyebrow eyebrow" data-reveal>{eyebrow}</p>
+    <h1 id="phero-h" class="phero__headline" data-reveal>
+      <slot name="headline">{headline}</slot>
+    </h1>
+    {lede && (
+      <p class="phero__lede" data-reveal set:html={lede}></p>
+    )}
+    {meta && (
+      <p class="phero__meta" data-reveal>{meta}</p>
+    )}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .phero {
+    padding: 96px 0 64px;
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 720px) {
+    .phero { padding: 64px 0 48px; }
+  }
+  .phero__eyebrow {
+    color: var(--oxblood);
+    margin-bottom: 28px;
+  }
+  .phero__headline {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 62px;
+    line-height: 1.05;
+    letter-spacing: -0.022em;
+    color: var(--ink);
+    margin: 0 0 32px;
+    max-width: 880px;
+  }
+  @media (max-width: 720px) {
+    .phero__headline { font-size: 38px; line-height: 1.1; letter-spacing: -0.018em; }
+  }
+  .phero__lede {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin: 0 0 24px;
+  }
+  @media (max-width: 720px) {
+    .phero__lede { font-size: 18px; }
+  }
+  .phero__lede em { color: var(--ink); }
+  .phero__meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--subtext);
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+    margin: 24px 0 0;
+    max-width: 680px;
+  }
+</style>

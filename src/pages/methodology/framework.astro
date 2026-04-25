@@ -1,0 +1,1061 @@
+---
+/**
+ * /methodology/framework — CROWD POWERED, the 12-step framework.
+ *
+ * Per deck §03 (Layer 02): "CROWD POWERED · the 12-step framework.
+ *   The methodology's mechanics, marketed independently of any single
+ *   application." Originally developed in 2003.
+ *
+ * The 12 steps are an acrostic — C-R-O-W-D P-O-W-E-R-E-D — and are organized
+ * by Power In Numbers in four working movements:
+ *
+ *   Movement I  · Resource Optimization   · C-R-O
+ *   Movement II · Community Building      · W-D-P-O
+ *   Movement III· Market Expansion        · W-E
+ *   Movement IV · Sustainable Scale       · R-E-D
+ *
+ * Source: PIN internal framework documentation (Jay Davis, current canon).
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+interface Step {
+  movement: 'I' | 'II' | 'III' | 'IV';
+  num: string;
+  letter: string;
+  name: string;
+  function: string;
+  body: string;
+  implementation: string[];
+  benefits: string[];
+}
+
+const steps: Step[] = [
+  /* ═══════════════════════════════════════════════════
+     Movement I — Resource Optimization (C-R-O)
+     ═══════════════════════════════════════════════════ */
+  {
+    movement: 'I',
+    num: '01',
+    letter: 'C',
+    name: 'Crowd-source everything possible',
+    function: 'Distribute resource requirements across a broad base of willing participants.',
+    body:
+      'Most ventures fail not because the idea is wrong but because a single principal is asked to carry every category of risk &mdash; capital, inventory, expertise, labor, market validation. The first move of the framework is to refuse that arrangement on principle. Identify each element of the work that can be moved off a single balance sheet and onto a constituency that has standing in the outcome.',
+    implementation: [
+      'Identify every element of the work that can be crowd-sourced &mdash; funding, inventory, skills, distribution, validation, governance.',
+      'Build transparent systems for contribution and tracking. Opacity destroys the participation logic immediately.',
+      'Establish a clear value proposition for each contributor class. No participant joins for the same reason; the framework names the reason for each.',
+    ],
+    benefits: [
+      'Reduced individual risk and resource burden.',
+      'Stakeholder buy-in becomes structural, not aspirational.',
+      'Access to expertise the firm could not afford to staff.',
+      'Resilience through a distributed resource base.',
+    ],
+  },
+  {
+    movement: 'I',
+    num: '02',
+    letter: 'R',
+    name: 'Realize value via volume',
+    function: 'Leverage economies of scale and network effects to generate value the constituency would not access alone.',
+    body:
+      'Once the participant base exists, the second move is to convert numerosity into purchasing power, bargaining power, or production efficiency that no individual member could achieve. The math is simple. The discipline is to engineer the volume mechanism explicitly &mdash; not as a side effect of growth, but as a designed instrument that compounds the value of joining.',
+    implementation: [
+      'Identify opportunities for bulk purchasing, bulk production, or volume-based pricing access.',
+      'Engineer systems that become more valuable to each participant as more participants join.',
+      'Build mechanisms that share the volume gain back to participants in a visible, attributable way.',
+    ],
+    benefits: [
+      'Reduced per-unit cost across the constituency.',
+      'Bargaining power against incumbents the constituency could not face alone.',
+      'A value proposition that improves over time without additional capital input.',
+      'Operational efficiency as a designed property, not a hoped-for outcome.',
+    ],
+  },
+  {
+    movement: 'I',
+    num: '03',
+    letter: 'O',
+    name: 'Optimize already-spent money',
+    function: 'Maximize the utility of existing expenditures &mdash; save, earn, and protect the assets the constituency is already deploying.',
+    body:
+      'Most economic models ask the participant to spend more. The framework asks the participant to spend the same and capture more. Existing expenditures &mdash; rent, payroll, inventory, marketing &mdash; are audited for embedded value that is being left on the table by the conventional structure. The savings, earnings, and protections that result are what the framework returns to the participant in lieu of asking them to deploy fresh capital.',
+    implementation: [
+      'Audit current expenditures for optimization opportunities &mdash; what is already being spent that could earn, save, or be protected.',
+      'Implement systems that capture additional value from necessary expenses (rebates, equity participation, group rates, shared infrastructure).',
+      'Create protection mechanisms for the assets the participant already owns or operates.',
+    ],
+    benefits: [
+      'Improved resource efficiency without additional capital.',
+      'Reduced reliance on new investment to produce new return.',
+      'Better risk management on assets already at work.',
+      'A return on participation that begins on day one.',
+    ],
+  },
+
+  /* ═══════════════════════════════════════════════════
+     Movement II — Community Building (W-D-P-O)
+     ═══════════════════════════════════════════════════ */
+  {
+    movement: 'II',
+    num: '04',
+    letter: 'W',
+    name: 'Weave multi-purpose communities',
+    function: 'Build engaged communities that serve more than one strategic objective at once.',
+    body:
+      'A community built for one purpose is fragile; a community built for several is durable. The fourth step organizes the constituency around a set of overlapping objectives &mdash; commerce, learning, support, advocacy, recreation &mdash; so that the community survives the failure of any single one. The work here is editorial as much as architectural: deciding which purposes belong together, and which would dilute each other.',
+    implementation: [
+      'Develop platforms and rituals for community interaction that are not narrowly transactional.',
+      'Engineer activities that produce value across more than one objective at the same time (e.g., a member event that is simultaneously commerce, R&amp;D, and PR).',
+      'Foster connections between members that the firm itself does not mediate.',
+    ],
+    benefits: [
+      'Marketing cost displaced by member-to-member visibility.',
+      'Built-in R&amp;D feedback the firm cannot buy at any price.',
+      'Natural market validation in advance of every product release.',
+      'A standing source of investment, talent, and defense.',
+    ],
+  },
+  {
+    movement: 'II',
+    num: '05',
+    letter: 'D',
+    name: 'Distribute common branding with fractal benefits',
+    function: 'Create unified branding that delivers cascading benefits to every participant who carries it.',
+    body:
+      'The framework treats brand as shared capital. A common identity carried by every participant compounds at the level of the whole constituency rather than only at the level of the firm. Done with discipline, the smallest member earns credibility from the brand; the brand earns reach from the smallest member. The fractal language is deliberate: the same shape repeats at every scale, and every scale strengthens the others.',
+    implementation: [
+      'Develop a brand mark, voice, and standard strong enough to confer credibility at any scale at which it is used.',
+      'Create explicit systems for participants to carry, co-sign, or be endorsed by the brand &mdash; with rules.',
+      'Establish guidelines that protect the brand without privatizing it.',
+    ],
+    benefits: [
+      'Marketing impact shared rather than duplicated.',
+      'Credibility transferred to participants who could not generate it alone.',
+      'Reduced individual marketing cost across the constituency.',
+      'Collective visibility that no single participant could buy.',
+    ],
+  },
+  {
+    movement: 'II',
+    num: '06',
+    letter: 'P',
+    name: 'Propel a cause or movement',
+    function: 'Align economic activity with a broader social or cultural movement that already has gravity.',
+    body:
+      'Every durable economic structure rides on a cultural current. The framework names the current explicitly and aligns the venture with it on stated grounds &mdash; not as marketing language, but as a substantive commitment legible in the ledger. The discipline here is to refuse the alignment if it cannot be made authentic. A propelled cause is a force multiplier; a counterfeit one collapses the whole structure on first audit.',
+    implementation: [
+      'Identify the cause or movement whose values the venture genuinely shares.',
+      'Build the connection in the operating logic, not in the marketing copy.',
+      'Develop impact metrics specific enough that a skeptic could verify them.',
+    ],
+    benefits: [
+      'Engagement and loyalty that survive price competition.',
+      'Earned-media opportunities the venture would not have on its own.',
+      'Social capital that compounds independent of revenue.',
+      'A stakeholder commitment grounded in shared belief, not transaction.',
+    ],
+  },
+  {
+    movement: 'II',
+    num: '07',
+    letter: 'O',
+    name: 'Orchestrate PR over advertising',
+    function: 'Prioritize earned media and organic growth over paid advertising.',
+    body:
+      'The framework treats paid advertising as a last resort and earned media as a designed output. The reasoning is structural: a constituency built around shared cause and shared brand will produce news on a regular cadence if the firm engineers occasions for news. Milestones, partnerships, releases, primary sources &mdash; each is treated as a press artifact in advance, not a performance to be advertised after the fact.',
+    implementation: [
+      'Engineer newsworthy initiatives and milestones into the operating calendar.',
+      'Compose narratives a journalist can lift cleanly &mdash; with primary sources attached.',
+      'Build the relationships with the outlets that cover the cause, on terms the outlets respect.',
+      'Trust the constituency to amplify what is already true.',
+    ],
+    benefits: [
+      'Marketing cost reduced sharply against the paid-media baseline.',
+      'Credibility a paid placement cannot buy.',
+      'Sustainable growth that does not collapse when the ad budget pauses.',
+      'Stakeholder engagement built on stories rather than impressions.',
+    ],
+  },
+
+  /* ═══════════════════════════════════════════════════
+     Movement III — Market Expansion (W-E)
+     ═══════════════════════════════════════════════════ */
+  {
+    movement: 'III',
+    num: '08',
+    letter: 'W',
+    name: 'Weave virtual presence into reality',
+    function: 'Create tangible, real-world manifestations of every digital initiative.',
+    body:
+      'A digital-only presence is rented; a real-world presence is owned. The framework requires every digital constituency to have at least one site of physical instantiation &mdash; an event, a venue, a tour, a printed artifact, a place a member can visit. The physical anchor is what makes the digital community legible to an outsider, defensible to a journalist, and durable across platform shifts the firm does not control.',
+    implementation: [
+      'Identify the physical occasion or location that will serve as the anchor.',
+      'Engineer real-world experiences that are memorable on their own merits, not as marketing assets.',
+      'Build bridges that move the online community into the room and back out again.',
+    ],
+    benefits: [
+      'Credibility that survives a platform de-platforming.',
+      'Community bonds that hold under stress.',
+      'Visibility a digital impression cannot reproduce.',
+      'Market penetration that compounds geographically.',
+    ],
+  },
+  {
+    movement: 'III',
+    num: '09',
+    letter: 'E',
+    name: 'Engage connected economies',
+    function: 'Create deliberate synergies between economic systems and markets that already neighbor the venture.',
+    body:
+      'Markets do not stand alone. Every venture has adjacent economies whose health it depends on and whose health it can compound. The framework names those adjacencies explicitly and engineers the exchange across them. The point is not partnership for partnership\'s sake. It is that a venture indexed against a single market is fragile; a venture indexed against a connected set of markets is hedged at the level of the design.',
+    implementation: [
+      'Identify the complementary economic systems whose growth correlates with the venture\'s growth.',
+      'Construct value-exchange mechanisms that benefit both sides on stated terms.',
+      'Develop cross-market opportunities the participants on either side could not produce alone.',
+    ],
+    benefits: [
+      'Market opportunities that did not exist before the connection.',
+      'Vulnerability reduced through structural hedging.',
+      'Value creation that compounds across more than one ledger.',
+      'Stability against shocks specific to any single market.',
+    ],
+  },
+
+  /* ═══════════════════════════════════════════════════
+     Movement IV — Sustainable Scale (R-E-D)
+     ═══════════════════════════════════════════════════ */
+  {
+    movement: 'IV',
+    num: '10',
+    letter: 'R',
+    name: 'Render solutions scalable',
+    function: 'Ensure the venture can grow efficiently and effectively without the scaffolding that built it.',
+    body:
+      'The work that proves a model is not the work that scales it. The tenth step rewrites the operating system of the venture so that growth does not depend on the founders\' physical presence, the original constituency\'s goodwill, or the early adopters\' patience. Protocols replace heroics. Training replaces hand-holding. Automation replaces repetition. The work that is currently being done by people who can\'t be replaced becomes work that anyone trained on the framework can do.',
+    implementation: [
+      'Design systems for growth from the start, not bolted on after product-market fit.',
+      'Codify clear protocols and procedures &mdash; the kind that survive a team rotation.',
+      'Implement automation where the marginal human is not adding judgment.',
+      'Build training and onboarding systems that produce consistent quality at any volume.',
+    ],
+    benefits: [
+      'Reduced growing pains during expansion windows.',
+      'Consistent quality across geographies and cohorts.',
+      'Resource utilization that improves rather than degrades with scale.',
+      'Long-term viability that does not depend on the founders\' availability.',
+    ],
+  },
+  {
+    movement: 'IV',
+    num: '11',
+    letter: 'E',
+    name: 'Execute through a single entity',
+    function: 'Centralize the operations that benefit from coordination &mdash; not the participation, the operations.',
+    body:
+      'The framework is decentralized in participation and centralized in execution. That distinction is non-negotiable. A constituency thrives on distributed contribution; a venture dies on distributed accountability. A single entity holds the operating responsibility, the governance, the books, and the brand standard. The constituency holds the cause, the contribution, and the ownership share &mdash; but the levers of execution sit with one identifiable team that the principal can name.',
+    implementation: [
+      'Establish a clear organizational structure with a single point of operating accountability.',
+      'Build governance systems that the constituency trusts and the auditors can verify.',
+      'Develop transparent reporting that makes the centralization legitimate, not opaque.',
+    ],
+    benefits: [
+      'Coordination that does not collapse at scale.',
+      'Resource allocation that can be defended in front of a board.',
+      'Accountability that has a name and a forwarding address.',
+      'Decision-making that does not stall in a committee.',
+    ],
+  },
+  {
+    movement: 'IV',
+    num: '12',
+    letter: 'D',
+    name: 'Deliver 90% returns to the system',
+    function: 'For mission-focused ventures: ensure long-term sustainability by returning the dominant share of revenue to the business itself &mdash; reinvestment over extraction.',
+    body:
+      'The closing step is the structural commitment that distinguishes mission-focused ventures from extractive ones. Ninety percent of revenue goes back into the business &mdash; into operations, into growth, into the work the venture exists to do &mdash; and ten percent supports the operating entity that holds the framework together. The ratio is not a marketing posture. It is what makes a mission-focused venture mission-focused, and it is what keeps every prior step coherent rather than rhetorical.',
+    implementation: [
+      'Engineer reinvestment mechanisms that are mechanical, not discretionary &mdash; the 90% does not depend on year-end goodwill.',
+      'Build transparent reporting that makes the 90/10 split verifiable, period after period.',
+      'Direct the reinvestment into work the constituency can see: capacity, mission delivery, infrastructure, and growth that compounds the cause.',
+    ],
+    benefits: [
+      'Sustainability that compounds rather than depletes.',
+      'Stakeholder buy-in that does not require sales effort.',
+      'Long-term outcomes the extractive structure cannot produce.',
+      'A community that defends the venture because the venture is visibly reinvesting in its mission.',
+    ],
+  },
+];
+
+const movements = [
+  {
+    roman: 'I',
+    name: 'Resource Optimization',
+    keys: 'C · R · O',
+    range: 'Steps 01–03',
+    body: 'How the constituency stops bearing the conventional load.',
+  },
+  {
+    roman: 'II',
+    name: 'Community Building',
+    keys: 'W · D · P · O',
+    range: 'Steps 04–07',
+    body: 'How the constituency becomes durable, branded, and propelled.',
+  },
+  {
+    roman: 'III',
+    name: 'Market Expansion',
+    keys: 'W · E',
+    range: 'Steps 08–09',
+    body: 'How the venture moves from screen to room to neighboring economies.',
+  },
+  {
+    roman: 'IV',
+    name: 'Sustainable Scale',
+    keys: 'R · E · D',
+    range: 'Steps 10–12',
+    body: 'How the model survives growth, governance, and the test of time.',
+  },
+];
+---
+
+<BaseLayout
+  title="The Framework — CROWD POWERED · Power In Numbers"
+  description="CROWD POWERED is the 12-step framework Power In Numbers has used since 2003. C-R-O-W-D P-O-W-E-R-E-D — a sustainable, virtuous-cycle generalization of crowdfunding into a discipline for any venture, in any industry, that intends to be participatory rather than extractive."
+>
+  <PageHero
+    eyebrow="The framework · System 01"
+    headline="CROWD POWERED."
+    lede="Twelve steps. Four movements. The procedure the firm has run on itself, and on every venture it has built, <em>since 2003</em>."
+    meta="Originally taught 2003 · Industry-agnostic · The framework is the operating system of decision cartography"
+  />
+
+  {/* ──────────────────────────────────────────────
+      §01 — What it is, said plainly
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 01" tag="What it is" />
+
+      <div class="prose">
+        <p data-reveal>
+          CROWD POWERED is a twelve-step framework. The letters of the name are
+          the steps, in order. C&ndash;R&ndash;O&ndash;W&ndash;D, then
+          P&ndash;O&ndash;W&ndash;E&ndash;R&ndash;E&ndash;D. The acrostic is not
+          decorative. It is the index of the framework, and it has held since 2003.
+        </p>
+        <p data-reveal>
+          The framework began as a sustainable, virtuous-cycle generalization of
+          crowdfunding &mdash; a methodology that could fund and structure any
+          venture in any industry without the extractive dynamics that the
+          funding category would later be known for. ArtistShare launched the
+          same year for artists only. Indiegogo and Kickstarter brought
+          general-purpose rewards crowdfunding to the mainstream five and six
+          years later. CROWD POWERED was already operating as a framework, not a
+          mechanism, when those companies were founded.
+        </p>
+        <p data-reveal>
+          What the framework asserts, structurally, is that economic challenges
+          are best solved through collaborative effort that creates value for
+          every participant while keeping the system itself sustainable. Twelve
+          steps, four movements, one rule for mission-focused ventures: ninety
+          percent of revenue is reinvested back into the business itself &mdash;
+          into the work, the operations, the cause &mdash; rather than
+          extracted. That rule is the last step, and the rest of the framework
+          is what makes it possible to honor.
+        </p>
+      </div>
+
+      <aside class="motto" data-reveal>
+        <p class="motto__line">Our strength is our unity.</p>
+        <p class="motto__line motto__line--echo">Our unity is our strength.</p>
+      </aside>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §02 — The four movements (index)
+      ────────────────────────────────────────────── */}
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 02" tag="The four movements" />
+
+      <h2 class="s-title" data-reveal>
+        Four movements, twelve steps in sequence.
+      </h2>
+      <p class="s-lede" data-reveal>
+        The shape is deliberate. The first movement releases the constituency
+        from the conventional load. The second forms the community that will
+        carry the work. The third moves the work into the world. The fourth
+        ensures the work survives growth.
+      </p>
+
+      <ol class="movements" data-reveal>
+        {movements.map((m) => (
+          <li class="movement">
+            <span class="movement__roman">Movement {m.roman}</span>
+            <h3 class="movement__name">{m.name}</h3>
+            <span class="movement__keys">{m.keys}</span>
+            <p class="movement__body">{m.body}</p>
+            <span class="movement__range">{m.range}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §03 — The acrostic visualized
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 03" tag="The acrostic" />
+
+      <h2 class="s-title" data-reveal>
+        Twelve letters. Twelve steps. One sequence.
+      </h2>
+
+      <ol class="acrostic" data-reveal aria-label="CROWD POWERED — twelve steps">
+        {steps.map((s) => (
+          <li class="acrostic__cell">
+            <a href={`#step-${s.num}`} class="acrostic__link">
+              <span class="acrostic__letter">{s.letter}</span>
+              <span class="acrostic__num">{s.num}</span>
+              <span class="acrostic__name">{s.name}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §04 — The 12 steps in full
+      ────────────────────────────────────────────── */}
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 04" tag="The twelve steps in full" />
+
+      <div class="steps">
+        {movements.map((m) => (
+          <div class="movement-block" data-reveal>
+            <header class="movement-block__head">
+              <span class="movement-block__roman">Movement {m.roman}</span>
+              <h3 class="movement-block__name">{m.name} <span class="movement-block__keys">&mdash; {m.keys}</span></h3>
+            </header>
+
+            {steps.filter((s) => s.movement === m.roman).map((s) => (
+              <article class="step" id={`step-${s.num}`}>
+                <header class="step__head">
+                  <div class="step__index">
+                    <span class="step__letter">{s.letter}</span>
+                    <span class="step__num">Step {s.num}</span>
+                  </div>
+                  <h4 class="step__name">{s.name}</h4>
+                  <p class="step__function"><span class="step__function-label">Function.</span> {s.function}</p>
+                </header>
+
+                <p class="step__body" set:html={s.body}></p>
+
+                <div class="step__detail">
+                  <div class="step__sub">
+                    <p class="step__sub-label">Implementation</p>
+                    <ul class="step__list">
+                      {s.implementation.map((it) => (<li set:html={it}></li>))}
+                    </ul>
+                  </div>
+                  <div class="step__sub">
+                    <p class="step__sub-label">Benefits</p>
+                    <ul class="step__list">
+                      {s.benefits.map((it) => (<li set:html={it}></li>))}
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §05 — Integration & success metrics
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 05" tag="Integration" />
+
+      <h2 class="s-title" data-reveal>
+        Twelve steps that reinforce each other.
+      </h2>
+      <p class="s-lede" data-reveal>
+        The steps are not optional and they are not selective. Run together,
+        they produce a reinforcing cycle in which each movement makes the next
+        movement honest. Run partially, they produce a brittle imitation that
+        fails on first audit.
+      </p>
+
+      <ol class="reinforce" data-reveal>
+        <li>
+          <span class="reinforce__num">01</span>
+          <div class="reinforce__body">
+            <h3>Resource Optimization makes Community Building possible.</h3>
+            <p>A constituency cannot form around a venture that has not first removed the conventional load it would otherwise have to carry alone.</p>
+          </div>
+        </li>
+        <li>
+          <span class="reinforce__num">02</span>
+          <div class="reinforce__body">
+            <h3>Community Building makes Market Expansion legitimate.</h3>
+            <p>A venture moves from screen to room only when there is a real community to manifest, a real cause to propel, and a real story to earn the press.</p>
+          </div>
+        </li>
+        <li>
+          <span class="reinforce__num">03</span>
+          <div class="reinforce__body">
+            <h3>Market Expansion makes Sustainable Scale necessary.</h3>
+            <p>Once the venture is operating across rooms and adjacent economies, the operating system has to be re-engineered for growth that does not depend on the original team&rsquo;s presence.</p>
+          </div>
+        </li>
+        <li>
+          <span class="reinforce__num">04</span>
+          <div class="reinforce__body">
+            <h3>Sustainable Scale makes the framework moral.</h3>
+            <p>The closing step &mdash; ninety percent of revenue reinvested back into the business itself &mdash; is what converts the prior eleven from clever architecture into a structural commitment to participatory, mission-focused economics.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §06 — Success metrics
+      ────────────────────────────────────────────── */}
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 06" tag={'What "good" looks like'} />
+
+      <h2 class="s-title" data-reveal>
+        How the framework is measured.
+      </h2>
+      <p class="s-lede" data-reveal>
+        Five families of metric, each with primary-source standing inside an
+        engagement&apos;s validation log. None is proxied; each is reported.
+      </p>
+
+      <div class="metrics" data-reveal>
+        <div class="metric">
+          <span class="metric__num">M1</span>
+          <h3 class="metric__name">Resource efficiency</h3>
+          <p class="metric__body">Capital displaced, expense optimized, volume captured. Reported per period against the conventional baseline.</p>
+        </div>
+        <div class="metric">
+          <span class="metric__num">M2</span>
+          <h3 class="metric__name">Community engagement</h3>
+          <p class="metric__body">Active participation, retention, member-to-member exchange. Vanity metrics excluded by gate at validation.</p>
+        </div>
+        <div class="metric">
+          <span class="metric__num">M3</span>
+          <h3 class="metric__name">Growth and scalability</h3>
+          <p class="metric__body">Throughput at constant quality, geographic reach, onboarding velocity. The test is whether quality holds, not whether volume rises.</p>
+        </div>
+        <div class="metric">
+          <span class="metric__num">M4</span>
+          <h3 class="metric__name">Reinvestment integrity</h3>
+          <p class="metric__body">The mission-focused split verified period over period &mdash; ninety percent of revenue reinvested into the venture, ten percent to the operating entity, on a schedule and at an audit standard the constituency can read.</p>
+        </div>
+        <div class="metric">
+          <span class="metric__num">M5</span>
+          <h3 class="metric__name">System sustainability</h3>
+          <p class="metric__body">Whether the venture compounds without extracting from the constituency that produced it. The closing test of the framework.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §07 — Read further
+      ────────────────────────────────────────────── */}
+  <section class="section section--ink">
+    <div class="frame">
+      <SectionMarker num="§ 07" tag="Read further" inverse />
+
+      <div class="next-row" data-reveal>
+        <a href="/methodology/curriculum" class="next-link">
+          <span class="next-link__num">02</span>
+          <span class="next-link__label">The Curriculum &mdash; how cartographers are formed</span>
+        </a>
+        <a href="/methodology/validation" class="next-link">
+          <span class="next-link__num">03</span>
+          <span class="next-link__label">VERIDEX &mdash; the validation layer</span>
+        </a>
+        <a href="/methodology" class="next-link">
+          <span class="next-link__num">&larr;</span>
+          <span class="next-link__label">Back to methodology overview</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section { padding: 96px 0; border-bottom: 1px solid var(--rule); }
+  @media (max-width: 720px) { .section { padding: 64px 0; } }
+  .section--paper-deep { background: var(--paper-deep); }
+  .section--ink { background: var(--ink); color: var(--paper); border-bottom: none; }
+
+  .s-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1.15;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    margin: 0 0 18px;
+    max-width: 760px;
+  }
+  @media (max-width: 720px) { .s-title { font-size: 26px; } }
+  .s-lede {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0 0 40px;
+    max-width: 720px;
+  }
+
+  .prose { max-width: 680px; font-size: 18px; line-height: 1.7; color: var(--ink-soft); }
+  .prose p { margin: 0 0 24px; }
+  .prose em { color: var(--ink); font-style: italic; }
+
+  /* ----- Motto block ----- */
+  .motto {
+    margin: 56px auto 0;
+    max-width: 680px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 36px 0;
+    text-align: center;
+  }
+  .motto__line {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 28px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .motto__line--echo { color: var(--oxblood); }
+  @media (max-width: 720px) { .motto__line { font-size: 22px; } }
+
+  /* ----- Movements (4 cards) ----- */
+  .movements {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  @media (max-width: 980px) { .movements { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 540px) { .movements { grid-template-columns: 1fr; } }
+  .movement {
+    padding: 28px 24px 24px;
+    border-right: 1px solid var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .movement:last-child { border-right: none; }
+  @media (max-width: 980px) {
+    .movement:nth-child(2n) { border-right: none; }
+    .movement:nth-child(-n+2) { border-bottom: 1px solid var(--ink); }
+  }
+  @media (max-width: 540px) {
+    .movement { border-right: none; border-bottom: 1px solid var(--ink); }
+    .movement:last-child { border-bottom: none; }
+  }
+  .movement__roman {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--oxblood);
+    text-transform: uppercase;
+  }
+  .movement__name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+  }
+  .movement__keys {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .movement__body {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+    flex: 1;
+  }
+  .movement__range {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--subtext);
+    margin-top: 4px;
+  }
+
+  /* ----- Acrostic grid (12 letters) ----- */
+  .acrostic {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    border: 1px solid var(--ink);
+  }
+  @media (max-width: 980px) { .acrostic { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 540px) { .acrostic { grid-template-columns: repeat(2, 1fr); } }
+  .acrostic__cell {
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  .acrostic__cell:nth-child(6n) { border-right: none; }
+  .acrostic__cell:nth-last-child(-n+6) { border-bottom: none; }
+  @media (max-width: 980px) {
+    .acrostic__cell:nth-child(6n) { border-right: 1px solid var(--ink); }
+    .acrostic__cell:nth-child(4n) { border-right: none; }
+    .acrostic__cell:nth-last-child(-n+6) { border-bottom: 1px solid var(--ink); }
+    .acrostic__cell:nth-last-child(-n+4) { border-bottom: none; }
+  }
+  @media (max-width: 540px) {
+    .acrostic__cell:nth-child(4n) { border-right: 1px solid var(--ink); }
+    .acrostic__cell:nth-child(2n) { border-right: none; }
+    .acrostic__cell:nth-last-child(-n+4) { border-bottom: 1px solid var(--ink); }
+    .acrostic__cell:nth-last-child(-n+2) { border-bottom: none; }
+  }
+  .acrostic__link {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 24px 20px 20px;
+    color: var(--ink);
+    text-decoration: none;
+    height: 100%;
+    transition: background 0.18s ease;
+  }
+  .acrostic__link:hover { background: var(--paper-deep); }
+  .acrostic__letter {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--oxblood);
+    letter-spacing: -0.02em;
+  }
+  .acrostic__num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--subtext);
+  }
+  .acrostic__name {
+    font-family: var(--font-display);
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+
+  /* ----- Step blocks (full body) ----- */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+  .movement-block {
+    border-left: 2px solid var(--oxblood);
+    padding-left: 32px;
+  }
+  @media (max-width: 720px) { .movement-block { padding-left: 20px; } }
+  .movement-block__head { margin-bottom: 28px; }
+  .movement-block__roman {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .movement-block__name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  @media (max-width: 720px) { .movement-block__name { font-size: 22px; } }
+  .movement-block__keys {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+  }
+
+  .step {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 32px;
+    margin-bottom: 16px;
+    scroll-margin-top: 100px;
+  }
+  @media (max-width: 720px) { .step { padding: 24px 20px; } }
+  .step__head { margin-bottom: 20px; }
+  .step__index {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .step__letter {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--oxblood);
+    letter-spacing: -0.02em;
+  }
+  .step__num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--subtext);
+  }
+  .step__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.25;
+    color: var(--ink);
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+  @media (max-width: 720px) { .step__name { font-size: 22px; } }
+  .step__function {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .step__function-label {
+    font-style: normal;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-right: 6px;
+  }
+  .step__body {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+    max-width: 720px;
+  }
+  .step__detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    border-top: 1px solid var(--rule);
+    padding-top: 22px;
+  }
+  @media (max-width: 720px) {
+    .step__detail { grid-template-columns: 1fr; gap: 22px; }
+  }
+  .step__sub-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0 0 12px;
+  }
+  .step__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .step__list li {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    padding-left: 18px;
+    position: relative;
+  }
+  .step__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 11px;
+    width: 8px;
+    height: 1px;
+    background: var(--oxblood);
+  }
+
+  /* ----- Reinforce list ----- */
+  .reinforce {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .reinforce li {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .reinforce li:last-child { border-bottom: 1px solid var(--ink); }
+  @media (max-width: 720px) {
+    .reinforce li { grid-template-columns: 1fr; gap: 8px; }
+  }
+  .reinforce__num {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--oxblood);
+    font-weight: 500;
+  }
+  .reinforce h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 0 0 8px;
+    letter-spacing: -0.005em;
+  }
+  .reinforce p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ----- Metrics ----- */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  @media (max-width: 1100px) { .metrics { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px) { .metrics { grid-template-columns: 1fr; } }
+  .metric {
+    padding: 24px 20px;
+    border-right: 1px solid var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .metric:last-child { border-right: none; }
+  @media (max-width: 1100px) {
+    .metric:nth-child(3n) { border-right: none; }
+    .metric:nth-child(-n+3) { border-bottom: 1px solid var(--ink); }
+  }
+  @media (max-width: 720px) {
+    .metric { border-right: none; border-bottom: 1px solid var(--ink); }
+    .metric:last-child { border-bottom: none; }
+  }
+  .metric__num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--oxblood);
+  }
+  .metric__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.25;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .metric__body {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ----- Next row (inverse links) ----- */
+  .next-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid rgba(245, 241, 232, 0.25);
+  }
+  @media (max-width: 860px) { .next-row { grid-template-columns: 1fr; } }
+  .next-link {
+    padding: 28px 24px;
+    border-right: 1px solid rgba(245, 241, 232, 0.25);
+    color: var(--paper);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: background 0.18s ease;
+  }
+  .next-link:hover { background: rgba(245, 241, 232, 0.04); }
+  .next-link:last-child { border-right: none; }
+  @media (max-width: 860px) {
+    .next-link { border-right: none; border-bottom: 1px solid rgba(245, 241, 232, 0.25); }
+    .next-link:last-child { border-bottom: none; }
+  }
+  .next-link__num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: #D67878;
+  }
+  .next-link__label {
+    font-family: var(--font-display);
+    font-size: 18px;
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+  }
+</style>

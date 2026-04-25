@@ -1,0 +1,139 @@
+---
+/**
+ * The three pillars of proof — preview cards for the home page.
+ * Per deck §03. Each pillar links to the page that goes deepest on it.
+ */
+
+const pillars = [
+  {
+    num: 'Pillar 01',
+    name: 'Predictive Track Record',
+    claim:
+      'The methodology has identified category-defining patterns five to fifteen years before each became a market trend.',
+    audience: 'Press · academics · journalists · conference programmers',
+    proof: 'Six documented instances across thirty-two years.',
+    href: '/track-record',
+    cta: 'See the timeline',
+  },
+  {
+    num: 'Pillar 02',
+    name: 'Firm-Built Proof',
+    claim:
+      'The major strategy consultancies build ventures for their clients. Power In Numbers builds with itself.',
+    audience: 'Founders · operators · enterprise buyers · venture investors',
+    proof: 'Six firm-owned operating ventures.',
+    href: '/case-studies',
+    cta: 'See the ventures',
+  },
+  {
+    num: 'Pillar 03',
+    name: 'Sovereign-Scale Proof',
+    claim:
+      'The methodology produces VERIDEX-validated outputs at the scale of national fiscal frameworks.',
+    audience: 'Ministries · multilaterals · sovereign wealth funds',
+    proof: '$30B Ghana fiscal framework · 22/22 VERIDEX gates.',
+    href: '/case-studies/ghana-fiscal-framework',
+    cta: 'See the Ghana case',
+  },
+];
+---
+
+<div class="pillars" data-reveal>
+  {
+    pillars.map((p) => (
+      <article class="pillar">
+        <header class="pillar__head">
+          <span class="pillar__num">{p.num}</span>
+          <span class="pillar__name">{p.name}</span>
+        </header>
+        <div class="pillar__body">
+          <p class="pillar__claim">{p.claim}</p>
+          <p class="pillar__audience">For: {p.audience}</p>
+          <p class="pillar__proof">{p.proof}</p>
+          <a href={p.href} class="readmore" aria-label={`${p.cta} — ${p.name}`}>
+            {p.cta}
+          </a>
+        </div>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  @media (max-width: 860px) {
+    .pillars { grid-template-columns: 1fr; }
+  }
+  .pillar {
+    padding: 0;
+    border-right: 1px solid var(--ink);
+    display: flex;
+    flex-direction: column;
+  }
+  .pillar:last-child { border-right: none; }
+  @media (max-width: 860px) {
+    .pillar {
+      border-right: none;
+      border-bottom: 1px solid var(--ink);
+    }
+    .pillar:last-child { border-bottom: none; }
+  }
+  .pillar__head {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .pillar__num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .pillar__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: -0.005em;
+  }
+  .pillar__body {
+    padding: 24px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .pillar__claim {
+    font-family: var(--font-display);
+    font-size: 19px;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .pillar__audience {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .pillar__proof {
+    font-size: 14px;
+    color: var(--subtext);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+</style>

@@ -1,0 +1,279 @@
+---
+/**
+ * /press — press kit and inquiry intake.
+ *
+ * Voice: terse, factual. Reads like the press section of a
+ * research institute — boilerplate paragraph, leadership facts,
+ * preferred descriptors, contact for press, embargo policy.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+const facts = [
+  { k: 'Firm', v: 'Power In Numbers' },
+  { k: 'Type', v: 'Research and decision-engineering firm' },
+  { k: 'Founded', v: '2001' },
+  { k: 'Founder & Principal', v: 'Jay Davis' },
+  { k: 'Methodology, named publicly', v: 'CROWD POWERED — 2003' },
+  { k: 'Validation standard', v: 'VERIDEX — 22 canonical gates, plus engine-specific extensions' },
+  { k: 'Operating engines', v: 'AI Mirror · VERIDEX BI USA · Sovereign Mirror' },
+  { k: 'Curriculum', v: 'Eight-phase Power In Numbers University' },
+  { k: 'Site', v: 'power-in-numbers.net' },
+  { k: 'Press contact', v: 'admin@power-in-numbers.net' },
+];
+
+const descriptors = [
+  {
+    label: 'Short (one line) — for byline notes',
+    body: 'Power In Numbers is a research and decision-engineering firm operating under the CROWD POWERED framework and the 22-gate VERIDEX validation standard.',
+  },
+  {
+    label: 'Standard (paragraph) — for press releases',
+    body: 'Power In Numbers is a research and decision-engineering firm founded by Jay Davis in 2001. The firm operates three engines — AI Mirror for individual decision-makers, VERIDEX BI USA for US-domiciled firms and ventures, and Sovereign Mirror for sovereign and multilateral principals — each calibrated to a distinct principal type and each clearing the firm\'s 22-gate VERIDEX validation standard. The firm publishes its methodology, validation standard, and curriculum in full at power-in-numbers.net.',
+  },
+  {
+    label: 'Extended (two paragraphs) — for feature pieces',
+    body: 'Power In Numbers is a research and decision-engineering firm founded by Jay Davis in 2001. Its operating framework — CROWD POWERED — was named publicly in 2003 and has remained the firm\'s discipline since. Its 22-gate VERIDEX validation standard is the audit standard every deliverable from any of the firm\'s three engines is required to clear.\n\nThe firm operates AI Mirror (the individual-grade engine), VERIDEX BI USA (the domestic firm-grade engine), and Sovereign Mirror (the sovereign and multilateral engine). The firm has built three of its own ventures under the same standard — iMused (music attribution), Equity Guardians (homeowner advocacy), and the 144K Collective (philanthropic capital aggregation). Its public throughline runs from a 2011 Go Local Magazine profile of Dr. Janelle Thompson to a 2026 AI Mirror Stage-3 reference deliverable presented at the Nexten Summit Accra.',
+  },
+];
+
+const policies = [
+  {
+    t: 'Embargo policy.',
+    b: 'The firm honours embargoes set by the convening institution (e.g., a multilateral conference, a ministry of finance, a host summit). Independent embargoes for press queries are accepted on a case-by-case basis and confirmed in writing.',
+  },
+  {
+    t: 'Quotation policy.',
+    b: 'Direct quotations from the firm\'s founder or principals are provided on the record. The firm does not provide off-the-record quotations. Background context — the firm\'s methodology, structure, and historical record — is on the public site at power-in-numbers.net and can be cited freely.',
+  },
+  {
+    t: 'Methodology references.',
+    b: 'Press references to CROWD POWERED, VERIDEX, AI Mirror, VERIDEX BI USA, or Sovereign Mirror should match the firm\'s public canonical naming. The firm asks that the framework not be paraphrased to "PIN methodology" or similar — the names are part of the audit trail.',
+  },
+  {
+    t: 'Deliverable references.',
+    b: 'Where a deliverable is the subject of press coverage, the firm asks that the engine be named (AI Mirror, VERIDEX BI USA, or Sovereign Mirror), the gate count cited (22 canonical, plus engine extensions where applicable), and the convening occasion attributed where relevant.',
+  },
+];
+
+const inquiries = [
+  { t: 'Press, by deadline', b: 'admin@power-in-numbers.net — please include outlet, story, and deadline in the subject line.' },
+  { t: 'Speaking and convenings', b: 'admin@power-in-numbers.net — convening institution, audience, and date in the subject line.' },
+  { t: 'Academic citation', b: 'admin@power-in-numbers.net — paper title, journal or working-paper series, and target citation form.' },
+];
+---
+
+<BaseLayout
+  title="Press — Power In Numbers"
+  description="Press contact, boilerplate descriptors, leadership facts, and quotation and embargo policy for Power In Numbers — a research and decision-engineering firm."
+>
+  <PageHero
+    eyebrow="Press"
+    headline="Boilerplate, facts, and the firm's quotation policy."
+    lede="The firm publishes its methodology, validation standard, and curriculum in full and welcomes press citation. This page provides the canonical descriptors, leadership facts, and the firm\'s quotation and embargo policy. Press queries with deadlines should be sent directly to the address below."
+    meta="Press contact · admin@power-in-numbers.net"
+  />
+
+  <section class="quick frame">
+    <SectionMarker num="§ 01" tag="Quick facts" />
+    <div class="quick__grid">
+      {facts.map((f) => (
+        <div class="quick__row" data-reveal>
+          <p class="quick__k">{f.k}</p>
+          <p class="quick__v">{f.v}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="desc frame">
+    <SectionMarker num="§ 02" tag="Boilerplate descriptors" />
+    <h2 class="desc__h">Three lengths, written for citation.</h2>
+    <p class="desc__lede">
+      The firm provides three boilerplate descriptors — short, standard,
+      extended — for press use. Each has been audited against the firm\'s
+      canonical naming and is the form the firm prefers in published
+      coverage.
+    </p>
+    <div class="desc__list">
+      {descriptors.map((d) => (
+        <article class="desc__item" data-reveal>
+          <p class="desc__label">{d.label}</p>
+          <div class="desc__body">
+            {d.body.split('\n\n').map((para) => <p>{para}</p>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="policy">
+    <div class="frame">
+      <SectionMarker num="§ 03" tag="Quotation, embargo, and naming" inverse={true} />
+      <div class="policy__grid">
+        {policies.map((p) => (
+          <article class="policy__item" data-reveal>
+            <p class="policy__t">{p.t}</p>
+            <p class="policy__b">{p.b}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="inq frame">
+    <SectionMarker num="§ 04" tag="Inquiries" />
+    <div class="inq__grid">
+      {inquiries.map((i) => (
+        <article class="inq__item" data-reveal>
+          <p class="inq__t">{i.t}</p>
+          <p class="inq__b">{i.b}</p>
+        </article>
+      ))}
+    </div>
+    <div class="inq__cta">
+      <a class="inq__btn" href="mailto:admin@power-in-numbers.net?subject=Press%20%C2%B7%20%5BOutlet%5D%20%5BDeadline%5D">
+        Write the firm
+      </a>
+      <a class="inq__alt" href="/about/">About the firm →</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .frame { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 720px) { .frame { padding: 0 20px; } }
+
+  /* Quick facts */
+  .quick { padding: 96px 0 64px; }
+  .quick__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 56px;
+    border-top: 1px solid var(--rule);
+  }
+  @media (max-width: 720px) { .quick__grid { grid-template-columns: 1fr; gap: 0; } }
+  .quick__row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+    align-items: baseline;
+  }
+  @media (max-width: 600px) { .quick__row { grid-template-columns: 1fr; gap: 4px; padding: 14px 0; } }
+  .quick__k {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0;
+    font-weight: 500;
+  }
+  .quick__v { color: var(--ink); margin: 0; line-height: 1.5; }
+
+  /* Descriptors */
+  .desc { padding: 64px 0 96px; }
+  .desc__h {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 0 0 20px;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .desc__lede {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 720px;
+    margin: 0 0 40px;
+  }
+  .desc__list { display: grid; gap: 32px; }
+  .desc__item {
+    background: var(--paper-deep);
+    padding: 28px 32px;
+    border-radius: 2px;
+  }
+  @media (max-width: 600px) { .desc__item { padding: 22px 20px; } }
+  .desc__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0 0 16px;
+    font-weight: 500;
+  }
+  .desc__body p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin: 0 0 12px;
+  }
+  .desc__body p:last-child { margin-bottom: 0; }
+
+  /* Policy */
+  .policy { background: var(--ink); color: var(--paper); padding: 96px 0; }
+  .policy__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 56px;
+    margin-top: 16px;
+  }
+  @media (max-width: 720px) { .policy__grid { grid-template-columns: 1fr; gap: 28px; } }
+  .policy__item { border-top: 1px solid rgba(245, 241, 232, 0.18); padding-top: 22px; }
+  .policy__t {
+    font-family: var(--font-display);
+    font-size: 20px;
+    margin: 0 0 10px;
+    color: var(--paper);
+    font-weight: 500;
+  }
+  .policy__b { font-size: 15px; line-height: 1.6; color: rgba(245, 241, 232, 0.78); margin: 0; }
+
+  /* Inquiries */
+  .inq { padding: 96px 0; }
+  .inq__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 40px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 720px) { .inq__grid { grid-template-columns: 1fr; gap: 20px; } }
+  .inq__item { border-top: 1px solid var(--rule); padding-top: 20px; }
+  .inq__t {
+    font-family: var(--font-display);
+    font-size: 18px;
+    margin: 0 0 8px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .inq__b { font-size: 14px; line-height: 1.55; color: var(--subtext); margin: 0; }
+  .inq__cta { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; padding-top: 32px; border-top: 1px solid var(--rule); }
+  .inq__btn {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 14px 22px;
+    text-decoration: none;
+    border-radius: 1px;
+  }
+  .inq__btn:hover { background: var(--oxblood); }
+  .inq__alt {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--subtext);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+  }
+  .inq__alt:hover { color: var(--ink); border-bottom-color: var(--oxblood); }
+</style>

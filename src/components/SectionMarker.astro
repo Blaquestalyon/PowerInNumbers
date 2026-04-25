@@ -1,0 +1,51 @@
+---
+/**
+ * Section marker — § 0X ────── Tag
+ * Used across all interior pages for editorial structure.
+ */
+interface Props {
+  num: string;
+  tag: string;
+  inverse?: boolean;
+}
+const { num, tag, inverse = false } = Astro.props;
+---
+
+<div class={`smarker${inverse ? ' smarker--inverse' : ''}`} data-reveal>
+  <span class="smarker__num">{num}</span>
+  <span class="smarker__rule" aria-hidden="true"></span>
+  <span class="smarker__tag">{tag}</span>
+</div>
+
+<style>
+  .smarker {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .smarker__num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    font-weight: 500;
+  }
+  .smarker__rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+    max-width: 120px;
+  }
+  .smarker__tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--subtext);
+  }
+  .smarker--inverse .smarker__rule { background: rgba(245, 241, 232, 0.25); }
+  .smarker--inverse .smarker__tag { color: rgba(245, 241, 232, 0.7); }
+  .smarker--inverse .smarker__num { color: #D67878; }
+</style>

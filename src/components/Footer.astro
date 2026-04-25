@@ -1,0 +1,111 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="frame site-footer__inner">
+    <div class="site-footer__col site-footer__col--main">
+      <span class="site-footer__mark">Power In Numbers</span>
+      <span class="site-footer__descriptor">
+        A strategic consultancy. Practiced as decision cartography.
+      </span>
+    </div>
+
+    <nav class="site-footer__col site-footer__nav" aria-label="Footer">
+      <span class="site-footer__nav-label">Site</span>
+      <a href="/methodology">Methodology</a>
+      <a href="/track-record">Track Record</a>
+      <a href="/case-studies">Case Studies</a>
+      <a href="/library">Library</a>
+    </nav>
+
+    <nav class="site-footer__col site-footer__nav" aria-label="Engage">
+      <span class="site-footer__nav-label">Engage</span>
+      <a href="/engage">Three engagement paths</a>
+      <a href="/about">About the firm</a>
+      <a href="/press">Press kit</a>
+      <a href="/contact">Contact</a>
+    </nav>
+
+    <div class="site-footer__col site-footer__col--right">
+      <span class="site-footer__meta">© {year} Power In Numbers</span>
+      <span class="site-footer__meta">All rights reserved</span>
+      <span class="site-footer__meta">power-in-numbers.net</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--rule);
+    padding: 72px 0 56px;
+    margin-top: 96px;
+    background: var(--paper-deep);
+  }
+  .site-footer__inner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .site-footer__inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  @media (max-width: 480px) {
+    .site-footer__inner { grid-template-columns: 1fr; gap: 28px; }
+  }
+  .site-footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .site-footer__col--right { text-align: right; }
+  @media (max-width: 860px) {
+    .site-footer__col--right { text-align: left; }
+  }
+
+  .site-footer__mark {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .site-footer__descriptor {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    max-width: 320px;
+  }
+
+  .site-footer__nav { gap: 6px; }
+  .site-footer__nav-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 8px;
+  }
+  .site-footer__nav a {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color var(--duration-quick) var(--ease-out);
+  }
+  .site-footer__nav a:hover { color: var(--oxblood); }
+
+  .site-footer__meta {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--subtext);
+    line-height: 1.8;
+  }
+</style>

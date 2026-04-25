@@ -1,0 +1,662 @@
+---
+/**
+ * /case-studies/[slug] — full case-study page.
+ *
+ * Each page opens with the four research-paper anchors and (when a primary-
+ * source artifact is published) embeds the published deliverable inline as
+ * an iframe. The Ghana case carries the AI Mirror Stage-3 report and the
+ * four Sovereign Mirror briefings; the Master's Chair case carries the
+ * VERIDEX BI USA Stage-3 report.
+ */
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('case-studies').catch(() => []);
+  return entries.map((e) => ({
+    params: { slug: e.id.replace(/\.md$/, '') },
+    props: { entry: e },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const slug = entry.id.replace(/\.md$/, '');
+
+// Whether the markdown body has substantive content (more than a few chars).
+// Some entries are engine-tier indices with frontmatter only — in those cases
+// the "case in full" section is suppressed and the four anchors stand alone.
+const hasBody = ((entry as any).body?.trim().length ?? 0) > 40;
+
+// Embedded primary-source artifacts (engine reference deliverables).
+// Listed inline so the order/labels are explicit in the page source.
+const ARTIFACTS: Record<
+  string,
+  Array<{ kind: 'html'; label: string; src: string; caption?: string; engine: string }>
+> = {
+  'ghana-market-entry': [
+    {
+      kind: 'html',
+      label: 'AI Mirror — Stage 3 Full Report',
+      src: '/artifacts/case-studies/ghana/ai-mirror-stage3-full-report.html',
+      engine: 'AI Mirror',
+      caption:
+        'Dr. Janelle Thompson · Epiphany Wellness · Nexten Summit Accra 2026. Sixteen analytical outputs covering competency extraction, gap mapping, two costed pathways, regulatory architecture, and a separate Decision-Maker Briefing.',
+    },
+    {
+      kind: 'html',
+      label: 'Sovereign Mirror — Domestic Resource Mobilisation',
+      src: '/artifacts/case-studies/ghana/sovereign-mirror-drm.html',
+      engine: 'Sovereign Mirror',
+      caption:
+        'Fiscal-allocation analysis of Ghana\u2019s domestic resource mobilisation envelope. Self-analysis briefing for a fiscal authority audience.',
+    },
+    {
+      kind: 'html',
+      label: 'Sovereign Mirror — Health Financing',
+      src: '/artifacts/case-studies/ghana/sovereign-mirror-health-financing.html',
+      engine: 'Sovereign Mirror',
+      caption:
+        'Allocation cartography for the health-financing line item. The principal is a Ministry of Finance audience; the analysis is the sovereign analysing itself.',
+    },
+    {
+      kind: 'html',
+      label: 'Sovereign Mirror — Ghana Stabilisation Fund',
+      src: '/artifacts/case-studies/ghana/sovereign-mirror-gsf.html',
+      engine: 'Sovereign Mirror',
+      caption:
+        'Sovereign-fund analysis structured for an oversight body. Counterfactual deployments costed inline.',
+    },
+    {
+      kind: 'html',
+      label: 'Sovereign Mirror — Annual Budget Funding Amount',
+      src: '/artifacts/case-studies/ghana/sovereign-mirror-abfa.html',
+      engine: 'Sovereign Mirror',
+      caption:
+        'Annual Budget Funding Amount allocation analysis with explicit counterfactual deployments.',
+    },
+  ],
+  'masters-chair': [
+    {
+      kind: 'html',
+      label: 'VERIDEX BI — USA · Stage 3 Full Report',
+      src: '/artifacts/case-studies/masters-chair/veridex-full-report.html',
+      engine: 'VERIDEX BI \u2014 USA',
+      caption:
+        'The Master\u2019s Chair · Houston \u2192 Atlanta interstate expansion. Sixteen analytical outputs, dual-revenue model, $650M TAM decomposed to a $120M Atlanta-metro SAM, P50 five-year revenue of $5.1M, full interstate compliance architecture, separate Decision-Maker Briefing.',
+    },
+  ],
+};
+
+const artifacts = ARTIFACTS[slug] ?? [];
+
+// Engine label per slug (for hero meta)
+const ENGINE_LABEL: Record<string, string> = {
+  'ghana-market-entry': 'AI Mirror · Sovereign Mirror',
+  'masters-chair': 'VERIDEX BI \u2014 USA',
+  'us-market-entry': 'VERIDEX BI \u2014 USA',
+  '144k-collective': 'CROWD POWERED',
+  'imused': 'CROWD POWERED',
+  'equity-guardians': 'CROWD POWERED',
+};
+
+const engineLabel = ENGINE_LABEL[slug] ?? '';
+
+// Janelle Thompson throughline — only on the Ghana case
+const showThroughline = slug === 'ghana-market-entry';
+
+// External venture URLs for firm-built cases
+const VENTURE_URL: Record<string, string> = {
+  '144k-collective': 'https://144kcollective.org/',
+  'imused': 'https://imused.ai/',
+  'equity-guardians': 'https://equityguardians.com/',
+};
+const ventureUrl = VENTURE_URL[slug];
+---
+
+<BaseLayout
+  title={`${entry.data.title} — Case Study · Power In Numbers`}
+  description={entry.data.summary}
+>
+  <PageHero
+    eyebrow={`Case study · ${entry.data.tier === 'firm-built' ? 'Firm-built' : entry.data.tier === 'sovereign' ? 'Sovereign' : 'Enterprise'} tier`}
+    headline={entry.data.title}
+    lede={entry.data.summary}
+    metaLeft={engineLabel ? `Engine: ${engineLabel}` : entry.data.classification}
+    metaRight={
+      entry.data.veridexGates
+        ? `VERIDEX gates: ${entry.data.veridexGates}`
+        : entry.data.attribution ?? entry.data.deck
+    }
+  />
+
+  {/* ──────────────────────────────────────────────
+      §01 — The four anchors
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 01" tag="The four anchors" />
+
+      <h2 class="s-title" data-reveal>
+        How a case opens, every time.
+      </h2>
+
+      <div class="anchors" data-reveal>
+        <article class="anchor">
+          <h3 class="anchor__name"><span class="anchor__num">01</span> Development question</h3>
+          <p class="anchor__body">{entry.data.developmentQuestion}</p>
+        </article>
+        <article class="anchor">
+          <h3 class="anchor__name"><span class="anchor__num">02</span> Methodology applied</h3>
+          <p class="anchor__body">{entry.data.methodologyApplied}</p>
+        </article>
+        <article class="anchor">
+          <h3 class="anchor__name"><span class="anchor__num">03</span> Output</h3>
+          <p class="anchor__body">{entry.data.output}</p>
+        </article>
+        <article class="anchor">
+          <h3 class="anchor__name"><span class="anchor__num">04</span> Counterfactual considered</h3>
+          <p class="anchor__body">{entry.data.counterfactual}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §02 — The throughline (Ghana case only)
+      ────────────────────────────────────────────── */}
+  {showThroughline && (
+    <section class="section section--paper-deep">
+      <div class="frame">
+        <SectionMarker num="§ 02" tag="The throughline" />
+        <h2 class="s-title" data-reveal>
+          The same principal. Fifteen years apart.
+        </h2>
+
+        <ol class="throughline" data-reveal>
+          <li class="tl-step">
+            <div class="tl-step__year">2011 ·  February</div>
+            <div class="tl-step__body">
+              <h3 class="tl-step__head">Go Local Magazine, Volume I, Edition 1</h3>
+              <p>
+                Dr. Janelle Thompson is profiled as the CEO of Epiphany
+                Wellness in the inaugural edition of Power In Numbers&rsquo; Go
+                Local Magazine. The publication identifies her venture as a
+                Power In Numbers Flagship contributor. The relationship begins
+                in the firm&rsquo;s primary-source archive.
+              </p>
+              <p class="tl-step__cite">
+                Source: <a href="/track-record/2010-go-local/">Go Local Magazine — Track Record entry</a>.
+              </p>
+            </div>
+          </li>
+          <li class="tl-step">
+            <div class="tl-step__year">2011 — 2025</div>
+            <div class="tl-step__body">
+              <h3 class="tl-step__head">Continuous operating record</h3>
+              <p>
+                Across the intervening years, Dr.&nbsp;Thompson develops the
+                clinician-educator capability stack the AI Mirror engine later
+                analyses: doctorate-level anesthesia practice, ITEC-certified
+                reflexology, Reiki, clinical aromatherapy, and certification
+                pathway architecture. Operating record, not credential list,
+                is what feeds the engine.
+              </p>
+            </div>
+          </li>
+          <li class="tl-step">
+            <div class="tl-step__year">2026 ·  March</div>
+            <div class="tl-step__body">
+              <h3 class="tl-step__head">AI Mirror Stage-3 Full Report</h3>
+              <p>
+                Dr.&nbsp;Thompson re-engages Power In Numbers for an audit-grade
+                analysis of cross-border market entry into Ghana, prepared for
+                Nexten Summit Accra 2026. The deliverable carries the firm&rsquo;s
+                full engine reference: two costed pathways, full regulatory
+                architecture, Monte Carlo on revenue, and a separate
+                Decision-Maker Briefing.
+              </p>
+              <p class="tl-step__cite">Embedded below as the AI Mirror reference deliverable.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+  )}
+
+  {/* ──────────────────────────────────────────────
+      Interactive cartography CTA — Ghana only
+      ────────────────────────────────────────────── */}
+  {showThroughline && (
+    <section class="section section--paper-deep">
+      <div class="frame">
+        <a class="ix-cta" href="/case-studies/ghana-market-entry/interactive/">
+          <div class="ix-cta__left">
+            <span class="ix-cta__eyebrow">Interactive cartography</span>
+            <h3 class="ix-cta__title">Read this case the way the engine renders it.</h3>
+            <p class="ix-cta__body">
+              A nine-section, browser-native walk-through of the AI Mirror
+              full report and four Sovereign Mirror briefings. The same
+              deliverables embedded below — staged with their own navigation,
+              read-out tables, and a separated Decision-Maker Briefing.
+            </p>
+          </div>
+          <span class="ix-cta__action">
+            Open cartography <span class="ix-cta__arrow">↗</span>
+          </span>
+        </a>
+      </div>
+    </section>
+  )}
+
+  {/* ──────────────────────────────────────────────
+      §03 — Body essay (markdown)
+      ────────────────────────────────────────────── */}
+  {hasBody && (
+    <section class="section">
+      <div class="frame">
+        <SectionMarker num={showThroughline ? '§ 03' : '§ 02'} tag="The case in full" />
+        <div class="prose prose--narrow" data-reveal>
+          <Content />
+          {ventureUrl && (
+            <p class="venture-link">
+              Venture site: <a href={ventureUrl} target="_blank" rel="noopener">{ventureUrl}</a>
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* ──────────────────────────────────────────────
+      §04 — Primary-source artifacts (when present)
+      ────────────────────────────────────────────── */}
+  {artifacts.length > 0 && (
+    <section class="section section--paper-deep">
+      <div class="frame">
+        <SectionMarker num={(() => {
+          let n = 1; // anchors
+          if (showThroughline) n++;
+          if (hasBody) n++;
+          return `§ 0${n + 1}`;
+        })()} tag="Primary-source deliverables" />
+        <h2 class="s-title" data-reveal>
+          The reports, embedded.
+        </h2>
+        <p class="s-lede" data-reveal>
+          Each artifact below is a published Power In Numbers deliverable,
+          embedded inline. Use the &ldquo;open in new tab&rdquo; link to read it at
+          full width, or scroll within the frame.
+        </p>
+
+        <ul class="artifacts" data-reveal>
+          {artifacts.map((a) => (
+            <li class="artifact">
+              <header class="artifact__head">
+                <span class="artifact__engine">{a.engine}</span>
+                <h3 class="artifact__title">{a.label}</h3>
+                <a class="artifact__open" href={a.src} target="_blank" rel="noopener">Open in new tab ↗</a>
+              </header>
+              {a.caption && <p class="artifact__caption">{a.caption}</p>}
+              <div class="artifact__frame">
+                <iframe
+                  src={a.src}
+                  title={a.label}
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                ></iframe>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* ──────────────────────────────────────────────
+      §05 — Read further
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num={(() => {
+        // §01 anchors is always present; §02 is throughline (Ghana only);
+        // body § (when hasBody) and artifacts § (when artifacts.length>0) follow.
+        let n = 1; // anchors
+        if (showThroughline) n++;
+        if (hasBody) n++;
+        if (artifacts.length > 0) n++;
+        return `§ 0${n + 1}`;
+      })()} tag="Read further" />
+      <ul class="onward">
+        <li class="onward__card">
+          <a href="/methodology/validation/">
+            <span class="onward__eyebrow">§ Layer 05</span>
+            <h3 class="onward__title">VERIDEX</h3>
+            <p class="onward__body">The validation standard the deliverables above passed.</p>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/case-studies/">
+            <span class="onward__eyebrow">All cases</span>
+            <h3 class="onward__title">Index</h3>
+            <p class="onward__body">Sovereign · enterprise · firm-built.</p>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/track-record/">
+            <span class="onward__eyebrow">§ Pillar 01</span>
+            <h3 class="onward__title">Track Record</h3>
+            <p class="onward__body">The methodology&rsquo;s predictive record across thirty-two years.</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .anchors {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .anchor {
+    border-left: 1px solid var(--oxblood);
+    padding: 0.25rem 0 0.5rem 1.5rem;
+  }
+
+  .anchor__num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: var(--oxblood);
+    margin-right: 0.85rem;
+  }
+
+  .anchor__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin: 0 0 0.7rem;
+    display: flex;
+    align-items: baseline;
+  }
+
+  .anchor__body {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .throughline {
+    list-style: none;
+    margin: 2.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .tl-step {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+    padding: 1.75rem 0 1.75rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .tl-step:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tl-step__year {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    padding-top: 0.3rem;
+  }
+
+  .tl-step__head {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.25rem;
+    color: var(--ink);
+    margin: 0 0 0.7rem;
+  }
+
+  .tl-step__body p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 0.85rem;
+  }
+
+  .tl-step__cite {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--subtext);
+  }
+
+  .tl-step__cite a {
+    color: var(--oxblood);
+  }
+
+  .prose--narrow {
+    max-width: 70ch;
+  }
+
+  .venture-link {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--subtext);
+    margin-top: 1.5rem;
+  }
+
+  .venture-link a {
+    color: var(--oxblood);
+  }
+
+  /* Interactive cartography CTA */
+  .ix-cta {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    padding: 2rem 2.25rem;
+    margin-top: 2rem;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .ix-cta:hover { background: #14283a; }
+  .ix-cta__eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.7);
+    margin-bottom: 0.6rem;
+  }
+  .ix-cta__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.45rem;
+    line-height: 1.25;
+    margin: 0 0 0.65rem;
+    color: var(--paper);
+  }
+  .ix-cta__body {
+    font-size: 0.93rem;
+    line-height: 1.6;
+    color: rgba(245, 241, 232, 0.78);
+    margin: 0;
+    max-width: 60ch;
+  }
+  .ix-cta__action {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--paper);
+    border: 1px solid rgba(245, 241, 232, 0.45);
+    padding: 0.85rem 1.25rem;
+    white-space: nowrap;
+  }
+  .ix-cta__arrow { margin-left: 0.4rem; }
+  @media (max-width: 720px) {
+    .ix-cta {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      padding: 1.5rem 1.25rem;
+    }
+    .ix-cta__action { justify-self: start; }
+  }
+
+  .artifacts {
+    list-style: none;
+    padding: 0;
+    margin: 2.5rem 0 0;
+    display: grid;
+    gap: 3rem;
+  }
+
+  .artifact {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .artifact__head {
+    padding: 1.5rem 1.75rem 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .artifact__engine {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 0.4rem;
+  }
+
+  .artifact__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin: 0 0 0.5rem;
+  }
+
+  .artifact__open {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--oxblood);
+    text-decoration: none;
+    border-bottom: 1px solid var(--oxblood);
+  }
+
+  .artifact__caption {
+    padding: 1rem 1.75rem 1.25rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--subtext);
+    margin: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .artifact__frame {
+    position: relative;
+    width: 100%;
+    height: 800px;
+    background: var(--paper);
+  }
+
+  .artifact__frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: var(--paper);
+  }
+
+  .onward {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .onward__card {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .onward__card a {
+    display: block;
+    padding: 1.75rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .onward__card:hover {
+    border-color: var(--ink);
+  }
+
+  .onward__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+  }
+
+  .onward__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin: 0.5rem 0 0.5rem;
+    color: var(--ink);
+  }
+
+  .onward__body {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--subtext);
+    margin: 0;
+  }
+
+  @media (max-width: 720px) {
+    .anchors {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .tl-step {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      padding: 1.5rem 0;
+    }
+
+    .artifact__frame {
+      height: 600px;
+    }
+
+    .onward {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

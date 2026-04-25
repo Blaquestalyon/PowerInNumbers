@@ -1,0 +1,243 @@
+---
+/**
+ * /library — the publishing engine index.
+ *
+ * Per deck §08, the library is the firm's working voice: white papers,
+ * methodology notes, framework essays, press essays, track-record essays,
+ * firm-built essays. Each entry is citation-grade and primary-sourced.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('library').catch(() => []);
+const entries = all
+  .filter((e) => !e.data.unlisted)
+  .sort(
+    (a, b) =>
+      new Date(b.data.publishedAt).valueOf() - new Date(a.data.publishedAt).valueOf()
+  );
+
+// Type label mapping
+const TYPE_LABEL: Record<string, string> = {
+  'white-paper': 'White paper',
+  framework: 'Framework',
+  'press-essay': 'Press essay',
+  'track-record-essay': 'Track-record essay',
+  'firm-built-essay': 'Firm-built essay',
+  'methodology-note': 'Methodology note',
+};
+
+// Group by type
+const TYPE_ORDER = [
+  'white-paper',
+  'framework',
+  'methodology-note',
+  'press-essay',
+  'track-record-essay',
+  'firm-built-essay',
+];
+const grouped: Record<string, typeof entries> = {};
+for (const t of TYPE_ORDER) grouped[t] = [];
+for (const e of entries) {
+  if (!grouped[e.data.type]) grouped[e.data.type] = [];
+  grouped[e.data.type].push(e);
+}
+
+const foundational = entries.filter((e) => e.data.foundational);
+
+// Format date
+const fmtDate = (d: Date | string) =>
+  new Date(d).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+const slugOf = (id: string) => id.replace(/\.md$/, '').replace(/^.*\//, '');
+---
+
+<BaseLayout
+  title="Library — Power In Numbers"
+  description="The firm's working voice. White papers, methodology notes, framework essays, press essays, track-record essays, firm-built essays. Citation-grade and primary-sourced."
+>
+  <PageHero
+    eyebrow="§ Pillar 03 · The library"
+    headline="The firm in its own words."
+    lede="A publishing engine, not a content marketing function. Each entry is citation-grade, primary-sourced and audit-defensible. The library is how the firm makes its method legible."
+  />
+
+  {/* ──────────────────────────────────────────────
+      §01 — Editorial standard
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 01" tag="Editorial standard" />
+      <h2 class="s-title" data-reveal>What you can expect from every entry.</h2>
+
+      <ol class="standard" data-reveal>
+        <li class="standard__row">
+          <span class="standard__num">01</span>
+          <div>
+            <h3 class="standard__h">A development question</h3>
+            <p>Each entry begins with the question it is trying to answer, named without ambiguity. No entry is a "thought piece."</p>
+          </div>
+        </li>
+        <li class="standard__row">
+          <span class="standard__num">02</span>
+          <div>
+            <h3 class="standard__h">Primary-source citations</h3>
+            <p>Statistics trace to source. Institutions are named. Temporal provenance is tagged. The same five source-tier rules that govern the firm's deliverables govern its essays.</p>
+          </div>
+        </li>
+        <li class="standard__row">
+          <span class="standard__num">03</span>
+          <div>
+            <h3 class="standard__h">A counterfactual considered</h3>
+            <p>If the entry advances a position, the position it rejects is named and costed in the same paragraph.</p>
+          </div>
+        </li>
+        <li class="standard__row">
+          <span class="standard__num">04</span>
+          <div>
+            <h3 class="standard__h">A separated reader-action line</h3>
+            <p>Where the entry recommends an action, that action lives in its own block — the same Decision-Maker Briefing discipline that VERIDEX Gate 22 mandates for the firm's reports.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §02 — Foundational essays (if any)
+      ────────────────────────────────────────────── */}
+  {foundational.length > 0 && (
+    <section class="section section--paper-deep">
+      <div class="frame">
+        <SectionMarker num="§ 02" tag="Foundational" />
+        <h2 class="s-title" data-reveal>Read these first.</h2>
+        <p class="s-lede" data-reveal>
+          Five entries that define the firm's vocabulary. Each one stands as a
+          load-bearing reference for the other essays in the library.
+        </p>
+
+        <ul class="foundational" data-reveal>
+          {foundational.map((entry) => (
+            <li class="foundational__card">
+              <a href={`/library/${slugOf(entry.id)}/`}>
+                <span class="foundational__type">{TYPE_LABEL[entry.data.type] ?? entry.data.type}</span>
+                <h3 class="foundational__title">{entry.data.title}</h3>
+                {entry.data.excerpt && (
+                  <p class="foundational__excerpt">&ldquo;{entry.data.excerpt}&rdquo;</p>
+                )}
+                <p class="foundational__summary">{entry.data.summary}</p>
+                <div class="foundational__meta">
+                  <span>{fmtDate(entry.data.publishedAt)}</span>
+                  {entry.data.readingMinutes && (
+                    <span>· {entry.data.readingMinutes} min read</span>
+                  )}
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* ──────────────────────────────────────────────
+      §03 — All entries by type
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num={foundational.length > 0 ? '§ 03' : '§ 02'} tag="The full library" />
+      <h2 class="s-title" data-reveal>Browse by category.</h2>
+
+      {TYPE_ORDER.map((type) => {
+        const list = grouped[type] ?? [];
+        if (list.length === 0) return null;
+        return (
+          <div class="cat" data-reveal>
+            <header class="cat__head">
+              <h3 class="cat__title">{TYPE_LABEL[type]}</h3>
+              <span class="cat__count">{list.length} {list.length === 1 ? 'entry' : 'entries'}</span>
+            </header>
+            <ul class="cat__list">
+              {list.map((entry) => (
+                <li class="entry">
+                  <a href={`/library/${slugOf(entry.id)}/`} class="entry__link">
+                    <div class="entry__main">
+                      <h4 class="entry__title">{entry.data.title}</h4>
+                      <p class="entry__summary">{entry.data.summary}</p>
+                      {entry.data.tags.length > 0 && (
+                        <div class="entry__tags">
+                          {entry.data.tags.slice(0, 4).map((t) => (
+                            <span class="entry__tag">{t}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div class="entry__meta">
+                      <span class="entry__date">{fmtDate(entry.data.publishedAt)}</span>
+                      {entry.data.readingMinutes && (
+                        <span class="entry__minutes">{entry.data.readingMinutes} min</span>
+                      )}
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+
+      {entries.length === 0 && (
+        <p class="empty">The library is being seeded. Entries appear here as they pass the editorial standard above.</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .standard { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; gap: 1.25rem; }
+  .standard__row { display: grid; grid-template-columns: 60px 1fr; gap: 1rem; padding: 1.5rem 0; border-top: 1px solid var(--rule); }
+  .standard__row:last-child { border-bottom: 1px solid var(--rule); }
+  .standard__num { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em; color: var(--oxblood); padding-top: 0.4rem; }
+  .standard__h { font-family: var(--font-display); font-weight: 500; font-size: 1.18rem; color: var(--ink); margin: 0 0 0.5rem; }
+  .standard__row p { font-size: 0.95rem; line-height: 1.7; color: var(--ink); margin: 0; }
+
+  .foundational { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+  .foundational__card { border: 1px solid var(--rule); background: var(--paper); transition: border-color 0.15s ease; }
+  .foundational__card:hover { border-color: var(--ink); }
+  .foundational__card a { display: block; padding: 1.75rem; color: inherit; text-decoration: none; }
+  .foundational__type { display: block; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--oxblood); }
+  .foundational__title { font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; line-height: 1.25; color: var(--ink); margin: 0.55rem 0 0.85rem; }
+  .foundational__excerpt { font-family: var(--font-display); font-style: italic; font-size: 1.05rem; line-height: 1.5; color: var(--ink); margin: 0 0 0.85rem; padding-left: 0.85rem; border-left: 2px solid var(--oxblood); }
+  .foundational__summary { font-size: 0.95rem; line-height: 1.6; color: var(--ink); margin: 0 0 0.85rem; }
+  .foundational__meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--subtext); display: flex; gap: 0.55rem; }
+
+  .cat { margin-top: 3rem; }
+  .cat__head { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 0.85rem; border-bottom: 1px solid var(--ink); margin-bottom: 0; }
+  .cat__title { font-family: var(--font-display); font-weight: 500; font-size: 1.55rem; color: var(--ink); margin: 0; }
+  .cat__count { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--subtext); }
+  .cat__list { list-style: none; margin: 0; padding: 0; }
+
+  .entry { border-bottom: 1px solid var(--rule); }
+  .entry__link { display: grid; grid-template-columns: 1fr 180px; gap: 2rem; padding: 1.5rem 0; color: inherit; text-decoration: none; transition: background 0.12s ease; }
+  .entry__link:hover { background: rgba(15, 31, 46, 0.02); }
+  .entry__title { font-family: var(--font-display); font-weight: 500; font-size: 1.2rem; color: var(--ink); margin: 0 0 0.5rem; line-height: 1.3; }
+  .entry__summary { font-size: 0.92rem; line-height: 1.6; color: var(--ink); margin: 0 0 0.7rem; }
+  .entry__tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .entry__tag { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--subtext); border: 1px solid var(--rule); padding: 0.18rem 0.55rem; }
+  .entry__meta { font-family: var(--font-mono); font-size: 0.78rem; color: var(--subtext); text-align: right; padding-top: 0.35rem; display: flex; flex-direction: column; gap: 0.3rem; align-items: flex-end; }
+
+  .empty { font-style: italic; color: var(--subtext); margin-top: 2rem; }
+
+  @media (max-width: 720px) {
+    .foundational { grid-template-columns: 1fr; }
+    .standard__row { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.25rem 0; }
+    .entry__link { grid-template-columns: 1fr; gap: 0.75rem; }
+    .entry__meta { text-align: left; align-items: flex-start; flex-direction: row; gap: 0.85rem; }
+  }
+</style>

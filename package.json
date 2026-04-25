@@ -1,0 +1,23 @@
+{
+  "name": "power-in-numbers",
+  "version": "1.0.0",
+  "description": "Power In Numbers — public-facing site. A strategic consultancy practiced as decision cartography.",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20.0.0" },
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0",
+    "start": "serve -s dist -l ${PORT:-3000}",
+    "build": "astro check && astro build",
+    "preview": "astro preview --host 0.0.0.0",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "serve": "^14.2.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.0",
+    "typescript": "^5.4.0"
+  }
+}

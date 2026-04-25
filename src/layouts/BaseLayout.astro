@@ -1,0 +1,108 @@
+---
+import '@/styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  canonical?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/og-default.png',
+  canonical,
+  noindex = false,
+} = Astro.props;
+
+const canonicalUrl =
+  canonical ?? new URL(Astro.url.pathname, Astro.site ?? 'https://power-in-numbers.net').toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Power In Numbers" />
+    <meta property="og:image" content={new URL(ogImage, Astro.site ?? 'https://power-in-numbers.net').toString()} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <meta name="theme-color" content="#F5F1E8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0F1F2E" media="(prefers-color-scheme: dark)" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <script is:inline>
+      // Restrained reveal-on-scroll. Respects prefers-reduced-motion.
+      (function () {
+        if (typeof window === 'undefined') return;
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const els = document.querySelectorAll('[data-reveal]');
+        if (reduce || !('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('is-revealed'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+        );
+        els.forEach((el) => io.observe(el));
+      })();
+    </script>
+
+    <style is:global>
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        padding: 12px 16px;
+        background: var(--ink);
+        color: var(--paper);
+        z-index: 100;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .skip-link:focus { left: 16px; top: 16px; }
+    </style>
+  </body>
+</html>

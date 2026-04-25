@@ -1,0 +1,411 @@
+---
+/**
+ * /track-record/[slug] — full entry page for one Predictive Track Record row.
+ *
+ * Each entry pairs PIN's earlier implementation with the mainstream
+ * emergence of a similar model, points at primary-source artifacts,
+ * and (when an essay is available) links to the Library treatment.
+ */
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('track-record').catch(() => []);
+  return entries.map((e) => ({
+    params: { slug: e.id.replace(/\.md$/, '') },
+    props: { entry: e },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Build prev/next navigation by timeline order
+const all = (await getCollection('track-record').catch(() => []))
+  .sort((a, b) => (a.data.order ?? a.data.yearSort) - (b.data.order ?? b.data.yearSort));
+const idx = all.findIndex((e) => e.id === entry.id);
+const prev = idx > 0 ? all[idx - 1] : null;
+const next = idx < all.length - 1 ? all[idx + 1] : null;
+---
+
+<BaseLayout
+  title={`${entry.data.title} (${entry.data.year}) — Power In Numbers`}
+  description={entry.data.summary ?? entry.data.pinImplementation}
+>
+  <PageHero
+    eyebrow={`Predictive Track Record · ${entry.data.year}`}
+    headline={entry.data.title}
+    lede={entry.data.summary ?? entry.data.pinImplementation}
+    metaLeft={entry.data.foilCompany ? `Pattern emerged at scale: ${entry.data.foilCompany}` : ''}
+    metaRight={entry.data.yearsAhead ? `${entry.data.yearsAhead} ahead` : ''}
+  />
+
+  {/* ──────────────────────────────────────────────
+      §01 — The pattern at a glance
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 01" tag="The pattern" />
+
+      <div class="pattern" data-reveal>
+        <div class="pattern__col">
+          <span class="pattern__label">PIN&rsquo;s implementation</span>
+          <span class="pattern__year">{entry.data.year}</span>
+          <p>{entry.data.pinImplementation}</p>
+        </div>
+        <div class="pattern__divider" aria-hidden="true">
+          <span class="pattern__divider-arrow">→</span>
+          {entry.data.yearsAhead && (
+            <span class="pattern__divider-label">{entry.data.yearsAhead}</span>
+          )}
+        </div>
+        <div class="pattern__col">
+          <span class="pattern__label">Mainstream emergence</span>
+          <span class="pattern__year">{entry.data.foilYear ?? '—'}</span>
+          <p>{entry.data.mainstreamEmergence}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §02 — Primary-source evidence
+      ────────────────────────────────────────────── */}
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 02" tag="Primary-source evidence" />
+
+      <h2 class="s-title" data-reveal>
+        What can be verified.
+      </h2>
+
+      <div class="evidence" data-reveal>
+        <p class="evidence__statement">{entry.data.evidence}</p>
+
+        {entry.data.artifacts && entry.data.artifacts.length > 0 ? (
+          <ul class="artifacts">
+            {entry.data.artifacts.map((a) => {
+              const isPdf = a.kind === 'pdf' || a.kind === 'document';
+              const isImage = a.kind === 'image';
+              const isYouTube = a.kind === 'youtube';
+              const isLink = a.kind === 'link';
+              const href = isYouTube
+                ? `https://www.youtube.com/watch?v=${a.src}`
+                : isLink
+                ? a.src
+                : a.src;
+              return (
+                <li class="artifact">
+                  <div class="artifact__head">
+                    <span class="artifact__kind">{a.kind}</span>
+                    <a class="artifact__label" href={href} target="_blank" rel="noopener">
+                      {a.label}
+                    </a>
+                    {a.dated && <span class="artifact__date">{a.dated}</span>}
+                  </div>
+                  {a.caption && <p class="artifact__caption">{a.caption}</p>}
+                  {isImage && (
+                    <img class="artifact__image" src={a.src} alt={a.label} loading="lazy" />
+                  )}
+                  {isYouTube && (
+                    <div class="artifact__video">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${a.src}`}
+                        title={a.label}
+                        loading="lazy"
+                        frameborder="0"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                      />
+                    </div>
+                  )}
+                  {isPdf && (
+                    <div class="artifact__pdf">
+                      <object data={a.src} type="application/pdf" aria-label={a.label}>
+                        <a href={a.src} target="_blank" rel="noopener">Open the PDF in a new tab.</a>
+                      </object>
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p class="evidence__pending">
+            Primary-source artifacts will be embedded here as scanned files,
+            magazine PDFs, broadcast records, and bank verification letters
+            arrive. Each will be reproduced in full, with the original
+            metadata intact.
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §03 — Body
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 03" tag="Anchor note" />
+
+      <div class="body-prose prose" data-reveal>
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §04 — Read further (prev/next)
+      ────────────────────────────────────────────── */}
+  <section class="section section--ink">
+    <div class="frame">
+      <SectionMarker num="§ 04" tag="Read further" inverse />
+
+      <div class="next-row" data-reveal>
+        {prev ? (
+          <a href={`/track-record/${prev.id.replace(/\.md$/, '')}`} class="next-link">
+            <span class="next-link__num">&larr; {prev.data.year}</span>
+            <span class="next-link__label">{prev.data.title}</span>
+          </a>
+        ) : (
+          <a href="/track-record" class="next-link">
+            <span class="next-link__num">&larr;</span>
+            <span class="next-link__label">Back to the timeline</span>
+          </a>
+        )}
+
+        <a href="/track-record" class="next-link">
+          <span class="next-link__num">&uarr;</span>
+          <span class="next-link__label">All six instances</span>
+        </a>
+
+        {next ? (
+          <a href={`/track-record/${next.id.replace(/\.md$/, '')}`} class="next-link">
+            <span class="next-link__num">{next.data.year} &rarr;</span>
+            <span class="next-link__label">{next.data.title}</span>
+          </a>
+        ) : (
+          <a href="/library" class="next-link">
+            <span class="next-link__num">&rarr;</span>
+            <span class="next-link__label">The Predictive Track Record essay series</span>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section { padding: 96px 0; border-bottom: 1px solid var(--rule); }
+  .section:last-of-type { border-bottom: none; }
+  .section--paper-deep { background: var(--paper-deep); }
+  .section--ink { background: var(--ink); color: var(--paper); border-bottom: none; }
+
+  .s-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(28px, 3.4vw, 42px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 18px;
+    max-width: 28ch;
+    color: var(--ink);
+  }
+  .section--ink .s-title { color: var(--paper); }
+
+  .prose { max-width: 680px; font-size: 18px; line-height: 1.7; color: var(--ink-soft); }
+  .prose :global(p) { margin: 0 0 24px; }
+  .prose :global(em) { color: var(--ink); font-style: italic; }
+
+  /* ─── §01 Pattern at a glance ─── */
+  .pattern {
+    display: grid;
+    grid-template-columns: 1fr 96px 1fr;
+    gap: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  @media (max-width: 800px) {
+    .pattern {
+      grid-template-columns: 1fr;
+    }
+  }
+  .pattern__col {
+    padding: 32px 28px;
+  }
+  .pattern__col:first-of-type { border-right: 1px solid var(--ink); }
+  @media (max-width: 800px) {
+    .pattern__col:first-of-type { border-right: none; border-bottom: 1px solid var(--ink); }
+  }
+  .pattern__label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--subtext);
+    margin-bottom: 12px;
+  }
+  .pattern__year {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 1;
+    color: var(--oxblood);
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+  }
+  .pattern__col p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .pattern__divider {
+    border-left: 1px solid var(--ink);
+    border-right: 1px solid var(--ink);
+    background: var(--paper-deep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  @media (max-width: 800px) {
+    .pattern__divider {
+      border-left: none;
+      border-right: none;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      flex-direction: row;
+      padding: 18px;
+    }
+  }
+  .pattern__divider-arrow {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--oxblood);
+  }
+  .pattern__divider-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--subtext);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* ─── §02 Evidence ─── */
+  .evidence__statement {
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink);
+    max-width: 72ch;
+    margin: 0 0 28px;
+    font-style: italic;
+  }
+  .evidence__pending {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--subtext);
+    max-width: 72ch;
+    margin: 0;
+    padding: 20px 24px;
+    border: 1px dashed var(--rule);
+    background: var(--paper);
+  }
+  .artifacts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 22px; max-width: 78ch; }
+  .artifact { padding: 22px 24px; border: 1px solid var(--rule); background: var(--paper); display: flex; flex-direction: column; gap: 14px; }
+  .artifact__head { display: grid; grid-template-columns: 90px 1fr auto; gap: 16px; align-items: baseline; }
+  @media (max-width: 600px) { .artifact__head { grid-template-columns: 1fr; gap: 6px; } }
+  .artifact__label { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); padding-bottom: 1px; }
+  .artifact__label:hover { border-bottom-color: var(--oxblood); color: var(--oxblood); }
+  .artifact__image { width: 100%; height: auto; border: 1px solid var(--rule); }
+  .artifact__video { position: relative; width: 100%; padding-bottom: 56.25%; }
+  .artifact__video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 1px solid var(--rule); }
+  .artifact__pdf { width: 100%; }
+  .artifact__pdf object { width: 100%; height: 720px; border: 1px solid var(--rule); background: var(--paper-deep); }
+  @media (max-width: 700px) { .artifact__pdf object { height: 480px; } }
+  .artifact__kind {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+  }
+  .artifact__label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .artifact__date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--subtext);
+    text-align: right;
+  }
+  @media (max-width: 600px) { .artifact__date { text-align: left; } }
+  .artifact__caption {
+    grid-column: 1 / -1;
+    margin: 4px 0 0;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--subtext);
+  }
+
+  /* ─── §03 Body ─── */
+  .body-prose { font-family: var(--font-body); }
+
+  /* ─── §04 Next row ─── */
+  .next-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(245, 241, 232, 0.18);
+  }
+  @media (max-width: 800px) { .next-row { grid-template-columns: 1fr; } }
+  .next-link {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 32px 28px 32px 0;
+    border-right: 1px solid rgba(245, 241, 232, 0.18);
+    color: var(--paper);
+    text-decoration: none;
+    transition: opacity 200ms ease;
+  }
+  .next-link:last-child { border-right: none; }
+  .next-link:hover { opacity: 0.7; }
+  @media (max-width: 800px) {
+    .next-link {
+      border-right: none;
+      border-bottom: 1px solid rgba(245, 241, 232, 0.18);
+      padding: 24px 0;
+    }
+    .next-link:last-child { border-bottom: none; }
+  }
+  .next-link__num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--oxblood);
+  }
+  .next-link__label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.3;
+    color: var(--paper);
+  }
+</style>

@@ -1,0 +1,413 @@
+---
+/**
+ * /engage — three intake paths, one each for the firm's engines.
+ *
+ * AI Mirror (individual / clinician / operator) ·
+ * VERIDEX BI USA (firm-grade domestic) ·
+ * Sovereign Mirror (sovereign / multilateral).
+ *
+ * The page is sober and reads like an admissions brochure rather
+ * than a sales page. There is no calendar embed, no pricing,
+ * no "book a demo." The intake is by written application —
+ * because the firm reviews fit before quoting.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+const paths = [
+  {
+    key: 'ai-mirror',
+    eyebrow: 'Path 01 · Individual decision',
+    engine: 'AI Mirror',
+    headline: 'A single principal, a high-consequence move.',
+    audience:
+      'Clinicians, founders, operators, domain experts evaluating a market entry, a relocation, a launch, or a structural change in their practice or company.',
+    deliverable:
+      'A Stage-3 AI Mirror Full Report. Two-pathway opportunity / friction modelling, comparator-set analysis, an explicit recommendation, and a separated Decision-Maker Briefing in the report\'s own block.',
+    standard: 'VERIDEX Core (22 gates) plus engine extensions G·24–G·27.',
+    referenceCase: 'Ghana market entry — Dr. Janelle Thompson, Epiphany Wellness.',
+    referenceCaseHref: '/case-studies/ghana-market-entry/',
+    intakeQuestions: [
+      'The decision you are trying to make, named without ambiguity.',
+      'The two or three pathways you are weighing — even roughly.',
+      'The two or three constraints that already disqualify some answers.',
+      'The horizon over which the decision binds you (months, years, a career).',
+      'The counterfactual — what you would do if the firm were not engaged.',
+    ],
+    timeline: '6–10 weeks from intake acceptance to Stage-3 Full Report.',
+  },
+  {
+    key: 'veridex-bi-usa',
+    eyebrow: 'Path 02 · Domestic firm-grade',
+    engine: 'VERIDEX BI USA',
+    headline: 'A US-based firm or operating venture, audit-grade.',
+    audience:
+      'US-domiciled enterprises and operating ventures requiring a firm-grade evaluation — geographic expansion, market entry, dual-revenue modelling, capital-entry sizing, jurisdictional comparison.',
+    deliverable:
+      'A VERIDEX BI USA Stage-3 Full Report. Two-pathway modelling at firm scale, capital-entry envelopes, jurisdictional tax and regulatory load, P50 / P10 / P90 revenue and margin trajectories, and a separated Decision-Maker Briefing.',
+    standard: 'VERIDEX Core (22 gates), engine-specific extensions, jurisdictional fiscal review.',
+    referenceCase: 'US market entry — The Master\'s Chair, Houston → Atlanta.',
+    referenceCaseHref: '/case-studies/us-market-entry/',
+    intakeQuestions: [
+      'The firm or venture, named, with current state of operations.',
+      'The decision under consideration — geography, scale, structure, or capital.',
+      'The capital you would bring to bear at the low and high ends.',
+      'The comparators you already consider relevant.',
+      'The audit standard the deliverable will have to satisfy downstream (board, investor, regulator).',
+    ],
+    timeline: '8–12 weeks from intake acceptance to Stage-3 Full Report.',
+  },
+  {
+    key: 'sovereign-mirror',
+    eyebrow: 'Path 03 · Sovereign and multilateral',
+    engine: 'Sovereign Mirror',
+    headline: 'A government, ministry, or multilateral evaluation.',
+    audience:
+      'Sovereign principals, ministries of finance, central banks, multilateral institutions, and quasi-governmental bodies commissioning a fiscal-framework, public-finance, or macro-structural evaluation.',
+    deliverable:
+      'A Sovereign Mirror briefing or full report — typically two to four interlocking artefacts (e.g., Domestic Resource Mobilisation, Health Financing, Sovereign Fund, Sectoral Revenue) with a Decision-Maker Briefing in each.',
+    standard:
+      'VERIDEX Core (22 gates) plus the Sovereign Mirror extensions; explicit primary-source citation; counterfactual block per recommendation.',
+    referenceCase: 'Ghana — Domestic Resource Mobilisation, Health Financing, GSF, ABFA.',
+    referenceCaseHref: '/case-studies/ghana-market-entry/interactive/',
+    intakeQuestions: [
+      'The principal, the ministry or office of authority, and the convening occasion (if any).',
+      'The fiscal or structural question, named without ambiguity.',
+      'The four to six instruments under consideration — even directionally.',
+      'The horizon and the political binding-window over which the brief must hold.',
+      'The audit standard the deliverable must satisfy on receipt (cabinet, IMF Article IV, multilateral co-financier, public release).',
+    ],
+    timeline: '10–16 weeks from intake acceptance to first set of briefings.',
+  },
+];
+
+const standards = [
+  {
+    title: 'Fit before quote.',
+    body: 'The firm reviews the intake before discussing fee. If the work is not a match for one of the three engines, the firm says so on the call rather than building an engagement around the wrong instrument.',
+  },
+  {
+    title: 'One principal, one engagement.',
+    body: 'Every engagement names a single decision-maker on the receiving side. The Decision-Maker Briefing is written for that reader. The firm does not run multi-stakeholder engagements without a named principal.',
+  },
+  {
+    title: 'Counterfactual on the record.',
+    body: 'Every Stage-3 deliverable carries the counterfactual — what the firm rejects and why — in the same paragraph as the recommendation. Engagements that cannot tolerate that discipline are not a fit.',
+  },
+  {
+    title: 'Primary-source standard.',
+    body: 'The firm cites primary sources, names institutions, and tags temporal provenance. Statistics that would not survive an audit do not enter the deliverable.',
+  },
+];
+---
+
+<BaseLayout
+  title="Engage — Three Paths · Power In Numbers"
+  description="The firm is engaged through one of three intake paths, one for each engine: AI Mirror (individual), VERIDEX BI USA (domestic firm-grade), and Sovereign Mirror (sovereign and multilateral). Intake is by written application."
+>
+  <PageHero
+    eyebrow="Engage — Three Paths"
+    headline="Three engines. Three intake paths. One audit standard."
+    lede="The firm is engaged through one of three written intake paths, one for each operating engine. There is no calendar to book and no pricing to pre-approve. The firm reviews fit before quoting. Every engagement is anchored to a named principal, a named decision, and the counterfactual the firm will be asked to reject."
+    meta="Intake review · 5 business days · admin@power-in-numbers.net"
+  />
+
+  <section class="paths frame">
+    <SectionMarker num="§ 01" tag="Choose the path that names your decision" />
+
+    {paths.map((p, i) => (
+      <article class="path" id={p.key} data-reveal>
+        <header class="path__head">
+          <p class="path__eyebrow">{p.eyebrow}</p>
+          <h2 class="path__headline">{p.headline}</h2>
+          <p class="path__engine"><span>Engine</span>{p.engine}</p>
+        </header>
+
+        <div class="path__grid">
+          <div class="path__col">
+            <p class="path__label">Audience</p>
+            <p class="path__body">{p.audience}</p>
+          </div>
+          <div class="path__col">
+            <p class="path__label">Deliverable</p>
+            <p class="path__body">{p.deliverable}</p>
+          </div>
+          <div class="path__col">
+            <p class="path__label">Validation standard</p>
+            <p class="path__body">{p.standard}</p>
+          </div>
+          <div class="path__col">
+            <p class="path__label">Reference case</p>
+            <p class="path__body">
+              <a href={p.referenceCaseHref} class="path__link">{p.referenceCase}</a>
+            </p>
+          </div>
+          <div class="path__col">
+            <p class="path__label">Indicative timeline</p>
+            <p class="path__body">{p.timeline}</p>
+          </div>
+        </div>
+
+        <div class="path__intake">
+          <p class="path__label">What the intake asks</p>
+          <ol class="path__qs">
+            {p.intakeQuestions.map((q, qi) => (
+              <li>
+                <span class="path__qnum">{String(qi + 1).padStart(2, '0')}</span>
+                <span>{q}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <a class="path__cta" href={`mailto:admin@power-in-numbers.net?subject=Engage%20%C2%B7%20${encodeURIComponent(p.engine)}%20intake`}>
+          Begin {p.engine} intake →
+        </a>
+      </article>
+    ))}
+  </section>
+
+  <section class="standard frame">
+    <SectionMarker num="§ 02" tag="The intake standard" />
+    <h2 class="standard__h">What every intake holds to.</h2>
+    <div class="standard__grid">
+      {standards.map((s) => (
+        <div class="standard__item" data-reveal>
+          <p class="standard__t">{s.title}</p>
+          <p class="standard__b">{s.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="frame">
+      <SectionMarker num="§ 03" tag="If you are unsure which path applies" inverse={true} />
+      <h2 class="closing__h">Write to the firm before you choose.</h2>
+      <p class="closing__lede">
+        If your decision sits between two of the three paths — for example, an
+        operator working with a sovereign convener, or a clinician evaluating
+        a firm-grade expansion — the firm prefers a short note to a guessed
+        intake. A single paragraph naming the principal, the decision, and the
+        horizon is enough to route the question.
+      </p>
+      <div class="closing__row">
+        <a class="closing__btn" href="mailto:admin@power-in-numbers.net?subject=Engage%20%C2%B7%20Routing%20question">Write the firm</a>
+        <a class="closing__alt" href="/contact/">Contact details →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .frame {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  @media (max-width: 720px) {
+    .frame { padding: 0 20px; }
+  }
+
+  /* Paths */
+  .paths {
+    padding: 96px 0 32px;
+  }
+  .path {
+    border-top: 1px solid var(--rule);
+    padding: 64px 0 80px;
+  }
+  .path:last-of-type { border-bottom: 1px solid var(--rule); }
+
+  .path__head { max-width: 820px; }
+  .path__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0 0 20px;
+    font-weight: 500;
+  }
+  .path__headline {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4.2vw, 44px);
+    line-height: 1.12;
+    margin: 0 0 24px;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .path__engine {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--subtext);
+    margin: 0 0 36px;
+  }
+  .path__engine span {
+    color: var(--oxblood);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-right: 12px;
+    font-weight: 500;
+  }
+
+  .path__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px 36px;
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+    margin-bottom: 44px;
+  }
+  @media (max-width: 900px) { .path__grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .path__grid { grid-template-columns: 1fr; gap: 20px; } }
+
+  .path__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0 0 10px;
+    font-weight: 500;
+  }
+  .path__body {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0;
+  }
+  .path__link {
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+  }
+  .path__link:hover { border-bottom-color: var(--oxblood); }
+
+  .path__intake {
+    background: var(--paper-deep);
+    padding: 32px 36px;
+    border-radius: 2px;
+    margin-bottom: 36px;
+  }
+  @media (max-width: 600px) { .path__intake { padding: 24px 20px; } }
+  .path__qs {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .path__qs li {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 12px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .path__qnum {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--oxblood);
+    padding-top: 4px;
+    font-weight: 500;
+  }
+
+  .path__cta {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 14px 22px;
+    text-decoration: none;
+    border-radius: 1px;
+    transition: background 0.15s;
+  }
+  .path__cta:hover { background: var(--oxblood); }
+
+  /* Standard */
+  .standard { padding: 64px 0; }
+  .standard__h {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 0 0 40px;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .standard__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 56px;
+  }
+  @media (max-width: 720px) { .standard__grid { grid-template-columns: 1fr; gap: 28px; } }
+
+  .standard__item { border-top: 1px solid var(--rule); padding-top: 20px; }
+  .standard__t {
+    font-family: var(--font-display);
+    font-size: 19px;
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .standard__b {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--subtext);
+    margin: 0;
+  }
+
+  /* Closing */
+  .closing {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 96px 0 112px;
+    margin-top: 32px;
+  }
+  .closing__h {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4.5vw, 46px);
+    margin: 0 0 20px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    max-width: 820px;
+    color: var(--paper);
+  }
+  .closing__lede {
+    font-size: 17px;
+    line-height: 1.6;
+    color: rgba(245, 241, 232, 0.78);
+    max-width: 700px;
+    margin: 0 0 36px;
+  }
+  .closing__row { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+  .closing__btn {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    background: var(--paper);
+    padding: 14px 22px;
+    text-decoration: none;
+    border-radius: 1px;
+  }
+  .closing__btn:hover { background: var(--paper-deep); }
+  .closing__alt {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: rgba(245, 241, 232, 0.78);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(245, 241, 232, 0.3);
+    padding-bottom: 2px;
+  }
+  .closing__alt:hover { color: var(--paper); border-bottom-color: var(--paper); }
+</style>

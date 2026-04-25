@@ -1,0 +1,851 @@
+---
+/**
+ * /methodology/curriculum — PINU, the eight-phase development curriculum.
+ *
+ * Source: "Methodology Map & Entrepreneurial Timeline" + "Entrepreneurial
+ * Course Map & Topic Detail" + "Business Plan Course Spread"
+ * (Power In Numbers University, Rev 8-25-05; current canon).
+ *
+ * The curriculum is an eight-phase sequence — eight courses — each pairing a
+ * topic block (instructional units) with a discrete business-plan deliverable.
+ * Per deck §03 (Layer 02), PINU is the formation discipline that produces
+ * cartographers; CROWD POWERED is the venture-structuring framework they apply.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+interface Phase {
+  num: string;             // 01…08
+  short: string;           // Short label for the timeline strip
+  title: string;           // Full course title
+  resolves: string;        // What this phase resolves — the question it answers
+  body: string;            // Editorial body prose
+  topics: string[];        // Topic units (verbatim from the Course Map & Topic Detail)
+  bizPlan: {               // Business Plan Course Spread — what this phase produces
+    label: string;
+    pieces: string[];
+  };
+}
+
+const phases: Phase[] = [
+  {
+    num: '01',
+    short: 'Idea & Concept Formation',
+    title: 'Idea and concept formation',
+    resolves: 'Whether the idea is the right idea — and whether the operator is the right operator for it.',
+    body:
+      'The course begins not with a market and not with a product but with the founder. Most ventures fail because the operator entered a problem they were not equipped to carry, or carried a problem that was not theirs to solve. Phase one separates the two questions and answers both honestly: is the idea worth the work, and is the operator the right vehicle for the idea. The output is not a pitch deck. It is a written self-account, paired with a working concept stress-tested for originality, timing, and personal fit.',
+    topics: [
+      'Creativity',
+      'Risk',
+      'Advice from mentors',
+      'Uniqueness',
+      'Identification of the idea',
+      'Source of the idea',
+      'Pricing',
+      'Selling unit',
+      'Business type and style',
+      'Franchise opportunities',
+      'Knowledge of the idea',
+      'Improvement on an old idea',
+      'Availability of information on the idea',
+      'Problem solved by the idea',
+      'Timing',
+      'Inventions',
+      'Manufactured product',
+      'Distributed product',
+      'Service',
+      'Niche to be served',
+      'Trendy idea',
+      'Idea assessment',
+      'Self-exploration',
+      'Entrepreneurial characteristics',
+      'Personal purpose',
+      'Vision, goals, mission',
+      'Personal values',
+      'Mental toughness',
+      'Handling risk',
+      'Stamina',
+      'Leadership ability',
+      'Personal commitment',
+      'Time management',
+      'Entrepreneur quiz',
+      'Self motivation',
+      'Entrepreneurial spirit',
+      'Entrepreneurial passion',
+      'Belief, commitment, focus and drive',
+      'Personal education',
+      'Teachable spirit',
+      'Planning technique',
+      'Small business failure',
+    ],
+    bizPlan: {
+      label: 'Business plan piece',
+      pieces: [
+        'Product / service identification',
+        'Product / service development',
+        'Critical risks and problems',
+      ],
+    },
+  },
+  {
+    num: '02',
+    short: 'Research, Market Analysis & Feasibility',
+    title: 'Research, market analysis and feasibility',
+    resolves: 'Whether the idea can survive contact with the market it claims to serve.',
+    body:
+      'Phase two is the audit phase. The course teaches the operator to write a research plan, design and run primary and secondary research, conduct competitive analysis at three tiers, and reach a defensible feasibility judgement. Feasibility here is not a gate-keeping ritual; it is the moment the operator earns or loses the right to keep going. The deliverable is a written feasibility position the venture will be measured against later.',
+    topics: [
+      'Research plan',
+      'Target analysis',
+      'New venture awareness',
+      'Governmental compliance',
+      'Market trends',
+      'Industry analysis',
+      'Financial resources',
+      'Cash flow projections',
+      'Market analysis',
+      'Primary research',
+      'Secondary research',
+      'Competitive analysis',
+      'Competitive advantage',
+      'The marketing plan',
+      'Growth strategies',
+      'Industry issues',
+      'Starting a search',
+      'Setting research objectives',
+      'Analysis factors',
+      'Manufacturing issues',
+      'Your market niche',
+      'Idea feasibility',
+      'Information gathering',
+      'Self-exploration',
+      'Product or service description',
+      'Desired results',
+      'Flaws',
+      'Ability to make significant money',
+      'Competitive reaction',
+      'Costs of production',
+      'Growth potential',
+      'Manufacturing or purchasing process',
+      'Risk vs. profit potential',
+      '10-year picture',
+      'Matching with personal vision',
+    ],
+    bizPlan: {
+      label: 'Business plan piece',
+      pieces: [
+        'The industry',
+        'Products and services — competitive perspective',
+        'Market analysis',
+        'Competition',
+        'Milestones and objectives',
+      ],
+    },
+  },
+  {
+    num: '03',
+    short: 'Financial Statements & Funding Sources',
+    title: 'Financial statements and funding sources',
+    resolves: 'How the venture will be capitalized — and on whose terms.',
+    body:
+      'Phase three replaces the founder&rsquo;s instinct about money with literacy. The course covers source identification (personal, banks, SBA-backed instruments, venture capital, angels, franchises, acquisition, inheritance), the legal organization decisions that follow from the funding choice, and the financial documents the venture will produce on a recurring basis. Cash flow projections, ratio analysis, and simple-and-detailed proformas are practiced until they are unintimidating. The deliverable is a complete financial section a third party would underwrite.',
+    topics: [
+      'Money sources',
+      'Presentation to sources',
+      'Alternative sources',
+      'Personal funds',
+      'Banks and bankers',
+      'Venture capitalists',
+      'Angel investors',
+      'SBA guaranteed programs',
+      'Purchase an existing business',
+      'Purchasing a franchise',
+      'Ratios',
+      'Proformas — simple and detailed',
+      'Legal organization',
+      'Types of legal entities',
+      'Start-up costs',
+      'Issues with partners',
+      'Buying a business',
+      'Inheriting a business',
+      'Intellectual property',
+    ],
+    bizPlan: {
+      label: 'Business plan piece',
+      pieces: [
+        'Financial data',
+        'Financial projections',
+        'Supporting documents',
+      ],
+    },
+  },
+  {
+    num: '04',
+    short: 'Systems, Tools & Automation',
+    title: 'Systems, tools and automation',
+    resolves: 'Which systems the venture runs on — before scale forces the choice.',
+    body:
+      'Phase four is the operations course. It treats systems as architecture, not utilities. Web presence, internet marketing instruments, operational systems, supplier and fulfillment processes, technical systems, the internet itself, e-marketing, CRM, and office automation are taught as decisions — each with a downstream cost and a downstream commitment. The deliverable is a written technology plan the venture is willing to live inside for the next three years.',
+    topics: [
+      'Web site plan',
+      'Internet marketing tools',
+      'Operational systems',
+      'Potential suppliers',
+      'Business procedures',
+      'Fulfillment process',
+      'Internet marketing',
+      'Technical systems',
+      'The internet',
+      'E-marketing systems',
+      'CRM systems',
+      'Office automation',
+      'How will you process your first order?',
+    ],
+    bizPlan: {
+      label: 'Business plan piece',
+      pieces: [
+        'Technology',
+        'IT processes',
+      ],
+    },
+  },
+  {
+    num: '05',
+    short: 'Management, Organization, HR & Strategy',
+    title: 'Management, organization, HR and strategy',
+    resolves: 'How the venture is led — formally, daily, and over the long arc.',
+    body:
+      'Phase five formalizes the operating discipline. Legal formation flows into governance; governance flows into strategic planning; strategic planning flows into the daily questions of communication, teamwork, hiring, location, and time. The course refuses the false choice between strategy and operations. Both are taught together because they are practiced together. The deliverable is the company&rsquo;s management and organization section, including the documented leadership method the founder will be measured against.',
+    topics: [
+      'Legal formation',
+      'Strategic planning',
+      'Written communication',
+      'Verbal communication',
+      'Teamwork',
+      'Employee management',
+      'Policies and practices',
+      'Purchase an existing business',
+      'Purchasing a franchise',
+      'Taxation',
+      'Location selection',
+      'Leadership characteristics',
+      'Leadership learning',
+      'Leadership methods',
+      'Time management',
+    ],
+    bizPlan: {
+      label: 'Business plan piece',
+      pieces: [
+        'The company',
+        'Administration, organization and personnel',
+        'Management and ownership',
+      ],
+    },
+  },
+  {
+    num: '06',
+    short: 'Marketing & Lead Generation',
+    title: 'Marketing and lead generation',
+    resolves: 'How the venture finds, qualifies, and keeps the audience it claims to serve.',
+    body:
+      'Phase six is the demand course. It treats marketing as a system to be engineered &mdash; planned, targeted, branded, budgeted, communicated, and tracked &mdash; not a creative impulse handed off to an agency. Customer profiling, market-share building, branding (company and personal), pricing, packaging, presentation, trade shows, advocates, and the marketing budget are taught as a single integrated discipline. The deliverable is a market strategy section in which every assertion can be reported against later.',
+    topics: [
+      'Planning',
+      'Marketing strategy',
+      'Customer service',
+      'Positive mental attitude',
+      'Communication',
+      'The sales process',
+      'Being first at something',
+      'Category creation',
+      'Customer perception',
+      'Market position',
+      'Market share building',
+      'Branding',
+      'Brand building',
+      'Targeting the customer',
+      'Customer profiling',
+      'Customer locating',
+      'Competitive advantage',
+      'SWOT analysis',
+      'Head-to-head competitors',
+      'First-tier competitors',
+      'Indirect competitors',
+      'Differentiation',
+      'Growth strategies',
+      'Marketing results tracking',
+      'Marketing budgets',
+      'Communication of the marketing plan',
+      'Trade shows',
+      'Pricing',
+      'Packaging',
+      'Presentations',
+    ],
+    bizPlan: {
+      label: 'Business plan piece',
+      pieces: [
+        'Market strategy',
+      ],
+    },
+  },
+  {
+    num: '07',
+    short: 'Sales & Salesforce Automation',
+    title: 'Sales and salesforce automation',
+    resolves: 'How the venture closes — repeatedly, ethically, and at the unit economics it claimed.',
+    body:
+      'Phase seven separates marketing from sales and treats sales as its own engineered discipline. The sales process, hiring sales people, expectations from new hires, customer relationships, branding at the personal level, creative selling, deal construction, persuasion tactics, prospecting, advocacy, and the use of technology in selling are taught as a coherent operating system. The deliverable is the sales strategy and process section, including the metrics by which the salesforce will be evaluated.',
+    topics: [
+      'Sales management',
+      'Sales process',
+      'Customer service',
+      'Negotiation tactics',
+      'Influencing people',
+      'Listening',
+      'Packaging',
+      'Presentations',
+      'Expectations and results',
+      'Testimonials',
+      'Proving value',
+      'Strategic sales activity',
+      'Picture proof',
+      'Statistical proof',
+      'Customer profiling',
+      'Seeking customer advice',
+      'Stimulation of referrals',
+      'Using premiums and enticements',
+      'Customer retention',
+      'Big-ticket selling',
+      'Creating a mystique',
+      'Using technology for sales',
+      'Persistence',
+      'Resiliency',
+      'Wholesale selling',
+      'Maximum use of contacts',
+      'Sales self-management',
+      'Prospecting over the phone',
+      'Wholesale prospecting',
+      'Using advocates',
+      'Personality',
+      'Hiring sales people',
+      'Expectations from new hires',
+      'Customer relationships',
+      'Branding — company and personal',
+      'Creative selling',
+      'Creating deals outside the box',
+      'Persuasion tactics',
+    ],
+    bizPlan: {
+      label: 'Business plan piece',
+      pieces: [
+        'Sales strategy',
+        'Sales process',
+      ],
+    },
+  },
+  {
+    num: '08',
+    short: 'Implementation',
+    title: 'Implementation',
+    resolves: 'Whether the venture, on the day it opens, is the venture the plan described.',
+    body:
+      'Phase eight is the closing course. It is not a celebration; it is the audit. Customer service, sales execution, vendor negotiation, the handling of legal issues as they arrive in real time, capital asset acquisition, logistics, the executive summary, and the finalized plan are practiced under the pressure of an opening date. The deliverable is the schedule and plan section, the executive summary, and the finalized business plan &mdash; the document the operator will be held to, period over period, by the validation discipline.',
+    topics: [
+      'Customer service',
+      'Sales plan',
+      'Vendor negotiation',
+      'Negotiation tactics',
+      'Legal issues',
+    ],
+    bizPlan: {
+      label: 'Business plan piece',
+      pieces: [
+        'Schedule and plan',
+        'Capital asset acquisition and logistics',
+        'Executive summary',
+        'Plan finalization',
+      ],
+    },
+  },
+];
+---
+
+<BaseLayout
+  title="The Curriculum — Power In Numbers"
+  description="PINU. The eight-phase Methodology Map and Entrepreneurial Timeline. Eight courses, each paired with a discrete business-plan deliverable. The formation discipline that produces cartographers."
+>
+  <PageHero
+    eyebrow="Methodology · Layer 02"
+    headline="The Curriculum"
+    lede="An eight-phase development sequence. Eight courses. One business plan, built piece by piece. The formation discipline that converts an operator into a cartographer."
+    metaLeft="PINU"
+    metaRight="Rev 8-25-05 · current canon"
+  />
+
+  {/* ──────────────────────────────────────────────
+      §01 — What the curriculum is
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 01" tag="What it is" />
+
+      <h2 class="s-title" data-reveal>
+        Eight phases. Eight courses. One audited plan.
+      </h2>
+
+      <div class="prose" data-reveal>
+        <p>
+          PINU is the curriculum side of Power In Numbers&rsquo; methodology &mdash;
+          the formation discipline that produces operators capable of running
+          decision cartography in the field. It is taught as eight sequential
+          phases. Each phase is a course; each course resolves a specific
+          development question; each course produces a specific section of
+          a defensible business plan.
+        </p>
+        <p>
+          The curriculum is not a survey. It is a working sequence. The order
+          is the argument. An operator does not earn the right to study
+          phase three until phase two is closed; does not earn the right
+          to enter phase six until phase five has produced a documented
+          management plan. The Methodology Map is the timeline that
+          enforces the order.
+        </p>
+        <p>
+          The deliverable produced across the eight phases is a single,
+          finalized business plan, written in pieces, audited at each
+          phase, and stress-tested by the validation layer at the end.
+          What the operator carries forward at graduation is the plan,
+          the discipline that produced it, and the operating habit
+          of writing every assertion in a form a third party can audit.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §02 — The eight-phase map
+      ────────────────────────────────────────────── */}
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 02" tag="The map" />
+
+      <h2 class="s-title" data-reveal>
+        The Methodology Map and Entrepreneurial Timeline.
+      </h2>
+      <p class="s-lede" data-reveal>
+        The phases run left to right. Each is a working course. The map is
+        read in sequence; phases are not selectable.
+      </p>
+
+      <ol class="map" data-reveal aria-label="PINU — eight-phase development curriculum">
+        {phases.map((p) => (
+          <li class="map__cell">
+            <a href={`#phase-${p.num}`} class="map__link">
+              <span class="map__num">Phase {p.num}</span>
+              <span class="map__name">{p.short}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §03 — The eight phases in full
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 03" tag="The eight phases in full" />
+
+      <div class="phases">
+        {phases.map((p) => (
+          <article class="phase" id={`phase-${p.num}`}>
+            <header class="phase__head">
+              <div class="phase__index">
+                <span class="phase__num">Phase {p.num}</span>
+                <span class="phase__course">Course {p.num}</span>
+              </div>
+              <h3 class="phase__name">{p.title}</h3>
+              <p class="phase__resolves">
+                <span class="phase__resolves-label">Resolves.</span> {p.resolves}
+              </p>
+            </header>
+
+            <p class="phase__body" set:html={p.body}></p>
+
+            <div class="phase__detail">
+              <div class="phase__sub phase__sub--topics">
+                <p class="phase__sub-label">Topic detail</p>
+                <ul class="phase__topics">
+                  {p.topics.map((t) => (<li>{t}</li>))}
+                </ul>
+              </div>
+              <div class="phase__sub phase__sub--bizplan">
+                <p class="phase__sub-label">{p.bizPlan.label}</p>
+                <ul class="phase__bizplan">
+                  {p.bizPlan.pieces.map((piece) => (<li>{piece}</li>))}
+                </ul>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §04 — Curriculum × framework × validation
+      ────────────────────────────────────────────── */}
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 04" tag="How the layers couple" />
+
+      <h2 class="s-title" data-reveal>
+        The curriculum forms the cartographer.
+      </h2>
+      <p class="s-lede" data-reveal>
+        PINU does not exist in isolation. It is one of three layers of the
+        methodology, and each layer has standing only in relation to the
+        other two.
+      </p>
+
+      <ol class="reinforce" data-reveal>
+        <li>
+          <span class="reinforce__num">01</span>
+          <div class="reinforce__body">
+            <h3>The curriculum forms the operator who applies the framework.</h3>
+            <p>An operator who has not been through the eight phases cannot legitimately run a CROWD POWERED engagement. The curriculum is what makes the framework usable in the field rather than admirable on the page.</p>
+          </div>
+        </li>
+        <li>
+          <span class="reinforce__num">02</span>
+          <div class="reinforce__body">
+            <h3>The framework gives the curriculum a venture to ground in.</h3>
+            <p>Without the twelve-step framework, the eight phases are general-purpose business education. With it, every course is taught against the question of how the venture will be structured to refuse single-principal risk and to reinvest ninety percent of revenue back into itself.</p>
+          </div>
+        </li>
+        <li>
+          <span class="reinforce__num">03</span>
+          <div class="reinforce__body">
+            <h3>VERIDEX is the audit standard the plan is held to.</h3>
+            <p>The business plan written across the eight phases is not the end of the story. It is the document the validation layer measures against, period over period, on twenty-two gates. The curriculum produces the plan; the framework structures the venture; VERIDEX confirms whether either is performing as written.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §05 — Read further
+      ────────────────────────────────────────────── */}
+  <section class="section section--ink">
+    <div class="frame">
+      <SectionMarker num="§ 05" tag="Read further" inverse />
+
+      <div class="next-row" data-reveal>
+        <a href="/methodology/framework" class="next-link">
+          <span class="next-link__num">01</span>
+          <span class="next-link__label">CROWD POWERED &mdash; the twelve-step framework</span>
+        </a>
+        <a href="/methodology/validation" class="next-link">
+          <span class="next-link__num">03</span>
+          <span class="next-link__label">VERIDEX &mdash; the validation layer</span>
+        </a>
+        <a href="/methodology" class="next-link">
+          <span class="next-link__num">&larr;</span>
+          <span class="next-link__label">Back to methodology overview</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ─── shared section vocabulary, matched to /methodology/framework ─── */
+  .section { padding: 96px 0; border-bottom: 1px solid var(--rule); }
+  .section:last-of-type { border-bottom: none; }
+  .section--paper-deep { background: var(--paper-deep); }
+  .section--ink { background: var(--ink); color: var(--paper); border-bottom: none; }
+
+  .s-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(28px, 3.4vw, 42px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 18px;
+    max-width: 28ch;
+    color: var(--ink);
+  }
+  .section--ink .s-title { color: var(--paper); }
+  .s-lede {
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--subtext);
+    max-width: 64ch;
+    margin: 0 0 40px;
+  }
+  .prose { max-width: 680px; font-size: 18px; line-height: 1.7; color: var(--ink-soft); }
+  .prose p { margin: 0 0 24px; }
+  .prose em { color: var(--ink); font-style: italic; }
+
+  /* ─── §02 The map: 8-cell horizontal timeline ─── */
+  .map {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .map__cell {
+    border-right: 1px solid var(--ink);
+  }
+  .map__cell:last-child { border-right: none; }
+  @media (max-width: 1024px) {
+    .map { grid-template-columns: repeat(4, 1fr); }
+    .map__cell:nth-child(4n) { border-right: none; }
+    .map__cell:nth-child(-n+4) { border-bottom: 1px solid var(--ink); }
+  }
+  @media (max-width: 600px) {
+    .map { grid-template-columns: repeat(2, 1fr); }
+    .map__cell:nth-child(4n) { border-right: 1px solid var(--ink); }
+    .map__cell:nth-child(2n) { border-right: none; }
+    .map__cell:nth-last-child(-n+2) { border-bottom: none; }
+    .map__cell:not(:nth-last-child(-n+2)) { border-bottom: 1px solid var(--ink); }
+  }
+  .map__link {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px 18px 24px;
+    text-decoration: none;
+    color: var(--ink);
+    height: 100%;
+    transition: background 200ms ease;
+  }
+  .map__link:hover { background: var(--paper-deep); }
+  .map__num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+  }
+  .map__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+
+  /* ─── §03 Phases in full ─── */
+  .phases {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+  .phase {
+    border-top: 1px solid var(--rule);
+    padding-top: 36px;
+  }
+  .phase:first-child { border-top: 1px solid var(--ink); }
+  .phase__head { margin-bottom: 20px; }
+  .phase__index {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .phase__num {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--oxblood);
+    letter-spacing: -0.01em;
+  }
+  .phase__course {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--subtext);
+  }
+  .phase__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(24px, 2.6vw, 30px);
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .phase__resolves {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--subtext);
+    margin: 0;
+    max-width: 72ch;
+  }
+  .phase__resolves-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-right: 8px;
+  }
+  .phase__body {
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 72ch;
+    margin: 0 0 28px;
+  }
+
+  .phase__detail {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 36px;
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+  }
+  @media (max-width: 800px) {
+    .phase__detail { grid-template-columns: 1fr; gap: 28px; }
+  }
+  .phase__sub-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0 0 14px;
+  }
+  .phase__topics {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    columns: 2;
+    column-gap: 28px;
+  }
+  @media (max-width: 600px) {
+    .phase__topics { columns: 1; }
+  }
+  .phase__topics li {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    padding: 4px 0;
+    break-inside: avoid;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .phase__bizplan {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .phase__bizplan li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .phase__bizplan li:last-child { border-bottom: none; }
+
+  /* ─── §04 Reinforce list (matches framework page vocabulary) ─── */
+  .reinforce {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 880px;
+  }
+  .reinforce li {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 22px;
+    align-items: baseline;
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+  }
+  .reinforce__num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--oxblood);
+  }
+  .reinforce__body h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .reinforce__body p {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--subtext);
+    margin: 0;
+    max-width: 72ch;
+  }
+
+  /* ─── §05 Next row (matches framework) ─── */
+  .next-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(245, 241, 232, 0.18);
+  }
+  @media (max-width: 800px) {
+    .next-row { grid-template-columns: 1fr; }
+  }
+  .next-link {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 32px 28px 32px 0;
+    border-right: 1px solid rgba(245, 241, 232, 0.18);
+    color: var(--paper);
+    text-decoration: none;
+    transition: opacity 200ms ease;
+  }
+  .next-link:last-child { border-right: none; }
+  .next-link:hover { opacity: 0.7; }
+  @media (max-width: 800px) {
+    .next-link {
+      border-right: none;
+      border-bottom: 1px solid rgba(245, 241, 232, 0.18);
+      padding: 24px 0;
+    }
+    .next-link:last-child { border-bottom: none; }
+  }
+  .next-link__num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--oxblood);
+  }
+  .next-link__label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.3;
+    color: var(--paper);
+  }
+</style>

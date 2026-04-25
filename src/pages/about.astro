@@ -1,0 +1,395 @@
+---
+/**
+ * /about — what the firm is, who runs it, what it commits to.
+ *
+ * Voice: restrained, sober, citation-grade. No "founder story"
+ * flourish, no emoji, no management-speak. The page reads like
+ * a Brookings about-the-program note written by an operator.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+const principles = [
+  {
+    n: '01',
+    t: 'Primary-source standard.',
+    b: 'Statistics trace to source. Institutions are named. Temporal provenance is tagged. The same five-source rule that governs the firm\'s deliverables governs its public writing.',
+  },
+  {
+    n: '02',
+    t: 'Counterfactual on the record.',
+    b: 'Every recommendation is paired with the position it rejects, in the same paragraph. A reader can audit not only what the firm chose, but what it set down.',
+  },
+  {
+    n: '03',
+    t: 'A separated reader-action line.',
+    b: 'Where the work recommends an action, that action lives in its own block — the Decision-Maker Briefing the firm requires by VERIDEX Gate 22 — never as a formatting convention.',
+  },
+  {
+    n: '04',
+    t: 'One principal, one engagement.',
+    b: 'Every engagement names a single decision-maker on the receiving side. The deliverable is written for that reader. The firm does not run multi-stakeholder mandates without a named principal.',
+  },
+];
+
+const commitments = [
+  {
+    t: 'A method made legible.',
+    b: 'CROWD POWERED — the firm\'s twelve-step operating framework, named publicly in 2003 — is documented openly at /methodology/framework. The 22-gate VERIDEX validation standard is enumerated in full at /methodology/validation. The eight-phase curriculum that the firm teaches is published at /methodology/curriculum. None of these are paywalled.',
+  },
+  {
+    t: 'A track record that reads as evidence.',
+    b: 'The firm\'s history is documented as a six-pattern timeline at /track-record, beginning with a 2001 employee-advocacy programme and reaching 2026 with the AI Mirror Stage-3 report at the Nexten Summit Accra. Each entry pairs the firm\'s earlier implementation with the mainstream emergence that followed, and where possible, with a primary-source artefact.',
+  },
+  {
+    t: 'Firm-built ventures held to the same standard.',
+    b: 'The firm operates three of its own ventures — iMused (music attribution), Equity Guardians (homeowner advocacy), and the 144K Collective (philanthropic capital aggregation). Each is written up at /case-studies with the same four anchors as a sovereign engagement.',
+  },
+  {
+    t: 'A library, not a content archive.',
+    b: 'The library at /library is a publishing engine, not a marketing function. Every entry is held to the firm\'s editorial standard: a development question, primary-source citation, a counterfactual considered, and a separated reader-action line.',
+  },
+];
+---
+
+<BaseLayout
+  title="About — Power In Numbers"
+  description="Power In Numbers is a research and decision-engineering firm. It builds, teaches, and validates the methodology by which it produces audit-grade decisions for individuals, firms, and sovereigns."
+>
+  <PageHero
+    eyebrow="About — The Firm"
+    headline="Brookings, if Brookings were an operator."
+    lede="Power In Numbers is a research and decision-engineering firm. It does not write recommendations and let the principal carry them forward. It writes recommendations, names the counterfactual it rejects, and commits to the audit standard by which the recommendation can be re-tested two years later."
+    meta="Founded 2001 · Operating record continuous · Discipline named publicly 2003"
+  />
+
+  <section class="what frame">
+    <SectionMarker num="§ 01" tag="What the firm is" />
+    <div class="what__grid">
+      <div class="what__col">
+        <h2 class="what__h">Three engines, one standard.</h2>
+        <p class="what__lede">
+          The firm operates three engines, each calibrated to a distinct
+          principal type. <a href="/methodology/">AI Mirror</a> is built for an
+          individual decision-maker — a clinician, founder, or operator
+          evaluating a high-consequence move. <a href="/methodology/">VERIDEX BI USA</a> is the firm-grade
+          domestic engine, calibrated to US-domiciled enterprises and
+          operating ventures. <a href="/methodology/">Sovereign Mirror</a> is the
+          sovereign and multilateral engine, calibrated to fiscal frameworks,
+          public-finance instruments, and macro-structural evaluations.
+        </p>
+        <p class="what__lede">
+          All three engines clear the same canonical 22-gate VERIDEX
+          validation standard. The engines differ in scope, instruments, and
+          comparator sets — not in the audit standard their output must
+          satisfy.
+        </p>
+      </div>
+      <div class="what__col">
+        <h2 class="what__h">What the firm sells.</h2>
+        <p class="what__lede">
+          The firm sells decisions. To be more precise: the firm sells the
+          audit trail that lets a principal make a decision, defend it, and
+          refer back to it later when the world has changed.
+        </p>
+        <p class="what__lede">
+          A Power In Numbers deliverable, in any of its three engine
+          configurations, comprises four constants — a development question
+          named without ambiguity, a methodology applied with the framework
+          and gates named, an output paired with the counterfactual it
+          rejects, and a separated Decision-Maker Briefing in its own
+          artefact. Where the four constants are present, the work is a Power
+          In Numbers deliverable. Where they are not, it is not.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ledger">
+    <div class="frame">
+      <SectionMarker num="§ 02" tag="The discipline, on the record" inverse={true} />
+      <div class="ledger__grid">
+        {principles.map((p) => (
+          <article class="ledger__item" data-reveal>
+            <p class="ledger__n">{p.n}</p>
+            <p class="ledger__t">{p.t}</p>
+            <p class="ledger__b">{p.b}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="commit frame">
+    <SectionMarker num="§ 03" tag="What the firm commits to publicly" />
+    <h2 class="commit__h">Method, record, ventures, library.</h2>
+    <p class="commit__lede">
+      The firm commits to four pieces of public infrastructure. None are
+      gated. Each can be referenced, audited, or critiqued by a reader who
+      arrives without an introduction.
+    </p>
+    <div class="commit__grid">
+      {commitments.map((c) => (
+        <article class="commit__item" data-reveal>
+          <p class="commit__t">{c.t}</p>
+          <p class="commit__b" set:html={c.b}></p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="lineage frame">
+    <SectionMarker num="§ 04" tag="Origin, briefly" />
+    <div class="lineage__grid">
+      <div class="lineage__copy">
+        <p>
+          The firm was founded by <strong>Jay Davis</strong> in 2001, around an
+          employee-advocacy programme that — in retrospect — operated as the
+          firm\'s first stakeholder-capitalism implementation. The discipline
+          was named publicly as <em>CROWD POWERED</em> in 2003. The validation
+          standard was hardened into VERIDEX over the decade that followed.
+          The firm\'s curriculum — eight phases, taught to the same standard
+          the firm produces against — has been delivered continuously since.
+        </p>
+        <p>
+          The firm\'s public throughline runs through Dr. Janelle Thompson,
+          profiled in the firm\'s <em>Go Local Magazine</em> Edition 1 in
+          February 2011 as the CEO of Epiphany Wellness, returning in 2026 as
+          the principal of the AI Mirror Stage-3 reference deliverable
+          presented at the Nexten Summit Accra. A fifteen-year primary-source
+          relationship — from a 2011 magazine profile to a 2026 audit-grade
+          decision artefact — is the structural argument the firm cares
+          about. The methodology is not a deck the firm rents to a client
+          for an engagement window. It is a discipline the firm practices
+          on the same people, over time, with the same standard.
+        </p>
+      </div>
+      <aside class="lineage__aside">
+        <p class="lineage__t">Selected dates</p>
+        <ul class="lineage__list">
+          <li><span>2001</span> Firm founded; employee-advocacy programme.</li>
+          <li><span>2003</span> CROWD POWERED named publicly.</li>
+          <li><span>2008</span> VerSes — proto social-token implementation.</li>
+          <li><span>2010</span> Go Local Magazine — flagship issue.</li>
+          <li><span>2011</span> Dr. Thompson, Edition 1 profile.</li>
+          <li><span>2023</span> Equity Guardians established.</li>
+          <li><span>2025</span> 144K Collective; iMused platform launch.</li>
+          <li><span>2026</span> AI Mirror Stage-3 · Nexten Summit Accra.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="frame">
+      <SectionMarker num="§ 05" tag="Read further" inverse={true} />
+      <div class="cta__grid">
+        <a class="cta__card" href="/methodology/">
+          <p class="cta__eyebrow">Pillar 01</p>
+          <p class="cta__t">Methodology</p>
+          <p class="cta__b">Framework, curriculum, validation — written from inside the firm.</p>
+        </a>
+        <a class="cta__card" href="/track-record/">
+          <p class="cta__eyebrow">Pillar 02</p>
+          <p class="cta__t">Track record</p>
+          <p class="cta__b">A six-pattern timeline of what the firm built before the field caught up.</p>
+        </a>
+        <a class="cta__card" href="/case-studies/">
+          <p class="cta__eyebrow">Pillar 03</p>
+          <p class="cta__t">Case studies</p>
+          <p class="cta__b">Sovereign, enterprise, and firm-built — held to the same standard.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .frame { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 720px) { .frame { padding: 0 20px; } }
+
+  .what { padding: 96px 0; }
+  .what__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+  @media (max-width: 900px) { .what__grid { grid-template-columns: 1fr; gap: 40px; } }
+  .what__h {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3vw, 30px);
+    margin: 0 0 20px;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .what__lede {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin: 0 0 18px;
+  }
+  .what__lede a { color: var(--ink); border-bottom: 1px solid var(--rule); text-decoration: none; }
+  .what__lede a:hover { border-bottom-color: var(--oxblood); }
+
+  .ledger { background: var(--ink); color: var(--paper); padding: 96px 0; }
+  .ledger__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 56px;
+    margin-top: 16px;
+  }
+  @media (max-width: 720px) { .ledger__grid { grid-template-columns: 1fr; gap: 32px; } }
+  .ledger__item { border-top: 1px solid rgba(245, 241, 232, 0.18); padding-top: 24px; }
+  .ledger__n {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: rgba(245, 241, 232, 0.6);
+    margin: 0 0 12px;
+  }
+  .ledger__t {
+    font-family: var(--font-display);
+    font-size: 22px;
+    margin: 0 0 12px;
+    color: var(--paper);
+    font-weight: 500;
+  }
+  .ledger__b {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(245, 241, 232, 0.78);
+    margin: 0;
+  }
+
+  .commit { padding: 96px 0; }
+  .commit__h {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 0 0 20px;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .commit__lede {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 700px;
+    margin: 0 0 44px;
+  }
+  .commit__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 56px;
+  }
+  @media (max-width: 720px) { .commit__grid { grid-template-columns: 1fr; gap: 28px; } }
+  .commit__item { border-top: 1px solid var(--rule); padding-top: 22px; }
+  .commit__t {
+    font-family: var(--font-display);
+    font-size: 20px;
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .commit__b { font-size: 15px; line-height: 1.6; color: var(--subtext); margin: 0; }
+  .commit__b a { color: var(--ink); border-bottom: 1px solid var(--rule); text-decoration: none; }
+  .commit__b a:hover { border-bottom-color: var(--oxblood); }
+
+  .lineage { padding: 32px 0 96px; }
+  .lineage__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 56px;
+  }
+  @media (max-width: 900px) { .lineage__grid { grid-template-columns: 1fr; gap: 36px; } }
+  .lineage__copy p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 18px;
+  }
+  .lineage__copy p:first-child::first-letter {
+    font-family: var(--font-display);
+    font-size: 3.4em;
+    float: left;
+    line-height: 0.9;
+    margin: 6px 8px 0 0;
+    color: var(--oxblood);
+    font-weight: 400;
+  }
+  .lineage__aside {
+    background: var(--paper-deep);
+    padding: 28px 28px 24px;
+    border-radius: 2px;
+    align-self: start;
+  }
+  .lineage__t {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0 0 16px;
+    font-weight: 500;
+  }
+  .lineage__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .lineage__list li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink);
+    border-top: 1px solid var(--rule);
+    padding-top: 8px;
+  }
+  .lineage__list li:first-child { border-top: 0; padding-top: 0; }
+  .lineage__list li span {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--oxblood);
+    font-weight: 500;
+  }
+
+  .cta { background: var(--ink); color: var(--paper); padding: 80px 0 96px; }
+  .cta__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 12px;
+  }
+  @media (max-width: 900px) { .cta__grid { grid-template-columns: 1fr; gap: 16px; } }
+  .cta__card {
+    display: block;
+    padding: 28px 28px 32px;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid rgba(245, 241, 232, 0.18);
+    text-decoration: none;
+    color: var(--paper);
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .cta__card:hover { background: rgba(245, 241, 232, 0.1); border-color: rgba(245, 241, 232, 0.32); }
+  .cta__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.6);
+    margin: 0 0 14px;
+  }
+  .cta__t {
+    font-family: var(--font-display);
+    font-size: 22px;
+    margin: 0 0 10px;
+    font-weight: 500;
+  }
+  .cta__b { font-size: 14px; line-height: 1.55; color: rgba(245, 241, 232, 0.78); margin: 0; }
+</style>

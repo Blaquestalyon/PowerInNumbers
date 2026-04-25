@@ -1,0 +1,428 @@
+---
+/**
+ * /track-record — the Predictive Track Record timeline.
+ *
+ * Per deck §07 (Pillar 01) and §09: the press-hook centerpiece. A museum-grade
+ * vertical archive of six historical instances in which the methodology
+ * identified a category-defining pattern five to fifteen years before it
+ * became a market trend. Each row pairs PIN's earlier implementation with
+ * mainstream emergence and points at primary-source evidence. Each row
+ * links to a full essay treatment.
+ *
+ * Framing (per deck): structural — pattern recognition, not credit-claiming.
+ * Other companies popularized later versions. PIN's claim is that the
+ * methodology saw the patterns first.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+const entries = (await getCollection('track-record').catch(() => []))
+  .sort((a, b) => (a.data.order ?? a.data.yearSort) - (b.data.order ?? b.data.yearSort));
+---
+
+<BaseLayout
+  title="Track Record — Power In Numbers"
+  description="The Predictive Track Record. Six documented instances across thirty-two years in which the methodology identified a category-defining pattern five to fifteen years before each became a market trend."
+>
+  <PageHero
+    eyebrow="Pillar 01 · Predictive Track Record"
+    headline="The patterns, identified first."
+    lede="Six documented instances across thirty-two years of methodology development. Each row pairs an earlier implementation by Power In Numbers with the mainstream emergence of a similar model — five to fifteen years later — and points at primary-source evidence."
+    metaLeft="2001 — 2017"
+    metaRight="Six instances · Primary-source archive"
+  />
+
+  {/* ──────────────────────────────────────────────
+      §01 — Framing
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 01" tag="The framing" />
+
+      <h2 class="s-title" data-reveal>
+        Pattern recognition, structural and consistent.
+      </h2>
+
+      <div class="prose" data-reveal>
+        <p>
+          The claim in this section is not that any of the later companies copied
+          the work below. Each is a legitimate venture. Verzuz creators have
+          publicly traced their format to a 2018 Hot 97 Summer Jam. Venu
+          Holding Corporation was founded by JW Roth in Colorado in 2017.
+          Birchbox was founded by Harvard MBAs in 2010.
+        </p>
+        <p>
+          The claim is structural. The methodology has consistently identified
+          the underlying pattern years before each became a market category.
+          The consistency of that pattern recognition across thirty-two years
+          and across radically different industries &mdash; broadcast, retail,
+          journalism, capital markets, marketing &mdash; is itself the
+          evidence.
+        </p>
+        <p>
+          Each row links to a primary-source artifact and, where available, to
+          the full essay treatment in the Library.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §02 — The timeline
+      ────────────────────────────────────────────── */}
+  <section class="section section--paper-deep section--timeline">
+    <div class="frame">
+      <SectionMarker num="§ 02" tag="The timeline" />
+
+      <h2 class="s-title" data-reveal>
+        Six instances. Three decades.
+      </h2>
+      <p class="s-lede" data-reveal>
+        The timeline reads top to bottom. Each entry runs in three columns:
+        the implementation, the mainstream emergence, and the primary-source
+        evidence the visitor can verify.
+      </p>
+
+      <div class="timeline-head" aria-hidden="true" data-reveal>
+        <span class="timeline-head__col">Year</span>
+        <span class="timeline-head__col">PIN&rsquo;s implementation</span>
+        <span class="timeline-head__col">Mainstream emergence</span>
+        <span class="timeline-head__col">Evidence</span>
+      </div>
+
+      <ol class="timeline" data-reveal>
+        {entries.map((e) => (
+          <li class="tl-row" id={`row-${e.id.replace(/\.md$/, '')}`}>
+            <a href={`/track-record/${e.id.replace(/\.md$/, '')}`} class="tl-row__link" aria-label={`Read full entry: ${e.data.title}`}>
+              <div class="tl-row__year">
+                <span class="tl-row__year-num">{e.data.year}</span>
+                {e.data.yearsAhead && (
+                  <span class="tl-row__ahead">{e.data.yearsAhead} ahead</span>
+                )}
+              </div>
+              <div class="tl-row__cell tl-row__cell--pin">
+                <span class="tl-row__sublabel">PIN</span>
+                <p>{e.data.pinImplementation}</p>
+              </div>
+              <div class="tl-row__cell tl-row__cell--main">
+                <span class="tl-row__sublabel">Mainstream</span>
+                <p>{e.data.mainstreamEmergence}</p>
+              </div>
+              <div class="tl-row__cell tl-row__cell--ev">
+                <span class="tl-row__sublabel">Evidence</span>
+                <p>{e.data.evidence}</p>
+              </div>
+              <div class="tl-row__title">
+                <span class="tl-row__title-text">{e.data.title}</span>
+                <span class="tl-row__cta" aria-hidden="true">Read entry &rarr;</span>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ol>
+
+      {entries.length === 0 && (
+        <p class="prose" data-reveal>
+          The timeline is being assembled. Entries will appear here as they are written.
+        </p>
+      )}
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §03 — Note on framing
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 03" tag="A note on framing" />
+
+      <h2 class="s-title" data-reveal>
+        Three rules the timeline is held to.
+      </h2>
+
+      <ol class="rules" data-reveal>
+        <li>
+          <span class="rules__num">01</span>
+          <div class="rules__body">
+            <h3>Never accuse. Always demonstrate.</h3>
+            <p>The timeline shows what was implemented and when. It does not allege copying. The pattern speaks for itself.</p>
+          </div>
+        </li>
+        <li>
+          <span class="rules__num">02</span>
+          <div class="rules__body">
+            <h3>Every claim is verifiable.</h3>
+            <p>Each row points at a primary source &mdash; a magazine PDF, a bank verification letter, a YouTube broadcast record, an internal pilot document. The reader is invited to check.</p>
+          </div>
+        </li>
+        <li>
+          <span class="rules__num">03</span>
+          <div class="rules__body">
+            <h3>Three decades, not three quarters.</h3>
+            <p>The thesis is consistency across radically different industries and across thirty-two years &mdash; not a single hit. Any one row could be coincidence. Six rows are not.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §04 — Read further
+      ────────────────────────────────────────────── */}
+  <section class="section section--ink">
+    <div class="frame">
+      <SectionMarker num="§ 04" tag="Read further" inverse />
+
+      <div class="next-row" data-reveal>
+        <a href="/methodology" class="next-link">
+          <span class="next-link__num">→</span>
+          <span class="next-link__label">The methodology that produced these patterns</span>
+        </a>
+        <a href="/case-studies" class="next-link">
+          <span class="next-link__num">→</span>
+          <span class="next-link__label">Case studies — the methodology in current application</span>
+        </a>
+        <a href="/library" class="next-link">
+          <span class="next-link__num">→</span>
+          <span class="next-link__label">Library — the Predictive Track Record essay series</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ─── shared section vocabulary ─── */
+  .section { padding: 96px 0; border-bottom: 1px solid var(--rule); }
+  .section:last-of-type { border-bottom: none; }
+  .section--paper-deep { background: var(--paper-deep); }
+  .section--ink { background: var(--ink); color: var(--paper); border-bottom: none; }
+
+  .s-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(28px, 3.4vw, 42px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 18px;
+    max-width: 28ch;
+    color: var(--ink);
+  }
+  .section--ink .s-title { color: var(--paper); }
+  .s-lede {
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--subtext);
+    max-width: 64ch;
+    margin: 0 0 40px;
+  }
+  .prose { max-width: 680px; font-size: 18px; line-height: 1.7; color: var(--ink-soft); }
+  .prose p { margin: 0 0 24px; }
+
+  /* ─── §02 Timeline ─── */
+  .timeline-head {
+    display: grid;
+    grid-template-columns: 140px 1.4fr 1.4fr 1.4fr;
+    gap: 28px;
+    padding: 14px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0;
+  }
+  @media (max-width: 1024px) {
+    .timeline-head { display: none; }
+  }
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .tl-row {
+    border-bottom: 1px solid var(--rule);
+    transition: background 200ms ease;
+  }
+  .tl-row:hover { background: rgba(139, 42, 42, 0.04); }
+  .tl-row__link {
+    display: grid;
+    grid-template-columns: 140px 1.4fr 1.4fr 1.4fr;
+    gap: 28px;
+    padding: 36px 0 28px;
+    text-decoration: none;
+    color: var(--ink);
+    position: relative;
+  }
+  @media (max-width: 1024px) {
+    .tl-row__link {
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 28px;
+    }
+  }
+  @media (max-width: 600px) {
+    .tl-row__link { grid-template-columns: 1fr; gap: 18px; padding: 32px 0 24px; }
+  }
+  .tl-row__year {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  @media (max-width: 1024px) {
+    .tl-row__year { grid-column: 1 / -1; }
+  }
+  .tl-row__year-num {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--oxblood);
+    letter-spacing: -0.01em;
+  }
+  .tl-row__ahead {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--subtext);
+  }
+  .tl-row__cell {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .tl-row__sublabel {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--subtext);
+  }
+  @media (min-width: 1025px) {
+    .tl-row__sublabel { display: none; }
+  }
+  .tl-row__cell p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .tl-row__cell--ev p { color: var(--subtext); font-style: italic; }
+  .tl-row__title {
+    grid-column: 1 / -1;
+    margin-top: 14px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    border-top: 1px dotted var(--rule);
+    padding-top: 14px;
+  }
+  .tl-row__title-text {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .tl-row__cta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    transition: transform 200ms ease;
+    flex-shrink: 0;
+  }
+  .tl-row:hover .tl-row__cta { transform: translateX(4px); }
+
+  /* ─── §03 Rules ─── */
+  .rules {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 880px;
+  }
+  .rules li {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 22px;
+    align-items: baseline;
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+  }
+  .rules__num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--oxblood);
+  }
+  .rules__body h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .rules__body p {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--subtext);
+    margin: 0;
+    max-width: 72ch;
+  }
+
+  /* ─── §04 Next row ─── */
+  .next-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(245, 241, 232, 0.18);
+  }
+  @media (max-width: 800px) { .next-row { grid-template-columns: 1fr; } }
+  .next-link {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 32px 28px 32px 0;
+    border-right: 1px solid rgba(245, 241, 232, 0.18);
+    color: var(--paper);
+    text-decoration: none;
+    transition: opacity 200ms ease;
+  }
+  .next-link:last-child { border-right: none; }
+  .next-link:hover { opacity: 0.7; }
+  @media (max-width: 800px) {
+    .next-link {
+      border-right: none;
+      border-bottom: 1px solid rgba(245, 241, 232, 0.18);
+      padding: 24px 0;
+    }
+    .next-link:last-child { border-bottom: none; }
+  }
+  .next-link__num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--oxblood);
+  }
+  .next-link__label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.3;
+    color: var(--paper);
+  }
+</style>

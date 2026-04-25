@@ -1,0 +1,178 @@
+---
+/**
+ * /library/[slug] — full library entry.
+ *
+ * Renders the markdown body inside a constrained reading column. Front
+ * matter supplies hero meta, type tag, tags, foundational marker, and
+ * series links.
+ */
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('library').catch(() => []);
+  return entries.map((e) => ({
+    params: { slug: e.id.replace(/\.md$/, '') },
+    props: { entry: e },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const TYPE_LABEL: Record<string, string> = {
+  'white-paper': 'White paper',
+  framework: 'Framework',
+  'press-essay': 'Press essay',
+  'track-record-essay': 'Track-record essay',
+  'firm-built-essay': 'Firm-built essay',
+  'methodology-note': 'Methodology note',
+};
+
+const fmtDate = (d: Date | string) =>
+  new Date(d).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+// Companion entries: same type, exclude current, most recent 3
+const all = await getCollection('library').catch(() => []);
+const companions = all
+  .filter((e) => e.id !== entry.id && !e.data.unlisted && e.data.type === entry.data.type)
+  .sort((a, b) => new Date(b.data.publishedAt).valueOf() - new Date(a.data.publishedAt).valueOf())
+  .slice(0, 3);
+
+const slugOf = (id: string) => id.replace(/\.md$/, '').replace(/^.*\//, '');
+---
+
+<BaseLayout
+  title={`${entry.data.title} — Library · Power In Numbers`}
+  description={entry.data.summary}
+>
+  <PageHero
+    eyebrow={`Library · ${TYPE_LABEL[entry.data.type] ?? entry.data.type}`}
+    headline={entry.data.title}
+    lede={entry.data.summary}
+    meta={`${fmtDate(entry.data.publishedAt)}${entry.data.readingMinutes ? ` · ${entry.data.readingMinutes} min read` : ''} · ${(entry.data.authors ?? ['Jay Davis']).join(', ')}`}
+  />
+
+  {/* ──────────────────────────────────────────────
+      §01 — Body
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <article class="prose prose--lib" data-reveal>
+        <Content />
+      </article>
+
+      {entry.data.tags.length > 0 && (
+        <div class="entry-tags" data-reveal>
+          {entry.data.tags.map((t) => (
+            <span class="entry-tag">{t}</span>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §02 — Companions
+      ────────────────────────────────────────────── */}
+  {companions.length > 0 && (
+    <section class="section section--paper-deep">
+      <div class="frame">
+        <SectionMarker num="§ 02" tag="Companion entries" />
+        <h2 class="s-title" data-reveal>More from the library.</h2>
+        <ul class="companions" data-reveal>
+          {companions.map((c) => (
+            <li class="companion">
+              <a href={`/library/${slugOf(c.id)}/`}>
+                <span class="companion__type">{TYPE_LABEL[c.data.type]}</span>
+                <h3 class="companion__title">{c.data.title}</h3>
+                <p class="companion__summary">{c.data.summary}</p>
+                <span class="companion__meta">
+                  {fmtDate(c.data.publishedAt)}
+                  {c.data.readingMinutes ? ` · ${c.data.readingMinutes} min` : ''}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* ──────────────────────────────────────────────
+      §03 — Onward
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num={companions.length > 0 ? '§ 03' : '§ 02'} tag="Read further" />
+      <ul class="onward">
+        <li class="onward__card">
+          <a href="/library/">
+            <span class="onward__eyebrow">All entries</span>
+            <h3 class="onward__title">Library index</h3>
+            <p class="onward__body">Browse by category. White papers · frameworks · essays.</p>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/methodology/">
+            <span class="onward__eyebrow">§ Pillar 02</span>
+            <h3 class="onward__title">Methodology</h3>
+            <p class="onward__body">The architecture the library is written from inside.</p>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/case-studies/">
+            <span class="onward__eyebrow">§ Pillar 03</span>
+            <h3 class="onward__title">Case studies</h3>
+            <p class="onward__body">The deliverables the library supports.</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .prose--lib { max-width: 70ch; }
+  .prose--lib :global(h2) { font-family: var(--font-display); font-weight: 500; font-size: 1.85rem; line-height: 1.25; color: var(--ink); margin: 3rem 0 1.25rem; letter-spacing: -0.005em; }
+  .prose--lib :global(h3) { font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; line-height: 1.3; color: var(--ink); margin: 2.25rem 0 0.85rem; }
+  .prose--lib :global(p) { font-size: 1.05rem; line-height: 1.78; color: var(--ink); margin: 0 0 1.25rem; }
+  .prose--lib :global(blockquote) { font-family: var(--font-display); font-style: italic; font-size: 1.2rem; line-height: 1.55; color: var(--ink); margin: 2rem 0 2rem; padding-left: 1.25rem; border-left: 2px solid var(--oxblood); }
+  .prose--lib :global(ol),
+  .prose--lib :global(ul) { padding-left: 1.5rem; margin: 0 0 1.25rem; }
+  .prose--lib :global(li) { font-size: 1rem; line-height: 1.7; color: var(--ink); margin-bottom: 0.55rem; }
+  .prose--lib :global(a) { color: var(--oxblood); text-decoration: underline; text-decoration-color: rgba(139, 42, 42, 0.4); text-underline-offset: 3px; }
+  .prose--lib :global(a:hover) { text-decoration-color: var(--oxblood); }
+  .prose--lib :global(hr) { border: 0; height: 1px; background: var(--rule); margin: 3rem 0; }
+  .prose--lib :global(code) { font-family: var(--font-mono); font-size: 0.92em; background: var(--paper-deep); padding: 0.1em 0.4em; }
+
+  .entry-tags { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); display: flex; gap: 0.5rem; flex-wrap: wrap; max-width: 70ch; }
+  .entry-tag { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--subtext); border: 1px solid var(--rule); padding: 0.22rem 0.65rem; }
+
+  .companions { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+  .companion { border: 1px solid var(--rule); background: var(--paper); transition: border-color 0.15s ease; }
+  .companion:hover { border-color: var(--ink); }
+  .companion a { display: block; padding: 1.5rem; color: inherit; text-decoration: none; }
+  .companion__type { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--oxblood); }
+  .companion__title { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; line-height: 1.3; color: var(--ink); margin: 0.5rem 0 0.6rem; }
+  .companion__summary { font-size: 0.9rem; line-height: 1.55; color: var(--ink); margin: 0 0 0.85rem; }
+  .companion__meta { font-family: var(--font-mono); font-size: 0.72rem; color: var(--subtext); display: block; }
+
+  .onward { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+  .onward__card { border: 1px solid var(--rule); background: var(--paper); }
+  .onward__card a { display: block; padding: 1.6rem; color: inherit; text-decoration: none; }
+  .onward__card:hover { border-color: var(--ink); }
+  .onward__eyebrow { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--oxblood); }
+  .onward__title { font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; margin: 0.4rem 0 0.45rem; color: var(--ink); }
+  .onward__body { font-size: 0.9rem; line-height: 1.55; color: var(--subtext); margin: 0; }
+
+  @media (max-width: 720px) {
+    .companions, .onward { grid-template-columns: 1fr; }
+  }
+</style>

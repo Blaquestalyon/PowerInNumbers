@@ -1,0 +1,451 @@
+---
+/**
+ * /case-studies — the work, organised by tier.
+ *
+ * Per deck §08: case studies are the firm's evidentiary record. Three tiers:
+ *   sovereign   — engagements at the level of fiscal authorities or national programmes
+ *   enterprise  — engagements with operating firms
+ *   firm-built  — ventures the firm builds and operates itself
+ *
+ * Each card carries the four research-paper anchors (development question,
+ * methodology applied, output, counterfactual considered) and links to the
+ * full case treatment.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+const all = (await getCollection('case-studies').catch(() => []))
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
+
+const sovereign = all.filter((c) => c.data.tier === 'sovereign');
+const enterprise = all.filter((c) => c.data.tier === 'enterprise');
+const firmBuilt = all.filter((c) => c.data.tier === 'firm-built');
+
+const tierLabel: Record<string, string> = {
+  sovereign: 'Sovereign',
+  enterprise: 'Enterprise',
+  'firm-built': 'Firm-built',
+};
+
+const statusLabel: Record<string, string> = {
+  operational: 'Operational',
+  'pre-launch': 'Pre-launch',
+  completed: 'Completed',
+  ongoing: 'Ongoing',
+};
+---
+
+<BaseLayout
+  title="Case Studies — Power In Numbers"
+  description="The firm's evidentiary record, organised by tier — sovereign, enterprise, and firm-built. Each case opens with a development question, the methodology applied, the output, and the counterfactual considered."
+>
+  <PageHero
+    eyebrow="The work, audited"
+    headline="Case studies."
+    lede="Three tiers — <em>sovereign</em>, <em>enterprise</em>, <em>firm-built</em>. Each case carries the four research-paper anchors: a development question, the methodology applied, the output produced, and the counterfactual considered."
+    metaLeft="Sovereign · Enterprise · Firm-built"
+    metaRight={`${all.length} cases · Engine reference deliverables published`}
+  />
+
+  {/* ──────────────────────────────────────────────
+      §01 — How to read the case studies
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 01" tag="How to read the case studies" />
+
+      <div class="prose" data-reveal>
+        <p>
+          Every case study on this page opens with the same four anchors. They
+          are the structure of a research paper, applied to a decision artifact.
+          The reader should be able to see, before reading any narrative, what
+          question the deliverable was answering, which engine produced it,
+          what the principal was given, and what alternatives were costed
+          against the recommendation. The narrative comes after.
+        </p>
+        <p>
+          Two cases on this page carry full Stage-3 Full Reports embedded as
+          primary-source artifacts. They are the published reference
+          deliverables for the firm's two operator-grade engines &mdash; AI Mirror
+          (the individual engine, applied to Dr.&nbsp;Janelle Thompson's Ghana
+          market-entry analysis) and VERIDEX BI &mdash; USA (the domestic firm
+          engine, applied to The Master&rsquo;s Chair&rsquo;s Atlanta expansion).
+          The remaining cases are firm-built ventures and engine engagements
+          listed for reference; their full essay treatments are forthcoming.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §02 — Sovereign tier
+      ────────────────────────────────────────────── */}
+  {sovereign.length > 0 && (
+    <section class="section section--paper-deep">
+      <div class="frame">
+        <SectionMarker num="§ 02" tag="Sovereign tier" />
+        <h2 class="s-title" data-reveal>Sovereign and individual-grade engagements.</h2>
+        <p class="s-lede" data-reveal>
+          Engagements where the principal is an individual operating across
+          jurisdictions, or a fiscal authority analysing its own allocation.
+          The AI Mirror engine and the Sovereign Mirror engine sit here.
+        </p>
+        <ul class="cases" data-reveal>
+          {sovereign.map((c) => (
+            <li class="case">
+              <a class="case__link" href={`/case-studies/${c.id.replace(/\.md$/, '')}/`} aria-label={`Read full case: ${c.data.title}`}>
+                <header class="case__head">
+                  <span class="case__tier">{tierLabel[c.data.tier]}</span>
+                  <span class="case__class">{c.data.classification}</span>
+                  <span class="case__status">{statusLabel[c.data.status]}</span>
+                </header>
+                <h3 class="case__title">{c.data.title}</h3>
+                <p class="case__deck">{c.data.deck}</p>
+                <p class="case__summary">{c.data.summary}</p>
+                <dl class="case__anchors">
+                  <div class="case__anchor"><dt>Question</dt><dd>{c.data.developmentQuestion}</dd></div>
+                  <div class="case__anchor"><dt>Methodology</dt><dd>{c.data.methodologyApplied}</dd></div>
+                  <div class="case__anchor"><dt>Output</dt><dd>{c.data.output}</dd></div>
+                  <div class="case__anchor"><dt>Counterfactual</dt><dd>{c.data.counterfactual}</dd></div>
+                </dl>
+                <footer class="case__foot">
+                  {c.data.veridexGates && <span class="case__meta">VERIDEX gates: {c.data.veridexGates}</span>}
+                  {c.data.fiscalScale && <span class="case__meta">{c.data.fiscalScale}</span>}
+                  {c.data.attribution && <span class="case__meta">{c.data.attribution}</span>}
+                  <span class="case__cta">Read the full case →</span>
+                </footer>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* ──────────────────────────────────────────────
+      §03 — Enterprise tier
+      ────────────────────────────────────────────── */}
+  {enterprise.length > 0 && (
+    <section class="section">
+      <div class="frame">
+        <SectionMarker num="§ 03" tag="Enterprise tier" />
+        <h2 class="s-title" data-reveal>Operator-led firms.</h2>
+        <p class="s-lede" data-reveal>
+          Engagements with US-domiciled firms evaluating formation, expansion,
+          or capital-deployment decisions. The VERIDEX BI &mdash; USA engine
+          sits here.
+        </p>
+        <ul class="cases" data-reveal>
+          {enterprise.map((c) => (
+            <li class="case">
+              <a class="case__link" href={`/case-studies/${c.id.replace(/\.md$/, '')}/`} aria-label={`Read full case: ${c.data.title}`}>
+                <header class="case__head">
+                  <span class="case__tier">{tierLabel[c.data.tier]}</span>
+                  <span class="case__class">{c.data.classification}</span>
+                  <span class="case__status">{statusLabel[c.data.status]}</span>
+                </header>
+                <h3 class="case__title">{c.data.title}</h3>
+                <p class="case__deck">{c.data.deck}</p>
+                <p class="case__summary">{c.data.summary}</p>
+                <dl class="case__anchors">
+                  <div class="case__anchor"><dt>Question</dt><dd>{c.data.developmentQuestion}</dd></div>
+                  <div class="case__anchor"><dt>Methodology</dt><dd>{c.data.methodologyApplied}</dd></div>
+                  <div class="case__anchor"><dt>Output</dt><dd>{c.data.output}</dd></div>
+                  <div class="case__anchor"><dt>Counterfactual</dt><dd>{c.data.counterfactual}</dd></div>
+                </dl>
+                <footer class="case__foot">
+                  {c.data.veridexGates && <span class="case__meta">VERIDEX gates: {c.data.veridexGates}</span>}
+                  {c.data.fiscalScale && <span class="case__meta">{c.data.fiscalScale}</span>}
+                  {c.data.attribution && <span class="case__meta">{c.data.attribution}</span>}
+                  <span class="case__cta">Read the full case →</span>
+                </footer>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* ──────────────────────────────────────────────
+      §04 — Firm-built tier
+      ────────────────────────────────────────────── */}
+  {firmBuilt.length > 0 && (
+    <section class="section section--paper-deep">
+      <div class="frame">
+        <SectionMarker num="§ 04" tag="Firm-built tier" />
+        <h2 class="s-title" data-reveal>Ventures the firm builds and operates.</h2>
+        <p class="s-lede" data-reveal>
+          Where the firm applies its own discipline to its own ventures. The
+          methodology is the audit standard; the firm is the principal.
+        </p>
+        <ul class="cases" data-reveal>
+          {firmBuilt.map((c) => (
+            <li class="case">
+              <a class="case__link" href={`/case-studies/${c.id.replace(/\.md$/, '')}/`} aria-label={`Read full case: ${c.data.title}`}>
+                <header class="case__head">
+                  <span class="case__tier">{tierLabel[c.data.tier]}</span>
+                  <span class="case__class">{c.data.classification}</span>
+                  <span class="case__status">{statusLabel[c.data.status]}</span>
+                </header>
+                <h3 class="case__title">{c.data.title}</h3>
+                <p class="case__deck">{c.data.deck}</p>
+                <p class="case__summary">{c.data.summary}</p>
+                <dl class="case__anchors">
+                  <div class="case__anchor"><dt>Question</dt><dd>{c.data.developmentQuestion}</dd></div>
+                  <div class="case__anchor"><dt>Methodology</dt><dd>{c.data.methodologyApplied}</dd></div>
+                  <div class="case__anchor"><dt>Output</dt><dd>{c.data.output}</dd></div>
+                  <div class="case__anchor"><dt>Counterfactual</dt><dd>{c.data.counterfactual}</dd></div>
+                </dl>
+                <footer class="case__foot">
+                  <span class="case__cta">Read the full case →</span>
+                </footer>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {/* ──────────────────────────────────────────────
+      §05 — Read further
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 05" tag="Read further" />
+      <ul class="onward">
+        <li class="onward__card">
+          <a href="/methodology/validation/">
+            <span class="onward__eyebrow">§ Layer 05</span>
+            <h3 class="onward__title">VERIDEX</h3>
+            <p class="onward__body">The validation standard every case on this page must satisfy.</p>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/methodology/framework/">
+            <span class="onward__eyebrow">§ Layer 02</span>
+            <h3 class="onward__title">CROWD POWERED</h3>
+            <p class="onward__body">The 12-step operating system underneath the firm-built ventures.</p>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/track-record/">
+            <span class="onward__eyebrow">§ Pillar 01</span>
+            <h3 class="onward__title">Track Record</h3>
+            <p class="onward__body">The methodology's predictive record across thirty-two years.</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .cases {
+    list-style: none;
+    margin: 3rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .case {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    transition: border-color 220ms ease, transform 220ms ease;
+  }
+
+  .case:hover {
+    border-color: var(--ink);
+  }
+
+  .case__link {
+    display: block;
+    padding: 2.25rem 2.25rem 2rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .case__head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--subtext);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .case__tier {
+    color: var(--oxblood);
+  }
+
+  .case__class {
+    color: var(--ink);
+  }
+
+  .case__status {
+    margin-left: auto;
+  }
+
+  .case__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    line-height: 1.15;
+    margin: 0 0 0.4rem;
+    color: var(--ink);
+  }
+
+  .case__deck {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--subtext);
+    margin: 0 0 1.25rem;
+  }
+
+  .case__summary {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink);
+    max-width: 70ch;
+    margin: 0 0 1.75rem;
+  }
+
+  .case__anchors {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem 2rem;
+    margin: 0 0 1.75rem;
+    padding: 1.5rem 0 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .case__anchor {
+    margin: 0;
+  }
+
+  .case__anchor dt {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0 0 0.45rem;
+  }
+
+  .case__anchor dd {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .case__foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    align-items: baseline;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--subtext);
+  }
+
+  .case__cta {
+    margin-left: auto;
+    color: var(--oxblood);
+  }
+
+  .onward {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .onward__card {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .onward__card a {
+    display: block;
+    padding: 1.75rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .onward__card:hover {
+    border-color: var(--ink);
+  }
+
+  .onward__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+  }
+
+  .onward__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin: 0.5rem 0 0.5rem;
+    color: var(--ink);
+  }
+
+  .onward__body {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--subtext);
+    margin: 0;
+  }
+
+  @media (max-width: 720px) {
+    .case__link {
+      padding: 1.75rem 1.5rem 1.5rem;
+    }
+
+    .case__anchors {
+      grid-template-columns: 1fr;
+    }
+
+    .case__head {
+      font-size: 0.65rem;
+    }
+
+    .case__status {
+      margin-left: 0;
+    }
+
+    .case__foot {
+      flex-direction: column;
+      gap: 0.65rem;
+      align-items: flex-start;
+    }
+
+    .case__cta {
+      margin-left: 0;
+    }
+
+    .onward {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

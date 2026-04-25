@@ -1,0 +1,138 @@
+---
+/**
+ * The brand and conceptual architecture — six layers.
+ * Ported from deck §03, Fig. 2. Monochrome line work.
+ */
+
+const tiers = [
+  {
+    layer: 'Layer 01 · Worldview',
+    name: 'Collective economics',
+    qualifier: '(the philosophy)',
+    meta: 'The manifesto-level claim that anchors every essay we publish.',
+  },
+  {
+    layer: 'Layer 02 · Operating system',
+    name: 'CROWD POWERED',
+    qualifier: '(the 12-step framework)',
+    meta: "The methodology's mechanics, marketed independently of any single application.",
+  },
+  {
+    layer: 'Layer 03 · The firm',
+    name: 'Power In Numbers',
+    qualifier: '',
+    meta: 'The strategic consultancy. The credentialing brand for everything beneath it.',
+  },
+  {
+    layer: 'Layer 04 · Discipline',
+    name: 'Decision Cartography',
+    qualifier: '(the airspace we name and claim)',
+    meta: 'The discipline. The press hook. The academic citation handle. The deliverable shape.',
+  },
+  {
+    layer: 'Layer 05 · Validation',
+    name: 'VERIDEX',
+    qualifier: '',
+    meta: 'The QA layer. The only named public system at v1.',
+  },
+  {
+    layer: 'Layer 06 · Outputs',
+    name: 'Interactive maps · case studies · ventures',
+    qualifier: '',
+    meta: "Working applications: Ghana via Nexten, US market entry, 144K, iMused, Equity Guardians, Master's Chair.",
+  },
+];
+---
+
+<figure class="arch" data-reveal>
+  <figcaption class="arch__caption">
+    Fig. 1 &mdash; The brand and conceptual architecture
+  </figcaption>
+  <div class="arch__stack">
+    {
+      tiers.map((t) => (
+        <div class="arch__tier">
+          <div class="arch__tier-label">{t.layer}</div>
+          <div class="arch__tier-name">
+            {t.name}
+            {t.qualifier && <em> {t.qualifier}</em>}
+          </div>
+          <div class="arch__tier-meta">{t.meta}</div>
+        </div>
+      ))
+    }
+  </div>
+</figure>
+
+<style>
+  .arch {
+    margin: 0;
+    padding: 40px;
+    border: 1px solid var(--rule);
+    background: var(--paper-deep);
+  }
+  @media (max-width: 720px) {
+    .arch { padding: 24px 20px; }
+  }
+  .arch__caption {
+    font-family: var(--font-mono);
+    font-size: var(--fs-mark-sm);
+    letter-spacing: var(--ls-mark);
+    text-transform: uppercase;
+    color: var(--subtext);
+    margin-bottom: 24px;
+  }
+  .arch__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .arch__tier {
+    border: 1px solid var(--ink);
+    padding: 18px 24px;
+    background: var(--paper);
+    display: grid;
+    grid-template-columns: 160px 1fr 280px;
+    align-items: center;
+    gap: 24px;
+  }
+  @media (max-width: 860px) {
+    .arch__tier {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 16px 18px;
+    }
+  }
+  .arch__tier-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-mark-xs);
+    letter-spacing: var(--ls-mark);
+    text-transform: uppercase;
+    color: var(--oxblood);
+    font-weight: 500;
+  }
+  .arch__tier-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+  }
+  @media (max-width: 720px) {
+    .arch__tier-name { font-size: 19px; }
+  }
+  .arch__tier-name em {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+  .arch__tier-meta {
+    font-size: 13px;
+    color: var(--subtext);
+    text-align: right;
+    line-height: 1.5;
+  }
+  @media (max-width: 860px) {
+    .arch__tier-meta { text-align: left; }
+  }
+</style>

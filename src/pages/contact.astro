@@ -1,0 +1,352 @@
+---
+/**
+ * /contact — single canonical address, routed by subject line.
+ *
+ * No form. The firm prefers a written paragraph from the
+ * sender to a structured form, because the intake review
+ * is itself part of the engagement standard.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+const routes = [
+  {
+    label: 'Engage the firm',
+    purpose: 'Begin a written intake for one of the three engines (AI Mirror, VERIDEX BI USA, Sovereign Mirror).',
+    subject: 'Engage · [Engine] intake',
+    audience: 'Individuals, firms, sovereign principals.',
+    page: { href: '/engage/', label: 'Three engagement paths →' },
+  },
+  {
+    label: 'Press and media',
+    purpose: 'Press queries with deadlines, boilerplate verification, embargo arrangements.',
+    subject: 'Press · [Outlet] [Deadline]',
+    audience: 'Working press, journalists, editors.',
+    page: { href: '/press/', label: 'Press kit →' },
+  },
+  {
+    label: 'Speaking and convenings',
+    purpose: 'Invitations to summits, multilateral panels, keynote engagements.',
+    subject: 'Speaking · [Convening] [Date]',
+    audience: 'Convening institutions, conference organisers.',
+    page: { href: '/about/', label: 'About the firm →' },
+  },
+  {
+    label: 'Curriculum and instruction',
+    purpose: 'Inquiries about the eight-phase Power In Numbers University curriculum.',
+    subject: 'Curriculum · [Cohort] inquiry',
+    audience: 'Operators, faculty, institutional partners.',
+    page: { href: '/methodology/curriculum/', label: 'Curriculum →' },
+  },
+  {
+    label: 'Library and citations',
+    purpose: 'Academic citation, library entry references, primary-source verification.',
+    subject: 'Library · [Entry] citation',
+    audience: 'Academics, researchers, students.',
+    page: { href: '/library/', label: 'Library →' },
+  },
+  {
+    label: 'Routing question',
+    purpose: 'When the right path is not obvious — for example, an operator working with a sovereign convener.',
+    subject: 'Engage · Routing question',
+    audience: 'Senders unsure which path applies.',
+    page: { href: '/engage/', label: 'Three engagement paths →' },
+  },
+];
+
+const principles = [
+  {
+    t: 'Written first.',
+    b: 'The firm prefers a written paragraph naming the principal, the decision, and the horizon to a structured form. The intake review is itself part of the engagement standard — a request that arrives well-named is half-answered.',
+  },
+  {
+    t: 'One address.',
+    b: 'There is one address: admin@power-in-numbers.net. The subject-line conventions above are how the firm routes internally. Senders who do not match a route should still write — the firm will route the question.',
+  },
+  {
+    t: 'Five business days.',
+    b: 'The firm replies within five business days for engagement intake and routing questions. Press queries with declared deadlines are escalated.',
+  },
+  {
+    t: 'No phone intake.',
+    b: 'The firm does not run intake by phone. Once a written intake is accepted, scheduled calls follow on a confirmed basis. This protects the audit-trail standard the firm holds itself to.',
+  },
+];
+---
+
+<BaseLayout
+  title="Contact — Power In Numbers"
+  description="One canonical address, routed by subject line. The firm prefers a written paragraph naming the principal, the decision, and the horizon."
+>
+  <PageHero
+    eyebrow="Contact"
+    headline="One address. Six routes. A written paragraph is enough."
+    lede="The firm runs a single canonical address, routed by subject line. There is no contact form. A written paragraph naming the principal, the decision under consideration, and the horizon is the form the firm prefers — because the intake review is itself part of the engagement standard."
+    meta="admin@power-in-numbers.net · Reply within 5 business days"
+  />
+
+  <section class="primary frame">
+    <SectionMarker num="§ 01" tag="The address" />
+    <div class="primary__card">
+      <p class="primary__label">Canonical address</p>
+      <a class="primary__addr" href="mailto:admin@power-in-numbers.net">admin@power-in-numbers.net</a>
+      <p class="primary__note">
+        One address handles every inbound. The subject-line conventions below
+        are how the firm routes internally — they are not required, but they
+        accelerate triage. If none of the routes match, write anyway; the
+        firm will route the question.
+      </p>
+    </div>
+  </section>
+
+  <section class="routes frame">
+    <SectionMarker num="§ 02" tag="Six routes" />
+    <h2 class="routes__h">Match the subject line to the inquiry.</h2>
+    <div class="routes__grid">
+      {routes.map((r) => (
+        <article class="routes__item" data-reveal>
+          <p class="routes__label">{r.label}</p>
+          <p class="routes__purpose">{r.purpose}</p>
+          <div class="routes__row">
+            <p class="routes__k">Subject line</p>
+            <code class="routes__v">{r.subject}</code>
+          </div>
+          <div class="routes__row">
+            <p class="routes__k">Typical sender</p>
+            <p class="routes__a">{r.audience}</p>
+          </div>
+          <div class="routes__cta">
+            <a class="routes__email" href={`mailto:admin@power-in-numbers.net?subject=${encodeURIComponent(r.subject)}`}>Compose →</a>
+            <a class="routes__page" href={r.page.href}>{r.page.label}</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="frame">
+      <SectionMarker num="§ 03" tag="How the firm handles inbound" inverse={true} />
+      <div class="how__grid">
+        {principles.map((p) => (
+          <article class="how__item" data-reveal>
+            <p class="how__t">{p.t}</p>
+            <p class="how__b">{p.b}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="legal frame">
+    <SectionMarker num="§ 04" tag="Operating particulars" />
+    <div class="legal__grid">
+      <div class="legal__item">
+        <p class="legal__k">Firm</p>
+        <p class="legal__v">Power In Numbers</p>
+      </div>
+      <div class="legal__item">
+        <p class="legal__k">Principal</p>
+        <p class="legal__v">Jay Davis · Founder</p>
+      </div>
+      <div class="legal__item">
+        <p class="legal__k">Site</p>
+        <p class="legal__v"><a href="https://power-in-numbers.net">power-in-numbers.net</a></p>
+      </div>
+      <div class="legal__item">
+        <p class="legal__k">General inquiries</p>
+        <p class="legal__v"><a href="mailto:admin@power-in-numbers.net">admin@power-in-numbers.net</a></p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .frame { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 720px) { .frame { padding: 0 20px; } }
+
+  .primary { padding: 96px 0 56px; }
+  .primary__card {
+    background: var(--paper-deep);
+    padding: 48px 56px;
+    border-radius: 2px;
+    max-width: 820px;
+  }
+  @media (max-width: 600px) { .primary__card { padding: 32px 24px; } }
+  .primary__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0 0 18px;
+    font-weight: 500;
+  }
+  .primary__addr {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 40px);
+    color: var(--ink);
+    text-decoration: none;
+    margin: 0 0 24px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+    word-break: break-all;
+  }
+  .primary__addr:hover { border-bottom-color: var(--oxblood); }
+  .primary__note {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--subtext);
+    margin: 0;
+    max-width: 640px;
+  }
+
+  .routes { padding: 64px 0 96px; }
+  .routes__h {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 0 0 40px;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .routes__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 800px) { .routes__grid { grid-template-columns: 1fr; } }
+  .routes__item {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 28px 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.15s;
+  }
+  .routes__item:hover { border-color: var(--oxblood); }
+  .routes__label {
+    font-family: var(--font-display);
+    font-size: 21px;
+    color: var(--ink);
+    margin: 0;
+    font-weight: 500;
+  }
+  .routes__purpose {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--subtext);
+    margin: 0;
+  }
+  .routes__row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 12px;
+    align-items: baseline;
+    padding-top: 8px;
+    border-top: 1px solid var(--rule);
+  }
+  .routes__k {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0;
+    font-weight: 500;
+  }
+  .routes__v {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink);
+    background: var(--paper-deep);
+    padding: 4px 8px;
+    border-radius: 1px;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+  .routes__a { font-size: 13px; color: var(--ink); margin: 0; line-height: 1.5; }
+  .routes__cta {
+    margin-top: auto;
+    padding-top: 12px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .routes__email {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 1px;
+  }
+  .routes__email:hover { background: var(--oxblood); }
+  .routes__page {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--subtext);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+  }
+  .routes__page:hover { color: var(--ink); border-bottom-color: var(--oxblood); }
+
+  .how { background: var(--ink); color: var(--paper); padding: 96px 0; }
+  .how__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 56px;
+    margin-top: 16px;
+  }
+  @media (max-width: 720px) { .how__grid { grid-template-columns: 1fr; gap: 28px; } }
+  .how__item { border-top: 1px solid rgba(245, 241, 232, 0.18); padding-top: 22px; }
+  .how__t {
+    font-family: var(--font-display);
+    font-size: 20px;
+    margin: 0 0 10px;
+    color: var(--paper);
+    font-weight: 500;
+  }
+  .how__b { font-size: 15px; line-height: 1.6; color: rgba(245, 241, 232, 0.78); margin: 0; }
+
+  .legal { padding: 96px 0; }
+  .legal__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 56px;
+    border-top: 1px solid var(--rule);
+  }
+  @media (max-width: 600px) { .legal__grid { grid-template-columns: 1fr; } }
+  .legal__item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+    align-items: baseline;
+  }
+  @media (max-width: 600px) { .legal__item { grid-template-columns: 1fr; gap: 4px; } }
+  .legal__k {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin: 0;
+    font-weight: 500;
+  }
+  .legal__v { color: var(--ink); margin: 0; line-height: 1.5; }
+  .legal__v a { color: var(--ink); border-bottom: 1px solid var(--rule); text-decoration: none; }
+  .legal__v a:hover { border-bottom-color: var(--oxblood); }
+</style>

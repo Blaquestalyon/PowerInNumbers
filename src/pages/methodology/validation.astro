@@ -1,0 +1,767 @@
+---
+/**
+ * /methodology/validation — VERIDEX, the validation layer.
+ *
+ * Per deck §03 (Layer 05): "VERIDEX · the validation layer.
+ *   Coverage of analytical, statistical, regulatory, and presentation
+ *   integrity gates. Reports do not leave the firm without passing."
+ *
+ * Public posture:
+ *   - Show the architecture (Core → Domain Module → Engines → Gates).
+ *   - Name every gate with a one-line description (canonical 22 + 4 engine extensions).
+ *   - Name VERIDEX's published refusals.
+ *   - Show the source tier hierarchy (T1–T5 + non-qualifying).
+ *   - Cite the deliverables produced under VERIDEX (Master's Chair, AI Mirror,
+ *     four Sovereign Mirror Ghana runs) without leaking any system-prompt content.
+ *
+ * Source-of-truth (private, not served): pin-source-docs/Sovereign_Mirror_*.md.
+ * NOTHING from those files is reproduced verbatim on this page. The page describes
+ * VERIDEX's *posture and outputs*, not its instructions.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+interface Gate {
+  num: string;
+  title: string;
+  body: string;
+  family: 'sourcing' | 'analytical' | 'modeling' | 'risk' | 'presentation' | 'consistency';
+}
+
+/* ──────────────────────────────────────────────────────────
+   The canonical 22 gates (Sovereign Mirror tier — shared
+   across every VERIDEX-audited deliverable) plus four
+   engine extensions (Gates 24–27, AI Mirror v8.x).
+   Gate 23 is reserved for a future extension and is not
+   listed publicly until it is in production.
+   ────────────────────────────────────────────────────────── */
+
+const gates: Gate[] = [
+  /* Sourcing & Source Discipline */
+  {
+    num: '01',
+    family: 'sourcing',
+    title: 'Every quantitative figure traces to a named, verifiable source.',
+    body:
+      'No fiscal figure, market estimate, multiplier, or rate appears in the deliverable without a traceable citation to a primary document, statutory source, or verified knowledge-base entry. Untraceable figures fail the gate, regardless of how confident the analyst is in their accuracy.',
+  },
+  {
+    num: '02',
+    family: 'sourcing',
+    title: 'Every named institution and program is independently verifiable.',
+    body:
+      'Ministries, regulators, programs, statutes, treaties, and incentive schemes named in the deliverable are spot-checked against the issuing authority. AI-generated content is notorious for fabricating plausible institutions; this gate is the audit answer.',
+  },
+  {
+    num: '03',
+    family: 'sourcing',
+    title: 'No statistic appears without a named source.',
+    body:
+      'Percentages, growth rates, market sizes, and quantitative claims are paired with an inline citation to the source — not "studies show," not "industry reports," not "common knowledge." The cited source must be retrievable by a reader who is willing to verify.',
+  },
+  {
+    num: '19',
+    family: 'sourcing',
+    title: 'Source tier is disclosed.',
+    body:
+      'Every load-bearing figure carries an explicit tier marker (Tier 1 sovereign / multilateral, Tier 2 economic intelligence, Tier 3 sector authority, Tier 4 commercial estimate, Tier 5 grey literature). Tier 4 figures cannot be presented next to Tier 1 data without visual differentiation.',
+  },
+  {
+    num: '20',
+    family: 'sourcing',
+    title: 'Temporal provenance is tagged.',
+    body:
+      'Data older than two years, or sourced from a known-lag publication (e.g., national statistics with a multi-year reporting cycle), carries a temporal tag indicating the data vintage. The reader sees the age of the figure they are deciding on.',
+  },
+
+  /* Analytical Integrity */
+  {
+    num: '04',
+    family: 'analytical',
+    title: 'No advocacy or partisan language in analytical sections.',
+    body:
+      'The analytical core uses descriptive, not normative, language. "We recommend," "the government should," and partisan framing are prohibited. The same allocation question, asked of two opposing administrations, must produce the same scoring.',
+  },
+  {
+    num: '05',
+    family: 'analytical',
+    title: 'A different question must produce different content.',
+    body:
+      'Two deliverables addressing two different questions cannot be substantially boilerplated copies of each other. The body of each report must reflect the specific question being asked. Generic content is treated as a deliverability failure.',
+  },
+  {
+    num: '06',
+    family: 'analytical',
+    title: 'Score-to-narrative alignment.',
+    body:
+      'Where the deliverable scores options or risks numerically, the surrounding narrative must match the scores. A scenario rated low on a given dimension cannot be discussed as if it scored high. Disagreement between the math and the prose is a failed gate.',
+  },
+  {
+    num: '17',
+    family: 'analytical',
+    title: 'Absorption and deployment are scored against historical data.',
+    body:
+      'Claims that a market or institution can absorb capital, talent, or programs at a given rate must be calibrated to the actual historical deployment rate of comparable initiatives — not assumed, not impressionistic. Optimism about deployment is the most common failure mode in this category.',
+  },
+  {
+    num: '18',
+    family: 'analytical',
+    title: 'Political-economy scoring is analytical, not partisan.',
+    body:
+      'Where the deliverable assesses political viability, the assessment is grounded in named governance indicators, electoral cycles, and policy trajectories — not in the analyst\u2019s personal read of the politics. The score must be defensible to a counterparty of the opposite political prior.',
+  },
+
+  /* Counterfactuals & Risk */
+  {
+    num: '07',
+    family: 'risk',
+    title: 'Risk profiles are specific, not boilerplate.',
+    body:
+      'Each risk dimension is described with the actual mechanics of the risk in this question, this market, this sector — not with reusable generic language. Mitigations are specific and actionable; "engage local counsel" and "monitor the situation" do not satisfy the gate.',
+  },
+  {
+    num: '09',
+    family: 'risk',
+    title: 'A Counterfactual Pause is included.',
+    body:
+      'Every analysis ends with two to three substantive arguments against the highest-scored option. The Pause exists to give the principal a structured reason to think twice before acting on what the analysis recommends. A missing Pause is a refused deliverable.',
+  },
+  {
+    num: '10',
+    family: 'risk',
+    title: 'Opportunity Cost Assessment is mandatory at scale.',
+    body:
+      'Allocations that exceed half a percent of an annual budget — or fifty million dollars equivalent — must be examined against named alternative deployments of the same capital. The reader sees what the recommended option precludes, by name, before they decide.',
+  },
+  {
+    num: '16',
+    family: 'risk',
+    title: 'Counterfactual micro-profiles name at least two alternatives.',
+    body:
+      'For each scored option, the deliverable identifies at least two named alternative programs or strategies that compete for the same resource. Generic "other priorities exist" language fails the gate. The alternatives must be specific enough to be looked up.',
+  },
+
+  /* Quantitative Modeling */
+  {
+    num: '08',
+    family: 'modeling',
+    title: 'Scenario parameters are consistent with the resource being modeled.',
+    body:
+      'A model funded by commodity revenue uses commodity-revenue parameters; a model funded by general budget uses general-budget parameters. Mixing parameter sources to produce tighter confidence bands is a transparency failure and is treated as a Gate 4 violation as well.',
+  },
+  {
+    num: '11',
+    family: 'modeling',
+    title: 'Monte Carlo correlation is treated explicitly.',
+    body:
+      'Stochastic models either implement correlation between macroeconomic variables with country-calibrated parameters, or assume independence with an explicit, quantified tail-risk disclosure. Models that quietly assume independence, without disclosure, fail the gate.',
+  },
+  {
+    num: '12',
+    family: 'modeling',
+    title: 'A three-step decomposition is present.',
+    body:
+      'Where the deliverable cites a market or fiscal envelope, it decomposes that envelope into total, allocable, and realistically deployable layers — and the layer that feeds the model is the realistic one. A headline figure, used un-decomposed, is a refused gate.',
+  },
+  {
+    num: '15',
+    family: 'modeling',
+    title: 'Arithmetic is verifiable.',
+    body:
+      'A reader with the assumptions table and a spreadsheet can reproduce every quantitative claim in the deliverable. If the math does not check out under independent recomputation, the deliverable does not ship.',
+  },
+
+  /* Internal Consistency */
+  {
+    num: '13',
+    family: 'consistency',
+    title: 'Decision-Maker call-to-action discipline.',
+    body:
+      'The deliverable\u2019s call to action — what the principal is being asked to decide — is framed as a decision, not as a sale. Promotional framing inside an analytical document fails the gate.',
+  },
+  {
+    num: '14',
+    family: 'consistency',
+    title: 'Impact and Risk scores are internally consistent.',
+    body:
+      'Where the same underlying data informs both an impact score and a risk score, the two scores must be reconcilable within a defined tolerance. A high "absorption capacity" impact score and a high "absorption risk" score, on the same data, fail the gate.',
+  },
+
+  /* Presentation Layer */
+  {
+    num: '21',
+    family: 'presentation',
+    title: 'The Executive Summary follows the six-component, equal-weight rule.',
+    body:
+      'Every Executive Summary contains six structural components in fixed order, and every option under analysis receives equal narrative weight in the summary regardless of which option the analytical core scored highest. The summary cannot be used to nudge the principal.',
+  },
+  {
+    num: '22',
+    family: 'presentation',
+    title: 'The Decision-Maker Briefing is separated from the primary report.',
+    body:
+      'Where the engagement produces a confidential briefing for the principal, that briefing is a separate document — never bundled with, referenced in, or implied by the primary deliverable. Separation is enforced by operator discipline; the gate exists to make the discipline visible.',
+  },
+];
+
+/* ──────────────────────────────────────────────────────────
+   Engine extensions (AI Mirror v8.x — Gates 24–27).
+   Public posture: name them so the reader sees the
+   evolution; do not detail the engine they live in.
+   ────────────────────────────────────────────────────────── */
+
+interface Extension { num: string; title: string; body: string; }
+const extensions: Extension[] = [
+  {
+    num: '24',
+    title: 'Rate-currency verification.',
+    body:
+      'Wage, fee, tariff, and price-rate figures are checked against current sources at the time of analysis, with a disclosed verification log. Rates that cannot be verified within the engagement window are tagged as such; stale rates are never presented as current.',
+  },
+  {
+    num: '25',
+    title: 'Source-quality and temporal-provenance disclosure.',
+    body:
+      'In addition to tier (Gate 19) and vintage (Gate 20), the engine discloses the publication context of every load-bearing source — peer review, replication status, funding-source conflicts, and known lag. The reader sees the source\u2019s standing, not just its name.',
+  },
+  {
+    num: '26',
+    title: 'Addressable-market decomposition.',
+    body:
+      'Market-entry analyses decompose a stated market into addressable, serviceable, and obtainable segments before any market-size figure feeds a model. Headline market-size figures, used as model inputs, fail the gate.',
+  },
+  {
+    num: '27',
+    title: 'Executive Summary construction.',
+    body:
+      'The Executive Summary follows a fixed construction protocol: a governing finding, a structured options panel, a quantified base-case and scenarios, a counterfactual line, a risk-and-mitigation line, and a decision call. The protocol is engine-internal; the standard is public.',
+  },
+];
+
+interface RefusalLine { line: string; }
+const refusals: RefusalLine[] = [
+  { line: 'Validate a conclusion the evidence does not support.' },
+  { line: 'Treat investment-promotion materials as objective analysis.' },
+  { line: 'Treat "Africa rising" or equivalent macro-narratives as evidence for a specific opportunity.' },
+  { line: 'Manufacture balance between a well-evidenced finding and a weakly supported counter.' },
+  { line: 'Treat a single successful case as evidence of a replicable opportunity, absent base-rate context.' },
+  { line: 'Soften a negative finding because the analysis was expensive to produce, or the principal is invested in the outcome.' },
+  { line: 'Overlook a fabricated institution because the rest of the analysis is strong.' },
+  { line: 'Treat market entry as inherently desirable. "Do not enter" is a valid finding.' },
+];
+
+interface Tier { num: string; name: string; examples: string; }
+const tiers: Tier[] = [
+  {
+    num: 'T1',
+    name: 'Primary sovereign and multilateral data.',
+    examples:
+      'National statistics bureaus, central banks, IMF Article IV, World Bank Indicators, IFC Country Diagnostics, UNCTAD investment data, official government gazettes.',
+  },
+  {
+    num: 'T2',
+    name: 'Established economic intelligence.',
+    examples:
+      'EIU country risk and commerce reports, Oxford Economics, S&P Global, Fitch, Moody\u2019s sovereign assessments, regional MDB reports, Worldwide Governance Indicators, Mo Ibrahim Index, Transparency International CPI, WEF Global Competitiveness.',
+  },
+  {
+    num: 'T3',
+    name: 'Sector-specific authority.',
+    examples:
+      'IRENA (energy), GSMA (telecoms), WHO (health), FAO (agriculture), ITU (digital infrastructure), national sector regulators, peer-reviewed sector journals, Big Four sector practice reports (weighted with awareness of incentive structure).',
+  },
+  {
+    num: 'T4',
+    name: 'Commercial intelligence.',
+    examples:
+      'Named, dated market-sizing reports from established research firms; U.S. Commercial Service country guides; investment-promotion-agency publications, used only when cross-referenced. Always tagged; never load-bearing without defense.',
+  },
+  {
+    num: 'T5',
+    name: 'Grey literature and named expert opinion.',
+    examples:
+      'Pre-prints, NBER and SSRN working papers, conference proceedings, named experts with disclosed credentials and affiliations. Flagged as non-peer-reviewed.',
+  },
+];
+
+interface NonSource { line: string; }
+const nonSources: NonSource[] = [
+  { line: 'News articles or blogs as primary data — acceptable only as a pointer to a primary source.' },
+  { line: 'Unnamed "industry reports" or "market research."' },
+  { line: 'Social media, influencer claims, or anecdotal evidence.' },
+  { line: 'Investment-promotion materials treated as objective analysis.' },
+  { line: 'AI-generated content citing itself or another AI output as a source.' },
+  { line: 'Wikipedia (acceptable as a navigation aid to a primary source — never as a source itself).' },
+];
+
+interface Engine { name: string; subject: string; deliverable: string; href: string; }
+const engines: Engine[] = [
+  {
+    name: 'AI Mirror',
+    subject: 'For an individual evaluating a market entry — the founder, the operator, the investor.',
+    deliverable: 'Stage-3 Full Report — Dr. Janelle Thompson, Nexten Summit Accra 2026 (Ghana).',
+    href: '/case-studies/ghana/',
+  },
+  {
+    name: 'VERIDEX BI — USA',
+    subject: 'For a US-domiciled firm evaluating a US market expansion — the operator, the board, the lender.',
+    deliverable: 'VERIDEX Full Report — The Master\u2019s Chair, Atlanta market entry.',
+    href: '/case-studies/masters-chair/',
+  },
+  {
+    name: 'Sovereign Mirror',
+    subject: 'For a fiscal authority evaluating its own allocation of a defined revenue stream.',
+    deliverable: 'Four interactive briefings — Domestic Resource Mobilisation, Health Financing, Ghana Stabilisation Fund, Annual Budget Funding Amount.',
+    href: '/case-studies/ghana/',
+  },
+];
+
+const familyLabel = {
+  sourcing: 'Sourcing & data integrity',
+  analytical: 'Analytical integrity',
+  modeling: 'Quantitative modeling',
+  risk: 'Risk and counterfactual',
+  consistency: 'Internal consistency',
+  presentation: 'Presentation discipline',
+};
+
+const families: Array<keyof typeof familyLabel> = [
+  'sourcing',
+  'analytical',
+  'modeling',
+  'risk',
+  'consistency',
+  'presentation',
+];
+---
+
+<BaseLayout
+  title="VERIDEX — The Validation Layer · Power In Numbers"
+  description="VERIDEX is the validation layer of the methodology. Every deliverable Power In Numbers ships passes through a fixed set of analytical, statistical, regulatory, and presentation gates. The gates are public; the engines are not."
+>
+  <PageHero
+    eyebrow="Methodology · Layer 05"
+    headline="VERIDEX."
+    lede="A fixed set of validation gates. Coverage of analytical, statistical, regulatory, and presentation integrity. <em>Reports do not leave the firm without passing.</em>"
+    metaLeft="22 canonical gates · 4 engine extensions"
+    metaRight="Public posture · operator discipline"
+  />
+
+  {/* ──────────────────────────────────────────────
+      §01 — What VERIDEX is, said plainly
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 01" tag="The validation layer, defined" />
+
+      <div class="prose">
+        <p data-reveal>
+          VERIDEX is the audit layer of the Power In Numbers methodology. The
+          firm produces analytical work in three operating modes &mdash; for an
+          individual, for a firm, and for a sovereign &mdash; and every
+          deliverable in every mode passes through the same set of gates before
+          it is allowed to leave. The gates are coverage requirements, not style
+          preferences. A report that fails a gate is revised until it passes,
+          or it is not shipped.
+        </p>
+        <p data-reveal>
+          The gates are <em>published</em>. The engines that run them are
+          not. Power In Numbers treats the operating prompts behind AI Mirror,
+          VERIDEX&nbsp;BI&nbsp;USA, and the Sovereign Mirror as the firm&rsquo;s
+          intellectual property &mdash; the product of a lengthy, iterative
+          prompt-engineering programme &mdash; and does not disclose them. What
+          this page describes is the standard the engines are required to
+          satisfy. The reader does not need the engine to inspect the work.
+        </p>
+        <p data-reveal>
+          The standard is forensic. Every quantitative claim must be traceable
+          to a named source. Every projection must disclose its method and its
+          uncertainty. Every named institution must be independently
+          verifiable. Every recommendation must be paired with a Counterfactual
+          Pause and an Opportunity Cost Assessment. Every Decision-Maker
+          Briefing must be a separate document. The principle is simple: the
+          deliverable is constructed so that an adversarial reviewer can audit
+          it without access to the firm.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §02 — The architecture, in one diagram
+      ────────────────────────────────────────────── */}
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 02" tag="The architecture" />
+
+      <h2 class="s-title" data-reveal>
+        Three engines. One audit. One standard.
+      </h2>
+
+      <div class="arch" data-reveal>
+        <div class="arch__row arch__row--audit">
+          <div class="arch__cell arch__cell--audit">
+            <span class="arch__layer">Layer 0 &mdash; the auditor</span>
+            <h3 class="arch__name">VERIDEX Core + BMEI module</h3>
+            <p class="arch__body">
+              The forensic auditor. Operates above the engines. Adjudicates
+              source quality, statistical rigor, regulatory accuracy, and
+              presentation discipline. Inherits no allegiance to any engine
+              and no commercial interest in any deliverable&rsquo;s
+              conclusion.
+            </p>
+          </div>
+        </div>
+
+        <div class="arch__row arch__row--engines">
+          <div class="arch__cell">
+            <span class="arch__layer">Engine</span>
+            <h3 class="arch__name">AI Mirror</h3>
+            <p class="arch__sub">For an individual evaluating market entry.</p>
+            <p class="arch__body">
+              A firm-built advisory engine. Subject is the principal. Output
+              is calibrated to a single decision-maker preparing to commit
+              capital, time, or reputation to a new market.
+            </p>
+          </div>
+
+          <div class="arch__cell">
+            <span class="arch__layer">Engine</span>
+            <h3 class="arch__name">VERIDEX BI &mdash; USA</h3>
+            <p class="arch__sub">For a US firm evaluating a US expansion.</p>
+            <p class="arch__body">
+              A firm-built advisory engine specialised for the US regulatory
+              and competitive landscape. Subject is the operator and the
+              board. Output is calibrated to a domestic expansion decision.
+            </p>
+          </div>
+
+          <div class="arch__cell">
+            <span class="arch__layer">Engine</span>
+            <h3 class="arch__name">Sovereign Mirror</h3>
+            <p class="arch__sub">For a fiscal authority evaluating its own allocation.</p>
+            <p class="arch__body">
+              A firm-built engine for fiscal-allocation-to-impact cartography.
+              Subject is the sovereign, analysing itself. Output is calibrated
+              to a Ministry of Finance, a development-partner audience, or
+              an oversight body.
+            </p>
+          </div>
+        </div>
+
+        <div class="arch__row arch__row--gates">
+          <div class="arch__cell arch__cell--gates">
+            <span class="arch__layer">Layer &infin; &mdash; the gates</span>
+            <h3 class="arch__name">22 canonical gates &middot; 4 engine extensions</h3>
+            <p class="arch__body">
+              Every deliverable, in every engine, passes through the same
+              fixed gate set before publication. Each gate is a binary
+              pass/fail check against a named integrity standard. A failed
+              gate is a refused deliverable until the failure is repaired.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §03 — The 22 canonical gates
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 03" tag="The canonical 22" />
+
+      <h2 class="s-title" data-reveal>
+        The 22 gates in full.
+      </h2>
+      <p class="prose__sub" data-reveal>
+        Organised by integrity family, in the order each family is invoked
+        during an audit. The numbering is canonical &mdash; the gates are
+        addressed by number throughout the firm and across every engagement.
+      </p>
+
+      {families.map((fam) => (
+        <div class="gate-family">
+          <h3 class="gate-family__title" data-reveal>
+            {familyLabel[fam]}
+          </h3>
+          <ol class="gates">
+            {gates
+              .filter((g) => g.family === fam)
+              .map((g) => (
+                <li class="gate" data-reveal>
+                  <span class="gate__num">G&middot;{g.num}</span>
+                  <div class="gate__body">
+                    <h4 class="gate__title">{g.title}</h4>
+                    <p class="gate__text">{g.body}</p>
+                  </div>
+                </li>
+              ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §04 — Engine extensions
+      ────────────────────────────────────────────── */}
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 04" tag="Engine extensions" />
+
+      <h2 class="s-title" data-reveal>
+        Four engine-level extensions.
+      </h2>
+      <p class="prose__sub" data-reveal>
+        Each operating engine carries calibrations beyond the canonical 22.
+        These are the four currently in production. They apply to engagements
+        run through AI Mirror and VERIDEX&nbsp;BI&nbsp;USA. Sovereign Mirror
+        engagements satisfy them by inheritance.
+      </p>
+
+      <ol class="gates gates--ext" data-reveal>
+        {extensions.map((e) => (
+          <li class="gate gate--ext">
+            <span class="gate__num gate__num--ext">G&middot;{e.num}</span>
+            <div class="gate__body">
+              <h4 class="gate__title">{e.title}</h4>
+              <p class="gate__text">{e.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §05 — Source tier hierarchy
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 05" tag="Source discipline" />
+
+      <h2 class="s-title" data-reveal>
+        The five tiers, and what does not qualify.
+      </h2>
+      <p class="prose__sub" data-reveal>
+        VERIDEX evaluates sources on a fixed five-tier hierarchy. Every
+        load-bearing figure in a deliverable carries a visible tier marker.
+        Tier 4 figures cannot stand next to Tier 1 data without explicit
+        differentiation. The list of source types that do not qualify is
+        equally fixed.
+      </p>
+
+      <ul class="tiers" data-reveal>
+        {tiers.map((t) => (
+          <li class="tier">
+            <span class="tier__num">{t.num}</span>
+            <div class="tier__body">
+              <h4 class="tier__name">{t.name}</h4>
+              <p class="tier__ex">{t.examples}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <h3 class="sub-title" data-reveal>What does not qualify.</h3>
+      <ul class="non-sources" data-reveal>
+        {nonSources.map((n) => (
+          <li class="non-source">{n.line}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §06 — What VERIDEX refuses to do
+      ────────────────────────────────────────────── */}
+  <section class="section section--ink">
+    <div class="frame">
+      <SectionMarker num="§ 06" tag="The refusal list" inverse={true} />
+
+      <h2 class="s-title s-title--ink" data-reveal>
+        What VERIDEX refuses to do.
+      </h2>
+      <p class="prose__sub prose__sub--ink" data-reveal>
+        Published refusals. The auditor does not soften, hedge, or reframe
+        a finding to protect anyone&rsquo;s emotional, political, or
+        commercial outcome. The principal is not the auditor&rsquo;s client.
+        The truth is.
+      </p>
+
+      <ol class="refusals" data-reveal>
+        {refusals.map((r, i) => (
+          <li class="refusal">
+            <span class="refusal__num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="refusal__text">{r.line}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §07 — The deliverables produced under VERIDEX
+      ────────────────────────────────────────────── */}
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 07" tag="The proof" />
+
+      <h2 class="s-title" data-reveal>
+        The three engines. The deliverables they produced.
+      </h2>
+      <p class="prose__sub" data-reveal>
+        VERIDEX is not described as a checklist. It is shown as a record of
+        published deliverables that passed it. Each engine below has produced
+        at least one full report under audit. Every report carries its full
+        gate set in an audit footer.
+      </p>
+
+      <ul class="engines" data-reveal>
+        {engines.map((e) => (
+          <li class="engine">
+            <span class="engine__layer">Engine</span>
+            <h3 class="engine__name">{e.name}</h3>
+            <p class="engine__subject">{e.subject}</p>
+            <p class="engine__deliverable"><strong>Reference deliverable.</strong> {e.deliverable}</p>
+            <a class="engine__cta" href={e.href}>See the case study &rarr;</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* ──────────────────────────────────────────────
+      §08 — Read further
+      ────────────────────────────────────────────── */}
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 08" tag="Read further" />
+
+      <div class="next-row">
+        <a href="/methodology/framework/" class="next-card">
+          <span class="next-card__num">§ Layer 02</span>
+          <span class="next-card__name">CROWD POWERED</span>
+          <span class="next-card__qual">The 12-step framework</span>
+        </a>
+        <a href="/methodology/curriculum/" class="next-card">
+          <span class="next-card__num">§ Layer 04</span>
+          <span class="next-card__name">PINU</span>
+          <span class="next-card__qual">The 8-phase curriculum</span>
+        </a>
+        <a href="/track-record/" class="next-card">
+          <span class="next-card__num">§ Predictive</span>
+          <span class="next-card__name">Track Record</span>
+          <span class="next-card__qual">PIN&rsquo;s pattern, dated</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ───── Section primitives (mirrors framework / curriculum) ───── */
+  .section { padding: 96px 0; }
+  .section--paper-deep { background: var(--paper-deep); }
+  .section--ink { background: var(--ink); color: var(--paper); }
+  .frame { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 700px) { .section { padding: 72px 0; } .frame { padding: 0 22px; } }
+
+  /* ───── Prose ───── */
+  .prose { max-width: 72ch; }
+  .prose p { font-size: 18px; line-height: 1.7; color: var(--ink); margin-bottom: 22px; }
+  .prose__sub { font-size: 17px; line-height: 1.65; color: var(--subtext); max-width: 72ch; margin: 0 0 36px; }
+  .prose__sub--ink { color: rgba(245,241,232,0.78); }
+
+  /* ───── Section titles ───── */
+  .s-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(30px, 4.2vw, 44px); line-height: 1.15; letter-spacing: -0.012em; color: var(--ink); margin: 4px 0 28px; max-width: 28ch; }
+  .s-title--ink { color: var(--paper); }
+  .sub-title { font-family: var(--font-display); font-weight: 400; font-size: 22px; line-height: 1.25; color: var(--ink); margin: 48px 0 16px; }
+
+  /* ───── §02 architecture diagram ───── */
+  .arch { display: grid; gap: 14px; }
+  .arch__row { display: grid; gap: 14px; }
+  .arch__row--engines { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 880px) { .arch__row--engines { grid-template-columns: 1fr; } }
+  .arch__cell { background: var(--paper); border: 1px solid var(--rule); padding: 24px 26px; }
+  .arch__cell--audit { border-left: 4px solid var(--oxblood); background: var(--paper); }
+  .arch__cell--gates { border-left: 4px solid var(--ink); background: var(--paper); }
+  .arch__layer { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--subtext); margin-bottom: 8px; }
+  .arch__name { font-family: var(--font-display); font-weight: 400; font-size: 22px; color: var(--ink); margin: 0 0 6px; }
+  .arch__sub { font-size: 13px; color: var(--oxblood); font-style: italic; margin: 0 0 12px; }
+  .arch__body { font-size: 15px; line-height: 1.6; color: var(--subtext); margin: 0; }
+
+  /* ───── §03 / §04 gate cards ───── */
+  .gate-family { margin-bottom: 56px; }
+  .gate-family__title { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--oxblood); border-top: 1px solid var(--rule); padding-top: 20px; margin: 0 0 24px; }
+  .gates { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+  .gates--ext { gap: 18px; }
+  .gate { display: grid; grid-template-columns: 80px 1fr; gap: 22px; padding: 22px 24px; background: var(--paper); border: 1px solid var(--rule); }
+  .gate--ext { background: var(--paper); border-left: 4px solid var(--oxblood); }
+  @media (max-width: 600px) { .gate { grid-template-columns: 1fr; gap: 12px; } }
+  .gate__num { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.08em; color: var(--oxblood); padding-top: 4px; }
+  .gate__num--ext { color: var(--oxblood); }
+  .gate__body { max-width: 64ch; }
+  .gate__title { font-family: var(--font-display); font-weight: 400; font-size: 19px; line-height: 1.3; color: var(--ink); margin: 0 0 8px; }
+  .gate__text { font-size: 15.5px; line-height: 1.65; color: var(--subtext); margin: 0; }
+
+  /* ───── §05 source tiers ───── */
+  .tiers { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 14px; }
+  .tier { display: grid; grid-template-columns: 60px 1fr; gap: 22px; padding: 20px 24px; background: var(--paper); border: 1px solid var(--rule); }
+  @media (max-width: 600px) { .tier { grid-template-columns: 1fr; gap: 8px; } }
+  .tier__num { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.08em; color: var(--oxblood); padding-top: 4px; }
+  .tier__name { font-family: var(--font-display); font-weight: 400; font-size: 19px; color: var(--ink); margin: 0 0 6px; }
+  .tier__ex { font-size: 14.5px; line-height: 1.6; color: var(--subtext); margin: 0; }
+  .non-sources { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-width: 78ch; }
+  .non-source { padding: 10px 16px; border-left: 3px solid var(--oxblood); background: var(--paper); font-size: 14.5px; line-height: 1.55; color: var(--subtext); }
+
+  /* ───── §06 refusal list ───── */
+  .refusals { list-style: none; counter-reset: r; margin: 0; padding: 0; display: grid; gap: 14px; max-width: 80ch; }
+  .refusal { display: grid; grid-template-columns: 56px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid rgba(245,241,232,0.18); }
+  .refusal:first-child { border-top: none; }
+  .refusal__num { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; color: var(--oxblood); padding-top: 4px; }
+  .refusal__text { font-size: 17px; line-height: 1.55; color: var(--paper); }
+
+  /* ───── §07 engine cards ───── */
+  .engines { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 880px) { .engines { grid-template-columns: 1fr; } }
+  .engine { background: var(--paper); border: 1px solid var(--rule); border-top: 4px solid var(--ink); padding: 26px 26px 22px; display: flex; flex-direction: column; }
+  .engine__layer { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--subtext); margin-bottom: 8px; }
+  .engine__name { font-family: var(--font-display); font-weight: 400; font-size: 24px; color: var(--ink); margin: 0 0 8px; }
+  .engine__subject { font-size: 14px; line-height: 1.55; color: var(--oxblood); font-style: italic; margin: 0 0 14px; }
+  .engine__deliverable { font-size: 14.5px; line-height: 1.6; color: var(--subtext); margin: 0 0 16px; }
+  .engine__cta { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--oxblood); text-decoration: none; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--rule); }
+  .engine__cta:hover { color: var(--ink); }
+
+  /* ───── §08 read-further row ───── */
+  .next-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 880px) { .next-row { grid-template-columns: 1fr; } }
+  .next-card { display: grid; gap: 8px; padding: 22px 24px; background: var(--paper); border: 1px solid var(--rule); text-decoration: none; transition: border-color 180ms ease; }
+  .next-card:hover { border-color: var(--ink); }
+  .next-card__num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--subtext); }
+  .next-card__name { font-family: var(--font-display); font-weight: 400; font-size: 22px; color: var(--ink); }
+  .next-card__qual { font-size: 13.5px; color: var(--subtext); }
+
+  /* ───── Reveal-on-scroll ───── */
+  [data-reveal] { opacity: 0; transform: translateY(14px); transition: opacity 600ms ease, transform 600ms ease; }
+  [data-reveal].is-revealed { opacity: 1; transform: none; }
+</style>
+
+<script>
+  // Reveal-on-scroll observer (matches framework / curriculum)
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.06, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+</script>

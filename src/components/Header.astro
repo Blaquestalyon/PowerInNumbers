@@ -1,0 +1,215 @@
+---
+const pathname = Astro.url.pathname;
+
+interface NavLink {
+  href: string;
+  label: string;
+}
+
+const nav: NavLink[] = [
+  { href: '/methodology', label: 'Methodology' },
+  { href: '/track-record', label: 'Track Record' },
+  { href: '/case-studies', label: 'Case Studies' },
+  { href: '/library', label: 'Library' },
+  { href: '/about', label: 'About' },
+];
+
+const isActive = (href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="frame site-header__inner">
+    <a href="/" class="wordmark" aria-label="Power In Numbers — home">
+      <span class="wordmark__rule" aria-hidden="true"></span>
+      <span class="wordmark__name">Power In Numbers</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={['site-nav__link', { 'is-active': isActive(item.href) }]}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a href="/engage" class="site-nav__link site-nav__link--accent">
+        Engage
+      </a>
+    </nav>
+
+    <button
+      class="site-nav__toggle"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      type="button"
+    >
+      <span class="site-nav__toggle-bar"></span>
+      <span class="site-nav__toggle-bar"></span>
+    </button>
+  </div>
+
+  <div class="site-nav__mobile" id="mobile-nav" hidden>
+    <div class="frame">
+      <nav aria-label="Mobile">
+        {nav.map((item) => (
+          <a href={item.href} class:list={['site-nav__mobile-link', { 'is-active': isActive(item.href) }]}>
+            {item.label}
+          </a>
+        ))}
+        <a href="/engage" class="site-nav__mobile-link site-nav__mobile-link--accent">
+          Engage
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    const btn = document.querySelector('.site-nav__toggle');
+    const panel = document.getElementById('mobile-nav');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      panel.hidden = open;
+      btn.classList.toggle('is-open', !open);
+    });
+  })();
+</script>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--rule);
+    padding: 24px 0;
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: saturate(180%) blur(8px);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .wordmark__rule {
+    display: inline-block;
+    width: 28px;
+    height: 2px;
+    background: var(--oxblood);
+  }
+  .wordmark__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: -0.005em;
+  }
+  .site-nav {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .site-nav__link {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition:
+      color var(--duration-quick) var(--ease-out),
+      border-color var(--duration-quick) var(--ease-out);
+  }
+  .site-nav__link:hover {
+    color: var(--oxblood);
+    border-bottom-color: var(--oxblood);
+  }
+  .site-nav__link.is-active {
+    color: var(--oxblood);
+    border-bottom-color: var(--oxblood);
+  }
+  .site-nav__link--accent {
+    color: var(--paper);
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 8px 16px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+  .site-nav__link--accent:hover {
+    background: var(--oxblood);
+    border-color: var(--oxblood);
+    color: var(--paper);
+    border-bottom-color: var(--oxblood);
+  }
+  .site-nav__link--accent.is-active {
+    background: var(--oxblood);
+    border-color: var(--oxblood);
+    color: var(--paper);
+  }
+
+  /* Mobile toggle */
+  .site-nav__toggle {
+    display: none;
+    width: 32px;
+    height: 32px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 0;
+  }
+  .site-nav__toggle-bar {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--ink);
+    transition: transform var(--duration-quick) var(--ease-out);
+  }
+  .site-nav__toggle.is-open .site-nav__toggle-bar:first-child {
+    transform: translateY(4px) rotate(45deg);
+  }
+  .site-nav__toggle.is-open .site-nav__toggle-bar:last-child {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+
+  .site-nav__mobile {
+    border-top: 1px solid var(--rule);
+    padding: 16px 0 24px;
+    background: var(--paper);
+  }
+  .site-nav__mobile nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .site-nav__mobile-link {
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .site-nav__mobile-link.is-active { color: var(--oxblood); }
+  .site-nav__mobile-link--accent { color: var(--oxblood); font-weight: 500; }
+
+  @media (max-width: 860px) {
+    .site-nav { display: none; }
+    .site-nav__toggle { display: flex; align-items: center; }
+  }
+</style>
