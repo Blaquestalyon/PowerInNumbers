@@ -7,7 +7,7 @@
   "engines": { "node": ">=20.0.0" },
   "scripts": {
     "dev": "astro dev --host 0.0.0.0",
-    "start": "serve -s dist -l ${PORT:-3000}",
+    "start": "serve -s dist -l $PORT",
     "build": "astro check && astro build",
     "preview": "astro preview --host 0.0.0.0",
     "astro": "astro"
