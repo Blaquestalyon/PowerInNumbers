@@ -1,0 +1,405 @@
+---
+/**
+ * /artifacts/foundation/
+ *
+ * Public-facing artifact viewer for The Foundation primary-source dossier.
+ *
+ * Contents, in order of evidentiary weight:
+ *   1. Five Texas First Bank verification letters (2015 \u2014 2018), signed by
+ *      Banking Center Manager / AVP Billie Jean Higginbotham, S4TF, LTD,
+ *      account #10016236. Cumulative deposits 2013 \u2014 29 June 2018:
+ *      $2,065,367.96.
+ *   2. The Foundation Project Prezi-export deck (45 pages, 2017 \u2014 2018).
+ *   3. The Foundation Coin scan, mint code EP-FLAG-999, serial 0001.
+ *   4. The S4TF revenue chart from the deck.
+ *
+ * The raw artifact files live under /artifacts/foundation/ in public/ and are
+ * served directly. This page renders the dossier as a single, citation-grade
+ * viewer.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+const bankLetters = [
+  {
+    label: 'Texas First Bank \u2014 verification letter, deposits 2013\u20132015',
+    src: '/artifacts/foundation/bank-letter-2015-11-18.jpg',
+    dated: '18 November 2015',
+    caption:
+      'Re: S4TF, LTD, account #10016236. Total deposits 2013 (Mar 14\u2013Dec 31): $287,830.79. 2014: $391,629.85. 2015 (Jan\u2013Oct 31): $365,699.25. Signed Billie Jean Higginbotham, Banking Center Manager / AVP.',
+  },
+  {
+    label: 'Texas First Bank \u2014 verification letter, full year 2015',
+    src: '/artifacts/foundation/bank-letter-2016-01-06.jpg',
+    dated: '6 January 2016',
+    caption: 'Re: S4TF, LTD. Total deposits 2015: $435,490.20.',
+  },
+  {
+    label: 'Texas First Bank \u2014 verification letter, full year 2016',
+    src: '/artifacts/foundation/bank-letter-2017-01-18.jpg',
+    dated: '18 January 2017',
+    caption: 'Re: S4TF, LTD. Total deposits 2016: $438,776.85.',
+  },
+  {
+    label: 'Texas First Bank \u2014 verification letter, Jan\u2013Nov 2017',
+    src: '/artifacts/foundation/bank-letter-2017-12-06.jpg',
+    dated: '6 December 2017',
+    caption: 'Re: S4TF. Total deposits January\u2013November 2017: $368,107.35.',
+  },
+  {
+    label: 'Texas First Bank \u2014 cumulative verification letter, 2013\u2013June 2018',
+    src: '/artifacts/foundation/bank-letter-2018-06-29.jpg',
+    dated: '29 June 2018',
+    caption:
+      'Re: S4TF, LTD. Cumulative deposits 2013 through 29 June 2018: $2,065,367.96. Average annual deposits 2013\u20132017: $386,638.56. Average monthly deposits: $32,219.88.',
+  },
+];
+
+const deck = {
+  label: 'The Foundation Project \u2014 architectural deck',
+  src: '/artifacts/foundation/the-foundation-project.pdf',
+  dated: '2017\u20132018',
+  caption:
+    '45-page Prezi-export, 2017\u20132018. Sections: The Plan, Who, What, Feasibility, Key Partners, How it Works, First Steps. Documents the El Paso flagship, the 100 Indie Artists / 100 Major Celebrities / City of El Paso constituency, the 50/50 ownership architecture, the V.I.P. access model, and the multi-vertical revenue plan. Contact of record at end of deck: Kirbie Speights.',
+};
+
+const coin = {
+  label: 'Foundation Coin \u2014 EP-FLAG-999, 0001',
+  src: '/artifacts/foundation/foundation-coin.jpg',
+  dated: '2017',
+  caption:
+    'Serialized fractional-ownership token rendered for the El Paso flagship. Obverse: \u201cOur Unity Is Our Strength\u201d rim, \u201cthe foundation\u201d wordmark on teal field. Reverse: \u201cTogether We Build!\u201d rim, five-point star centered, serial 0001, mint code EP-FLAG-999.',
+};
+
+const chart = {
+  label: 'S4TF revenue trajectory, 2013\u20132017',
+  src: '/artifacts/foundation/s4tf-revenue-chart.jpg',
+  dated: '2017',
+  caption:
+    'Annual revenue chart from the Foundation deck. Bars peak in 2015\u20132016 above the $400,000 line and step down in 2017 \u2014 a partial-year figure shown alongside the full prior years.',
+};
+---
+
+<BaseLayout
+  title="The Foundation \u2014 Primary-Source Dossier · Artifact Viewer · Power In Numbers"
+  description="The Foundation primary-source dossier: five Texas First Bank verification letters documenting $2,065,367.96 in cumulative deposits to S4TF, LTD between 2013 and 29 June 2018; the 45-page Foundation Project architectural deck; the Foundation Coin (EP-FLAG-999, 0001); and the S4TF revenue chart."
+>
+  <PageHero
+    eyebrow="Artifact viewer · Foundation dossier"
+    headline="The Foundation, on letterhead."
+    lede="Five Texas First Bank verification letters document <em>$2,065,367.96</em> in deposits to S4TF, LTD between March 2013 and 29 June 2018. The architectural deck, the Foundation Coin, and the revenue chart are reproduced alongside."
+    metaLeft="Operator: 9th Ward Production and Promotions Company, LLC"
+    metaRight="Funded through: S4TF, LTD"
+  />
+
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 01" tag="Bank-letterhead evidence" />
+      <h2 class="s-title" data-reveal>The financial spine.</h2>
+      <p class="s-lede" data-reveal>
+        Five letters, signed by an Assistant Vice President of the bank, at five
+        separate dates over three years. Cumulative deposits 2013 through 29
+        June 2018: <strong>$2,065,367.96</strong>. Average annual deposits
+        2013\u20132017: <strong>$386,638.56</strong>. Average monthly deposits:
+        <strong>$32,219.88</strong>. That is not a forecast. It is the bank\u2019s
+        own ledger, in writing, on letterhead.
+      </p>
+
+      <ul class="dossier" data-reveal>
+        {bankLetters.map((a) => (
+          <li class="dossier__item">
+            <header class="dossier__head">
+              <span class="dossier__kind">Bank letter</span>
+              <a class="dossier__label" href={a.src} target="_blank" rel="noopener">
+                {a.label} ↗
+              </a>
+              <span class="dossier__date">{a.dated}</span>
+            </header>
+            <p class="dossier__caption">{a.caption}</p>
+            <a
+              class="dossier__media"
+              href={a.src}
+              target="_blank"
+              rel="noopener"
+              aria-label={`Open ${a.label} in new tab`}
+            >
+              <img src={a.src} alt={a.label} loading="lazy" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 02" tag="The architectural deck" />
+      <h2 class="s-title" data-reveal>The Foundation Project.</h2>
+      <p class="s-lede" data-reveal>
+        The 45-page Prezi-export deck published 2017\u20132018. The flagship sited in
+        El Paso, TX, operated through 9th Ward Production and Promotions
+        Company, LLC, structured around a 100 Indie Artists / 100 Major
+        Celebrities / City of El Paso constituency, with a 50 / 50 ownership
+        architecture and serialized fractional tokens issued against it.
+      </p>
+
+      <article class="dossier__deck" data-reveal>
+        <header class="dossier__head">
+          <span class="dossier__kind">PDF · 45 pages</span>
+          <a class="dossier__label" href={deck.src} target="_blank" rel="noopener">
+            {deck.label} ↗
+          </a>
+          <span class="dossier__date">{deck.dated}</span>
+        </header>
+        <p class="dossier__caption">{deck.caption}</p>
+        <div class="dossier__pdf">
+          <iframe
+            src={deck.src}
+            title={deck.label}
+            loading="lazy"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 03" tag="Token and revenue chart" />
+      <h2 class="s-title" data-reveal>The coin and the chart.</h2>
+      <p class="s-lede" data-reveal>
+        The Foundation Coin is the serialized fractional-ownership token issued
+        against the El Paso flagship; serial 0001, mint code EP-FLAG-999. The
+        revenue chart from the deck visualises the same deposit history the bank
+        letters confirm.
+      </p>
+
+      <ul class="dossier dossier--two" data-reveal>
+        {[coin, chart].map((a) => (
+          <li class="dossier__item">
+            <header class="dossier__head">
+              <span class="dossier__kind">Image</span>
+              <a class="dossier__label" href={a.src} target="_blank" rel="noopener">
+                {a.label} ↗
+              </a>
+              <span class="dossier__date">{a.dated}</span>
+            </header>
+            <p class="dossier__caption">{a.caption}</p>
+            <a
+              class="dossier__media"
+              href={a.src}
+              target="_blank"
+              rel="noopener"
+              aria-label={`Open ${a.label} in new tab`}
+            >
+              <img src={a.src} alt={a.label} loading="lazy" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 04" tag="Independent corroboration" />
+      <h2 class="s-title" data-reveal>The 2011 print record.</h2>
+      <p class="s-lede" data-reveal>
+        Six years before the bank-letter window opens, Go Local Magazine,
+        Volume I, Edition 2 (April 2011) profiles the property at 100
+        Carnarvon Drive, Houston \u2014 a 36,000-square-foot residence built by Lee
+        Calloway, originally specified at approximately $1,500 per square foot,
+        with a ten-karat gold-leaf ceiling and roughly nine million dollars in
+        antiquities \u2014 and identifies it explicitly as the headquarters of the
+        Power In Numbers Economic Development Initiative. The full reproduction
+        is embedded on the Go Local entry.
+      </p>
+      <ul class="onward" data-reveal>
+        <li class="onward__card">
+          <a href="/track-record/2017-foundation-venu/">
+            <span class="onward__eyebrow">Track record · 2017</span>
+            <span class="onward__title">The Foundation \u2014 community-owned venue</span>
+            <span class="onward__lede">The full essay, with foil mapping to Venu Holding Corporation (NYSE: VENU) and the seven-year head start.</span>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/track-record/2010-go-local/">
+            <span class="onward__eyebrow">Track record · 2010</span>
+            <span class="onward__title">Go Local Magazine</span>
+            <span class="onward__lede">Volume I, Edition 2 (April 2011) names 100 Carnarvon Drive in print as the firm\u2019s headquarters.</span>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/case-studies/ghana-market-entry/">
+            <span class="onward__eyebrow">Case study</span>
+            <span class="onward__title">Ghana market entry</span>
+            <span class="onward__lede">The same principal threaded forward fifteen years \u2014 from the 2011 Go Local profile to the 2026 AI Mirror engagement.</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .dossier {
+    list-style: none;
+    padding: 0;
+    margin: 2.5rem 0 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .dossier--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 720px) {
+    .dossier--two { grid-template-columns: 1fr; }
+  }
+
+  .dossier__item,
+  .dossier__deck {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    overflow: hidden;
+  }
+
+  .dossier__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1.25rem;
+    padding: 1.25rem 1.5rem 0.95rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .dossier__kind {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+  }
+
+  .dossier__label {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    line-height: 1.3;
+    flex: 1 1 auto;
+  }
+
+  .dossier__label:hover { border-bottom-color: var(--oxblood); }
+
+  .dossier__date {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--subtext);
+  }
+
+  .dossier__caption {
+    padding: 1rem 1.5rem 1.15rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--subtext);
+    margin: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .dossier__media {
+    display: block;
+    background: var(--paper-deep);
+    text-decoration: none;
+  }
+
+  .dossier__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 720px;
+    object-fit: contain;
+    background: var(--paper-deep);
+  }
+
+  .dossier__pdf {
+    position: relative;
+    width: 100%;
+    height: 880px;
+    background: var(--paper);
+  }
+
+  .dossier__pdf iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: var(--paper);
+  }
+
+  @media (max-width: 720px) {
+    .dossier__pdf { height: 640px; }
+  }
+
+  .onward {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 720px) {
+    .onward { grid-template-columns: 1fr; }
+  }
+
+  .onward__card {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .onward__card a {
+    display: block;
+    padding: 1.5rem 1.75rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.18s ease;
+  }
+
+  .onward__card a:hover { background: var(--paper-deep); }
+
+  .onward__eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 0.55rem;
+  }
+
+  .onward__title {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 1.25;
+    margin-bottom: 0.55rem;
+  }
+
+  .onward__lede {
+    display: block;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--subtext);
+  }
+</style>

@@ -1,0 +1,271 @@
+---
+/**
+ * /artifacts/case-studies/masters-chair/
+ *
+ * Public-facing artifact viewer for the VERIDEX BI USA Stage-3 deliverable
+ * prepared for The Master's Chair Houston \u2192 Atlanta interstate expansion.
+ * Single deliverable, embedded inline. The case is pre-launch: principal
+ * accepted Pathway A but build-out has not started, so the framing here is
+ * "reference deliverable" rather than retrospective.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+const deliverable = {
+  engine: 'Engine C · VERIDEX BI \u2014 USA',
+  title: 'VERIDEX BI \u2014 USA · Stage 3 Full Report',
+  src: '/artifacts/case-studies/masters-chair/veridex-full-report.html',
+  lede:
+    'Sixteen analytical outputs, dual-revenue model, $650M TAM decomposed to a $120M Atlanta-metro SAM, P50 five-year revenue of $5.1M, full interstate compliance architecture, separate Decision-Maker Briefing.',
+};
+
+const meta = [
+  { label: 'Engagement', value: 'The Master\u2019s Chair · Houston \u2192 Atlanta' },
+  { label: 'Status', value: 'Pre-launch \u2014 reference deliverable' },
+  { label: 'Pathway', value: 'A \u2014 Commercial Sanctuary, dual-revenue · 21 / 25' },
+  { label: 'Gates', value: '27 / 27 passed · G\u00b724 \u2014 G\u00b727' },
+];
+---
+
+<BaseLayout
+  title="VERIDEX BI \u2014 USA · The Master's Chair · Artifact Viewer · Power In Numbers"
+  description="VERIDEX BI USA Stage-3 full report for The Master's Chair Houston-to-Atlanta interstate expansion. Sixteen analytical outputs, dual-revenue model, $650M TAM, $120M Atlanta SAM, P50 five-year revenue of $5.1M, twenty-seven of twenty-seven gates passed."
+>
+  <PageHero
+    eyebrow="Artifact viewer · Engine C · VERIDEX BI \u2014 USA"
+    headline="The Master\u2019s Chair, embedded."
+    lede="The full Stage-3 report prepared for the Houston-to-Atlanta interstate expansion. Read the deliverable directly below; use <em>Open in new tab</em> for full-width reading."
+    metaLeft="Engagement: The Master\u2019s Chair"
+    metaRight="Status: Pre-launch"
+  />
+
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 01" tag="The deliverable" />
+
+      <article class="amsingle">
+        <header class="amsingle__head">
+          <span class="amsingle__engine">{deliverable.engine}</span>
+          <h2 class="amsingle__title">{deliverable.title}</h2>
+          <p class="amsingle__lede">{deliverable.lede}</p>
+          <ul class="amsingle__meta">
+            {meta.map((m) => (
+              <li><span>{m.label}</span><strong>{m.value}</strong></li>
+            ))}
+            <li>
+              <span>Deliverable</span>
+              <a href={deliverable.src} target="_blank" rel="noopener">Open in new tab ↗</a>
+            </li>
+          </ul>
+        </header>
+        <div class="amsingle__frame">
+          <iframe
+            src={deliverable.src}
+            title={deliverable.title}
+            loading="lazy"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 02" tag="A note on status" />
+      <h2 class="s-title" data-reveal>Reference deliverable.</h2>
+      <p class="s-lede" data-reveal>
+        The principal accepted Pathway A \u2014 the Commercial Sanctuary,
+        dual-revenue option \u2014 and the deliverable is complete. The
+        Houston-to-Atlanta build-out has not yet started. The report is published
+        here as a reference artifact for what a VERIDEX BI USA engagement
+        produces, not as a retrospective on an operating venture.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 03" tag="Read further" />
+      <h2 class="s-title" data-reveal>Where this fits.</h2>
+      <ul class="onward" data-reveal>
+        <li class="onward__card">
+          <a href="/case-studies/masters-chair/">
+            <span class="onward__eyebrow">Case study</span>
+            <span class="onward__title">The Master\u2019s Chair</span>
+            <span class="onward__lede">The full case page \u2014 the four anchors, the costed pathways, the decision the principal made.</span>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/methodology/framework/">
+            <span class="onward__eyebrow">Methodology</span>
+            <span class="onward__title">The three engines</span>
+            <span class="onward__lede">VERIDEX BI USA inside the engine architecture. Twenty-two gates, four engine extensions G\u00b724 \u2014 G\u00b727.</span>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/methodology/validation/">
+            <span class="onward__eyebrow">Methodology</span>
+            <span class="onward__title">Validation</span>
+            <span class="onward__lede">How the gate scoring works, what each gate tests for, and why twenty-seven of twenty-seven matters here.</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .amsingle {
+    margin-top: 2.5rem;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .amsingle__head {
+    padding: 1.85rem 2rem 1.35rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .amsingle__engine {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 0.55rem;
+  }
+
+  .amsingle__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.65rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0 0 0.7rem;
+  }
+
+  .amsingle__lede {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--subtext);
+    max-width: 75ch;
+    margin: 0 0 1.2rem;
+  }
+
+  .amsingle__meta {
+    list-style: none;
+    padding: 1.05rem 0 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.85rem 2rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .amsingle__meta li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+  }
+
+  .amsingle__meta span {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--subtext);
+  }
+
+  .amsingle__meta strong {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+
+  .amsingle__meta a {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--oxblood);
+    text-decoration: none;
+    border-bottom: 1px solid var(--oxblood);
+  }
+
+  .amsingle__frame {
+    position: relative;
+    width: 100%;
+    height: 880px;
+    background: var(--paper);
+  }
+
+  .amsingle__frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: var(--paper);
+  }
+
+  @media (max-width: 720px) {
+    .amsingle__frame { height: 640px; }
+  }
+
+  .onward {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 720px) {
+    .onward { grid-template-columns: 1fr; }
+  }
+
+  .onward__card {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .onward__card a {
+    display: block;
+    padding: 1.5rem 1.75rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.18s ease;
+  }
+
+  .onward__card a:hover { background: var(--paper-deep); }
+
+  .onward__eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 0.55rem;
+  }
+
+  .onward__title {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 1.25;
+    margin-bottom: 0.55rem;
+  }
+
+  .onward__lede {
+    display: block;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--subtext);
+  }
+</style>
