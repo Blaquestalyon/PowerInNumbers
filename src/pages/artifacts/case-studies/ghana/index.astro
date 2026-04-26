@@ -1,0 +1,455 @@
+---
+/**
+ * /artifacts/case-studies/ghana/
+ *
+ * Public-facing artifact viewer for the four Sovereign Mirror Ghana briefings.
+ * Tabbed presentation: one iframe visible at a time. Each tab opens a separate
+ * deliverable in the embedded frame; an "Open in new tab" link is provided for
+ * full-width reading.
+ *
+ * The four raw deliverable files live at /artifacts/case-studies/ghana/*.html
+ * and are served directly from the public/ directory by the custom static
+ * server. This page is the cartography-grade viewer that wraps them.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import SectionMarker from '@/components/SectionMarker.astro';
+
+const briefings = [
+  {
+    id: 'drm',
+    engine: 'Engine B · Sovereign Mirror',
+    title: 'Domestic Resource Mobilisation',
+    longTitle: 'Sovereign Mirror — Domestic Resource Mobilisation',
+    src: '/artifacts/case-studies/ghana/sovereign-mirror-drm.html',
+    lede:
+      'Allocation analysis of Ghana\u2019s domestic resource mobilisation envelope. Four allocation options costed; counterfactuals costed alongside.',
+    audience: 'Fiscal authority',
+    period: '2026 — 2028',
+  },
+  {
+    id: 'health-financing',
+    engine: 'Engine B · Sovereign Mirror',
+    title: 'Health Financing',
+    longTitle: 'Sovereign Mirror — Health Financing',
+    src: '/artifacts/case-studies/ghana/sovereign-mirror-health-financing.html',
+    lede:
+      'Allocation cartography for the health-financing line item. The principal is a Ministry of Finance audience; the analysis is the sovereign analysing itself.',
+    audience: 'Ministry of Finance',
+    period: 'Current cycle',
+  },
+  {
+    id: 'gsf',
+    engine: 'Engine B · Sovereign Mirror',
+    title: 'Ghana Stabilisation Fund',
+    longTitle: 'Sovereign Mirror — Ghana Stabilisation Fund',
+    src: '/artifacts/case-studies/ghana/sovereign-mirror-gsf.html',
+    lede:
+      'Sovereign-fund analysis structured for an oversight body. Counterfactual deployments costed inline.',
+    audience: 'Oversight body',
+    period: 'Current cycle',
+  },
+  {
+    id: 'abfa',
+    engine: 'Engine B · Sovereign Mirror',
+    title: 'Annual Budget Funding Amount',
+    longTitle: 'Sovereign Mirror — Annual Budget Funding Amount',
+    src: '/artifacts/case-studies/ghana/sovereign-mirror-abfa.html',
+    lede:
+      'Annual Budget Funding Amount allocation analysis with explicit counterfactual deployments.',
+    audience: 'Fiscal authority',
+    period: 'Current cycle',
+  },
+];
+---
+
+<BaseLayout
+  title="Sovereign Mirror — Ghana · Artifact Viewer · Power In Numbers"
+  description="Four Sovereign Mirror briefings for the Ghana sovereign engagement: Domestic Resource Mobilisation, Health Financing, Ghana Stabilisation Fund, and the Annual Budget Funding Amount. The deliverables, embedded for direct reading."
+>
+  <PageHero
+    eyebrow="Artifact viewer · Engine B · Sovereign Mirror"
+    headline="The Ghana briefings, embedded."
+    lede="Four allocation cartographies prepared for sovereign audiences. Each briefing is a published Power In Numbers deliverable. Use the tabs to move between them; use <em>Open in new tab</em> to read at full width."
+    metaLeft="Engagement: Ghana"
+    metaRight="Briefings: 4 of 4"
+  />
+
+  <section class="section">
+    <div class="frame">
+      <SectionMarker num="§ 01" tag="The four briefings" />
+
+      <div class="amviewer" data-amviewer>
+        <div class="amviewer__tabs" role="tablist" aria-label="Sovereign Mirror Ghana briefings">
+          {briefings.map((b, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`amtab-${b.id}`}
+              aria-controls={`ampanel-${b.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              class={`amviewer__tab${i === 0 ? ' is-active' : ''}`}
+              data-target={b.id}
+            >
+              <span class="amviewer__tabnum">{`0${i + 1}`}</span>
+              <span class="amviewer__tabname">{b.title}</span>
+            </button>
+          ))}
+        </div>
+
+        {briefings.map((b, i) => (
+          <div
+            class={`amviewer__panel${i === 0 ? ' is-active' : ''}`}
+            id={`ampanel-${b.id}`}
+            role="tabpanel"
+            aria-labelledby={`amtab-${b.id}`}
+            hidden={i !== 0}
+            data-panel={b.id}
+          >
+            <header class="amviewer__head">
+              <span class="amviewer__engine">{b.engine}</span>
+              <h2 class="amviewer__title">{b.longTitle}</h2>
+              <p class="amviewer__lede">{b.lede}</p>
+              <ul class="amviewer__meta">
+                <li><span>Audience</span><strong>{b.audience}</strong></li>
+                <li><span>Period</span><strong>{b.period}</strong></li>
+                <li><span>Deliverable</span>
+                  <a href={b.src} target="_blank" rel="noopener">Open in new tab ↗</a>
+                </li>
+              </ul>
+            </header>
+            <div class="amviewer__frame">
+              <iframe
+                src={i === 0 ? b.src : ''}
+                data-src={b.src}
+                title={b.longTitle}
+                loading="lazy"
+                referrerpolicy="no-referrer"
+              ></iframe>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper-deep">
+    <div class="frame">
+      <SectionMarker num="§ 02" tag="Read further" />
+      <h2 class="s-title" data-reveal>Where this fits.</h2>
+      <p class="s-lede" data-reveal>
+        These four briefings are the Engine B half of the Ghana engagement. The
+        AI Mirror Stage-3 report \u2014 Engine A \u2014 is published in full on the
+        Ghana case-study page, which also walks the throughline back to 2011.
+      </p>
+      <ul class="onward" data-reveal>
+        <li class="onward__card">
+          <a href="/case-studies/ghana-market-entry/">
+            <span class="onward__eyebrow">Case study</span>
+            <span class="onward__title">Ghana market entry</span>
+            <span class="onward__lede">The full case, with Engine A and Engine B threaded through one principal across fifteen years.</span>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/methodology/framework/">
+            <span class="onward__eyebrow">Methodology</span>
+            <span class="onward__title">The three engines</span>
+            <span class="onward__lede">How AI Mirror, Sovereign Mirror, and VERIDEX BI compose. Engine extensions G·24 — G·27.</span>
+          </a>
+        </li>
+        <li class="onward__card">
+          <a href="/track-record/2010-go-local/">
+            <span class="onward__eyebrow">Track record · 2010</span>
+            <span class="onward__title">Go Local Magazine</span>
+            <span class="onward__lede">The 2011 print profile that anchors the principal\u2019s relationship with the firm.</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .amviewer {
+    margin-top: 2.5rem;
+  }
+
+  .amviewer__tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    border: 1px solid var(--rule);
+    border-bottom: 0;
+    background: var(--paper);
+  }
+
+  @media (max-width: 720px) {
+    .amviewer__tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .amviewer__tab {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-right: 1px solid var(--rule);
+    text-align: left;
+    padding: 1rem 1.1rem;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    transition: background 0.18s ease;
+  }
+
+  .amviewer__tab:last-child { border-right: 0; }
+
+  @media (max-width: 720px) {
+    .amviewer__tab:nth-child(2) { border-right: 0; }
+    .amviewer__tab:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+  }
+
+  .amviewer__tab:hover {
+    background: var(--paper-deep);
+  }
+
+  .amviewer__tab.is-active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .amviewer__tabnum {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+  }
+
+  .amviewer__tab.is-active .amviewer__tabnum {
+    color: var(--paper);
+    opacity: 0.65;
+  }
+
+  .amviewer__tabname {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .amviewer__panel {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .amviewer__panel[hidden] { display: none; }
+
+  .amviewer__head {
+    padding: 1.75rem 1.85rem 1.25rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .amviewer__engine {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 0.5rem;
+  }
+
+  .amviewer__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.55rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0 0 0.6rem;
+  }
+
+  .amviewer__lede {
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--subtext);
+    max-width: 70ch;
+    margin: 0 0 1.1rem;
+  }
+
+  .amviewer__meta {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 2.25rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 0.95rem;
+  }
+
+  .amviewer__meta li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .amviewer__meta span {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--subtext);
+  }
+
+  .amviewer__meta strong {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  .amviewer__meta a {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--oxblood);
+    text-decoration: none;
+    border-bottom: 1px solid var(--oxblood);
+  }
+
+  .amviewer__frame {
+    position: relative;
+    width: 100%;
+    height: 820px;
+    background: var(--paper);
+  }
+
+  .amviewer__frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: var(--paper);
+  }
+
+  @media (max-width: 720px) {
+    .amviewer__frame { height: 620px; }
+  }
+
+  .onward {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 720px) {
+    .onward { grid-template-columns: 1fr; }
+  }
+
+  .onward__card {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .onward__card a {
+    display: block;
+    padding: 1.5rem 1.75rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.18s ease;
+  }
+
+  .onward__card a:hover { background: var(--paper-deep); }
+
+  .onward__eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 0.55rem;
+  }
+
+  .onward__title {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 1.25;
+    margin-bottom: 0.55rem;
+  }
+
+  .onward__lede {
+    display: block;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--subtext);
+  }
+</style>
+
+<script>
+  // Tabbed artifact viewer.
+  // First panel renders its iframe immediately. The other three iframes are
+  // hydrated lazily on first activation so the page does not request all four
+  // deliverables on initial load.
+  (() => {
+    const root = document.querySelector<HTMLElement>('[data-amviewer]');
+    if (!root) return;
+
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('.amviewer__tab'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('.amviewer__panel'));
+
+    function activate(targetId: string) {
+      tabs.forEach((t) => {
+        const active = t.dataset.target === targetId;
+        t.classList.toggle('is-active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+        t.setAttribute('tabindex', active ? '0' : '-1');
+      });
+      panels.forEach((p) => {
+        const active = p.dataset.panel === targetId;
+        p.classList.toggle('is-active', active);
+        if (active) {
+          p.removeAttribute('hidden');
+          // Hydrate the iframe on first activation.
+          const iframe = p.querySelector<HTMLIFrameElement>('iframe');
+          if (iframe && !iframe.src && iframe.dataset.src) {
+            iframe.src = iframe.dataset.src;
+          }
+        } else {
+          p.setAttribute('hidden', '');
+        }
+      });
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => {
+        const id = tab.dataset.target;
+        if (id) activate(id);
+      });
+      tab.addEventListener('keydown', (e) => {
+        const k = e.key;
+        if (k !== 'ArrowRight' && k !== 'ArrowLeft' && k !== 'Home' && k !== 'End') return;
+        e.preventDefault();
+        let next = i;
+        if (k === 'ArrowRight') next = (i + 1) % tabs.length;
+        if (k === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+        if (k === 'Home') next = 0;
+        if (k === 'End') next = tabs.length - 1;
+        const t = tabs[next];
+        const id = t.dataset.target;
+        if (id) {
+          activate(id);
+          t.focus();
+        }
+      });
+    });
+  })();
+</script>
