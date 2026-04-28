@@ -2,7 +2,7 @@
 title: "Ghana Market Entry — A Fifteen-Year Throughline"
 tier: sovereign
 classification: "Cross-border market entry · Individual analysis"
-deck: "AI Mirror · Stage 3 Full Report · Nexten Summit Accra 2026"
+deck: "Market Entry Intelligence Decision Protocol · Stage 3 Full Report · Nexten Summit Accra 2026"
 engagedAt: "2026"
 status: completed
 order: 1
@@ -12,7 +12,7 @@ attribution: "Nexten Summit Accra 2026"
 publishedAt: 2026-04-01
 summary: >-
   Dr. Janelle Thompson — profiled in Power In Numbers' Go Local Magazine in February 2011 as
-  the CEO of Epiphany Wellness — returned to the firm in 2026 for a Stage-3 AI Mirror analysis
+  the CEO of Epiphany Wellness — returned to the firm in 2026 for a Stage-3 Market Entry Protocol analysis
   of cross-border market entry into Ghana. The same principal. Fifteen years of relationship.
   One audited deliverable.
 developmentQuestion: >-
@@ -20,7 +20,7 @@ developmentQuestion: >-
   health, where does her capability stack create the highest-feasibility intersection with Ghana's
   documented development gaps — and at what scale of capital exposure?
 methodologyApplied: >-
-  AI Mirror v8.2 — the firm's individual-grade engine. Operates above VERIDEX Core; satisfies all
+  Market Entry Intelligence Decision Protocol v8.2 — the firm's individual-grade engine. Operates above VERIDEX Core; satisfies all
   twenty-two canonical gates, plus the four engine-level extensions G·24–G·27. Two competing
   pathways scored on a five-criterion opportunity matrix and a five-dimension friction matrix.
   Monte Carlo on revenue, with country-calibrated correlation. Counterfactual Pause and Opportunity
@@ -29,7 +29,7 @@ output: >-
   A Stage-3 Full Report — sixteen analytical outputs — covering competency extraction, gap mapping
   against Ghana's national-priority data, two costed pathway options, regulatory architecture (GIPC,
   CTVET, FDA, medical licensing), Monte Carlo revenue ranges, and a separate Decision-Maker
-  Briefing. Reference deliverable for the AI Mirror engine.
+  Briefing. Reference deliverable for the Market Entry Protocol.
 counterfactual: >-
   Two named alternative deployments of the same capital and operator-time were costed against the
   recommendation: a private integrative-wellness clinic in Accra (Pathway A) and a training
@@ -37,9 +37,9 @@ counterfactual: >-
   sees the path not taken.
 ---
 
-## Why this case is the AI Mirror reference deliverable
+## Why this case is the Market Entry Protocol reference deliverable
 
-AI Mirror is the firm's individual-grade engine. It is built for one person — typically a clinician, founder, operator, or domain expert — evaluating a high-consequence move into a market they have not previously deployed in. The output is not a market report. It is a decision artifact for a single reader, with the same audit standard as the firm's sovereign work.
+The Market Entry Protocol is the firm's individual-grade engine. It is built for one person — typically a clinician, founder, operator, or domain expert — evaluating a high-consequence move into a market they have not previously deployed in. The output is not a market report. It is a decision artifact for a single reader, with the same audit standard as the firm's sovereign work.
 
 The Janelle Thompson engagement is the published reference because it shows the engine doing what the engine is built to do. Two pathways were costed in full. Each was scored on the five-criterion opportunity matrix and the five-dimension friction matrix that the engine requires. A Counterfactual Pause names two competing uses of the same capital. An Opportunity Cost Assessment is included because the recommendation crosses the engine's threshold for one. The Decision-Maker Briefing is a separate document, exactly as Gate 22 requires. Twenty-seven gates pass.
 
@@ -55,4 +55,4 @@ The Decision-Maker Briefing is a separate document. It is not bundled with the p
 
 ## What this case tells the reader about the firm
 
-A fifteen-year primary-source relationship — beginning with a 2011 magazine profile, ending with a 2026 audit-grade decision artifact — is the structural argument the firm cares about. The methodology is not a deck the firm rents to a client for an engagement window. It is a discipline the firm practices on the same people, over time, with the same standard. The Go Local Magazine profile, the operating record between, and the AI Mirror Stage-3 report below are three points on the same line.
+A fifteen-year primary-source relationship — beginning with a 2011 magazine profile, ending with a 2026 audit-grade decision artifact — is the structural argument the firm cares about. The methodology is not a deck the firm rents to a client for an engagement window. It is a discipline the firm practices on the same people, over time, with the same standard. The Go Local Magazine profile, the operating record between, and the Market Entry Protocol Stage-3 report below are three points on the same line.

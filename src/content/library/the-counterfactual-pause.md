@@ -57,7 +57,7 @@ The Pause produces three concrete artefacts in a deliverable.
 
 ## A worked example
 
-In the firm's Ghana market-entry case, the AI Mirror engine recommends
+In the firm's Ghana market-entry case, the Market Entry Intelligence Decision Protocol recommends
 *Pathway B — Skills Transfer / Academy* at 21/25 opportunity and 10/25
 friction. The recommendation is the result of the Pause having been
 applied to a *Defer twelve months* counterfactual, and to a *Pathway A —

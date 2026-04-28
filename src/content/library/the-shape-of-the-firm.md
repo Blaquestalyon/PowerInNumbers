@@ -47,7 +47,7 @@ that lets a principal make a decision, defend it, and refer back to it
 later when the world has changed.
 
 A Power In Numbers deliverable, in any of its three engine configurations
-(AI Mirror, VERIDEX BI — USA, Sovereign Mirror), comprises four constants:
+(the Market Entry Intelligence Decision Protocol, VERIDEX BI — USA, the Sovereign Intelligence Decision Protocol), comprises four constants:
 
 1. **A development question** — the question the principal is trying to
    answer, named without ambiguity.

@@ -164,7 +164,7 @@ the rest of the firm's record:
   itself.
 - **Dr.&nbsp;Janelle Thompson** is identified, on the Collective's own
   property, as a co-author and partner contributor. The same Dr.&nbsp;Thompson
-  is the principal in the firm's Ghana market-entry case (the AI Mirror
+  is the principal in the firm's Ghana market-entry case (the Market Entry Intelligence Decision Protocol
   Stage-3 deliverable for Nexten Summit Accra 2026), and in the firm's
   primary-source archive going back to the inaugural edition of Go Local
   Magazine in February 2011. The fifteen-year throughline runs through this
@@ -197,7 +197,7 @@ canonical primary-source documents are:
 - **Equity Guardians.** A second firm-built venture applying the same
   collective-bargaining logic to homeowner advocacy. See
   [/case-studies/equity-guardians/](/case-studies/equity-guardians/).
-- **Ghana market entry.** The AI Mirror engine reference deliverable.
+- **Ghana market entry.** The Market Entry Protocol reference deliverable.
   Dr.&nbsp;Janelle Thompson, named here as a Collective contributor, is the
   principal in the Ghana case, fifteen years after first appearing in the
   firm's primary-source archive. See

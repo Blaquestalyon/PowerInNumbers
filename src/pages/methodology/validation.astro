@@ -30,9 +30,9 @@ interface Gate {
 }
 
 /* ──────────────────────────────────────────────────────────
-   The canonical 22 gates (Sovereign Mirror tier — shared
+   The canonical 22 gates (Sovereign Protocol tier — shared
    across every VERIDEX-audited deliverable) plus four
-   engine extensions (Gates 24–27, AI Mirror v8.x).
+   engine extensions (Gates 24–27, Market Entry Protocol v8.x).
    Gate 23 is reserved for a future extension and is not
    listed publicly until it is in production.
    ────────────────────────────────────────────────────────── */
@@ -206,7 +206,7 @@ const gates: Gate[] = [
 ];
 
 /* ──────────────────────────────────────────────────────────
-   Engine extensions (AI Mirror v8.x — Gates 24–27).
+   Engine extensions (Market Entry Protocol v8.x — Gates 24–27).
    Public posture: name them so the reader sees the
    evolution; do not detail the engine they live in.
    ────────────────────────────────────────────────────────── */
@@ -298,7 +298,7 @@ const nonSources: NonSource[] = [
 interface Engine { name: string; subject: string; deliverable: string; href: string; }
 const engines: Engine[] = [
   {
-    name: 'AI Mirror',
+    name: 'Market Entry Intelligence Decision Protocol',
     subject: 'For an individual evaluating a market entry — the founder, the operator, the investor.',
     deliverable: 'Stage-3 Full Report — Dr. Janelle Thompson, Nexten Summit Accra 2026 (Ghana).',
     href: '/case-studies/ghana/',
@@ -310,7 +310,7 @@ const engines: Engine[] = [
     href: '/case-studies/masters-chair/',
   },
   {
-    name: 'Sovereign Mirror',
+    name: 'Sovereign Intelligence Decision Protocol',
     subject: 'For a fiscal authority evaluating its own allocation of a defined revenue stream.',
     deliverable: 'Four interactive briefings — Domestic Resource Mobilisation, Health Financing, Ghana Stabilisation Fund, Annual Budget Funding Amount.',
     href: '/case-studies/ghana/',
@@ -367,8 +367,8 @@ const families: Array<keyof typeof familyLabel> = [
         </p>
         <p data-reveal>
           The gates are <em>published</em>. The engines that run them are
-          not. Power In Numbers treats the operating prompts behind AI Mirror,
-          VERIDEX&nbsp;BI&nbsp;USA, and the Sovereign Mirror as the firm&rsquo;s
+          not. Power In Numbers treats the operating prompts behind the Market Entry Intelligence Decision Protocol,
+          VERIDEX&nbsp;BI&nbsp;USA, and the Sovereign Intelligence Decision Protocol as the firm&rsquo;s
           intellectual property &mdash; the product of a lengthy, iterative
           prompt-engineering programme &mdash; and does not disclose them. What
           this page describes is the standard the engines are required to
@@ -417,7 +417,7 @@ const families: Array<keyof typeof familyLabel> = [
         <div class="arch__row arch__row--engines">
           <div class="arch__cell">
             <span class="arch__layer">Engine</span>
-            <h3 class="arch__name">AI Mirror</h3>
+            <h3 class="arch__name">Market Entry Intelligence Decision Protocol</h3>
             <p class="arch__sub">For an individual evaluating market entry.</p>
             <p class="arch__body">
               A firm-built advisory engine. Subject is the principal. Output
@@ -439,7 +439,7 @@ const families: Array<keyof typeof familyLabel> = [
 
           <div class="arch__cell">
             <span class="arch__layer">Engine</span>
-            <h3 class="arch__name">Sovereign Mirror</h3>
+            <h3 class="arch__name">Sovereign Intelligence Decision Protocol</h3>
             <p class="arch__sub">For a fiscal authority evaluating its own allocation.</p>
             <p class="arch__body">
               A firm-built engine for fiscal-allocation-to-impact cartography.
@@ -518,7 +518,7 @@ const families: Array<keyof typeof familyLabel> = [
       <p class="prose__sub" data-reveal>
         Each operating engine carries calibrations beyond the canonical 22.
         These are the four currently in production. They apply to engagements
-        run through AI Mirror and VERIDEX&nbsp;BI&nbsp;USA. Sovereign Mirror
+        run through the Market Entry Protocol and VERIDEX&nbsp;BI&nbsp;USA. The Sovereign Protocol
         engagements satisfy them by inheritance.
       </p>
 
