@@ -25,10 +25,15 @@
 
     <p class="hero__sub" data-reveal>
       Power In Numbers is a strategic consultancy. Our discipline is
-      <em>decision cartography</em> &mdash; a proprietary methodology, validated by VERIDEX,
-      with thirty-two years of pattern recognition, six firm-built ventures,
-      and applications at sovereign fiscal scale. The methodology has been
-      proven on us first.
+      <em>decision cartography</em> &mdash; a rigorous, auditable methodology
+      for navigating high-stakes decisions with clarity and confidence.
+    </p>
+
+    <p class="hero__sub hero__sub--cont" data-reveal>
+      We’ve applied it at every scale: community ventures, corporate strategy,
+      sovereign fiscal policy. And because we believe in it completely, we use
+      it to build our own ventures too. We don’t just deliver the map. We
+      navigate by it ourselves.
     </p>
 
     <div class="hero__metrics" data-reveal aria-label="Key metrics">
@@ -87,8 +92,13 @@
     font-size: 20px;
     line-height: 1.55;
     color: var(--ink-soft);
-    margin-bottom: 48px;
+    margin-bottom: 24px;
     max-width: 720px;
+  }
+  /* Continuation paragraph sits tighter under the lede, then opens up to
+     the metric rule below. */
+  .hero__sub--cont {
+    margin-bottom: 48px;
   }
   @media (max-width: 720px) {
     .hero__sub { font-size: 17px; line-height: 1.6; }
