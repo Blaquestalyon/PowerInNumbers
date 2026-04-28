@@ -227,6 +227,82 @@ const ventureUrl = VENTURE_URL[slug];
   )}
 
   {/* ──────────────────────────────────────────────
+      §03 — Pathway scoring matrix (Ghana only)
+      Two pathways, scored on the same matrix. Audit-defensible.
+      ────────────────────────────────────────────── */}
+  {showThroughline && (
+    <section class="section">
+      <div class="frame">
+        <SectionMarker num="§ 03" tag="Pathway scoring matrix" />
+        <h2 class="s-title" data-reveal>
+          Two pathways. The same matrix. The recommendation derived.
+        </h2>
+        <p class="s-lede" data-reveal>
+          The Market Entry Protocol scores every candidate pathway on a
+          five-criterion opportunity matrix and a five-dimension friction
+          matrix. Each criterion and dimension is independently scored 1–5.
+          The two columns below are the engine&rsquo;s read on the Janelle
+          Thompson engagement, sourced from the Stage&nbsp;3 Full Report
+          embedded later on this page.
+        </p>
+
+        <div class="matrix" data-reveal>
+          {/* Pathway A */}
+          <article class="pw">
+            <header class="pw__head">
+              <span class="pw__label">Pathway A</span>
+              <h3 class="pw__title">Direct Translation</h3>
+              <p class="pw__sub">Private integrative-wellness clinic in Accra.</p>
+            </header>
+            <div class="pw__scores">
+              <div class="pw__score">
+                <div class="pw__score-label">Opportunity</div>
+                <div class="pw__score-value">18<span class="pw__score-of">/25</span></div>
+                <div class="pw__score-note">Structured Opportunity signal</div>
+              </div>
+              <div class="pw__score">
+                <div class="pw__score-label">Friction</div>
+                <div class="pw__score-value">14<span class="pw__score-of">/25</span></div>
+                <div class="pw__score-note">Elevated &mdash; capital intensity, regulatory surface area, FX exposure</div>
+              </div>
+            </div>
+          </article>
+
+          {/* Pathway B */}
+          <article class="pw pw--rec">
+            <header class="pw__head">
+              <span class="pw__label">Pathway B <span class="pw__rec-tag">Recommended</span></span>
+              <h3 class="pw__title">Skills Transfer</h3>
+              <p class="pw__sub">Training academy with international certification structure.</p>
+            </header>
+            <div class="pw__scores">
+              <div class="pw__score">
+                <div class="pw__score-label">Opportunity</div>
+                <div class="pw__score-value">21<span class="pw__score-of">/25</span></div>
+                <div class="pw__score-note">Direct Opportunity signal</div>
+              </div>
+              <div class="pw__score">
+                <div class="pw__score-label">Friction</div>
+                <div class="pw__score-value">10<span class="pw__score-of">/25</span></div>
+                <div class="pw__score-note">Lower &mdash; lighter capital footprint, narrower regulatory surface, recurring revenue</div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <p class="matrix__note" data-reveal>
+          Pathway B returns higher opportunity and lower friction on the
+          same data set, scored against the same matrix. The recommendation
+          is therefore audit-defensible on the face of the scoring &mdash;
+          before regulatory architecture, Monte Carlo revenue ranges, or the
+          Decision-Maker Briefing are read. The full criterion-by-criterion
+          breakdown sits inside the embedded Stage&nbsp;3 Full Report.
+        </p>
+      </div>
+    </section>
+  )}
+
+  {/* ──────────────────────────────────────────────
       Interactive cartography CTA — Ghana only
       ────────────────────────────────────────────── */}
   {showThroughline && (
@@ -252,12 +328,13 @@ const ventureUrl = VENTURE_URL[slug];
   )}
 
   {/* ──────────────────────────────────────────────
-      §03 — Body essay (markdown)
+      §04 — Body essay (markdown)
+      Numbered §04 on Ghana (after matrix); §02 on every other case.
       ────────────────────────────────────────────── */}
   {hasBody && (
     <section class="section">
       <div class="frame">
-        <SectionMarker num={showThroughline ? '§ 03' : '§ 02'} tag="The case in full" />
+        <SectionMarker num={showThroughline ? '§ 04' : '§ 02'} tag="The case in full" />
         <div class="prose prose--narrow" data-reveal>
           <Content />
           {ventureUrl && (
@@ -277,8 +354,8 @@ const ventureUrl = VENTURE_URL[slug];
     <section class="section section--paper-deep">
       <div class="frame">
         <SectionMarker num={(() => {
-          let n = 1; // anchors
-          if (showThroughline) n++;
+          let n = 1; // §01 anchors
+          if (showThroughline) n += 2; // §02 throughline + §03 matrix
           if (hasBody) n++;
           return `§ 0${n + 1}`;
         })()} tag="Primary-source deliverables" />
@@ -321,10 +398,11 @@ const ventureUrl = VENTURE_URL[slug];
   <section class="section">
     <div class="frame">
       <SectionMarker num={(() => {
-        // §01 anchors is always present; §02 is throughline (Ghana only);
-        // body § (when hasBody) and artifacts § (when artifacts.length>0) follow.
+        // §01 anchors is always present.
+        // Ghana adds two sections (§02 throughline + §03 pathway matrix).
+        // Body § (when hasBody) and artifacts § (when artifacts.length>0) follow.
         let n = 1; // anchors
-        if (showThroughline) n++;
+        if (showThroughline) n += 2;
         if (hasBody) n++;
         if (artifacts.length > 0) n++;
         return `§ 0${n + 1}`;
@@ -446,6 +524,131 @@ const ventureUrl = VENTURE_URL[slug];
 
   .tl-step__cite a {
     color: var(--oxblood);
+  }
+
+  /* ───────────── Pathway scoring matrix ───────────── */
+  .matrix {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .pw {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 1.75rem 1.85rem 1.85rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pw--rec {
+    border-color: var(--oxblood);
+    border-width: 1px;
+    box-shadow: inset 3px 0 0 0 var(--oxblood);
+  }
+
+  .pw__head {
+    margin-bottom: 1.5rem;
+  }
+
+  .pw__label {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 0.7rem;
+  }
+
+  .pw__rec-tag {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: var(--paper);
+    background: var(--oxblood);
+    padding: 0.18rem 0.55rem;
+    border-radius: 1px;
+  }
+
+  .pw__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.45rem;
+    color: var(--ink);
+    margin: 0 0 0.45rem;
+    line-height: 1.2;
+  }
+
+  .pw__sub {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--subtext);
+    margin: 0;
+  }
+
+  .pw__scores {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+    margin-top: auto;
+  }
+
+  .pw__score-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--subtext);
+    margin-bottom: 0.55rem;
+  }
+
+  .pw__score-value {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .pw__score-of {
+    font-size: 1.05rem;
+    color: var(--subtext);
+    margin-left: 0.15rem;
+    font-weight: 400;
+  }
+
+  .pw__score-note {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--subtext);
+  }
+
+  .matrix__note {
+    margin-top: 2rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--ink);
+    max-width: 70ch;
+  }
+
+  @media (max-width: 720px) {
+    .matrix {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .pw__scores {
+      gap: 1rem;
+    }
+    .pw__score-value {
+      font-size: 2rem;
+    }
   }
 
   .prose--narrow {
