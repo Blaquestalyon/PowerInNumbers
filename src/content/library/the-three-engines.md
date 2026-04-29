@@ -10,7 +10,7 @@ summary: >-
 deck: "Reference"
 readingMinutes: 8
 authors: ["Jay Davis"]
-tags: ["engines", "ai-mirror", "veridex-bi", "sovereign-mirror", "method"]
+tags: ["engines", "market-entry-protocol", "veridex-bi", "sovereign-protocol", "method"]
 foundational: true
 excerpt: >-
   The principal differs. The standard does not.

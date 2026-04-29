@@ -10,7 +10,7 @@ summary: >-
 deck: "Companion to /case-studies/ghana-market-entry/"
 readingMinutes: 8
 authors: ["Jay Davis"]
-tags: ["ghana", "ai-mirror", "thompson", "market-entry", "africa"]
+tags: ["ghana", "market-entry-protocol", "thompson", "market-entry", "africa"]
 series: "Engine Reference Readings"
 seriesOrder: 2
 excerpt: >-

@@ -25,6 +25,24 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const slug = entry.id.replace(/\.md$/, '');
 
+// CreativeWork schema for case studies. We model each case study as a
+// CreativeWork (rather than Article) because they are engagement records,
+// not press essays. Includes principal subject when frontmatter supplies it.
+const caseUrl = `https://power-in-numbers.net/case-studies/${slug}/`;
+const caseSchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  '@id': `${caseUrl}#case-study`,
+  name: (entry.data as any).title ?? slug,
+  url: caseUrl,
+  about: (entry.data as any).summary ?? (entry.data as any).description ?? undefined,
+  publisher: { '@id': 'https://power-in-numbers.net/#organization' },
+  inLanguage: 'en-US',
+  ...((entry.data as any).publishedAt
+    ? { datePublished: new Date((entry.data as any).publishedAt).toISOString() }
+    : {}),
+};
+
 // Whether the markdown body has substantive content (more than a few chars).
 // Some entries are engine-tier indices with frontmatter only — in those cases
 // the "case in full" section is suppressed and the four anchors stand alone.
@@ -119,6 +137,7 @@ const ventureUrl = VENTURE_URL[slug];
 <BaseLayout
   title={`${entry.data.title} — Case Study · Power In Numbers`}
   description={entry.data.summary}
+  jsonLd={caseSchema}
 >
   <PageHero
     eyebrow={`Case study · ${entry.data.tier === 'firm-built' ? 'Firm-built' : entry.data.tier === 'sovereign' ? 'Sovereign' : 'Enterprise'} tier`}

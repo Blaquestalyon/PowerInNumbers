@@ -50,11 +50,25 @@ const libraryTypeLabel: Record<string, string> = {
 
 const fmtDate = (d: Date) =>
   d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+// Homepage WebSite schema (enables sitelinks search box and richer org panel).
+const homeSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': 'https://power-in-numbers.net/#website',
+  url: 'https://power-in-numbers.net/',
+  name: 'Power In Numbers',
+  publisher: { '@id': 'https://power-in-numbers.net/#organization' },
+  description:
+    'A strategic consultancy practiced as decision cartography. Audit-grade analytical discipline for market-entry, capital-formation, and sovereign-tier decisions.',
+  inLanguage: 'en-US',
+};
 ---
 
 <BaseLayout
   title="Power In Numbers — A strategic consultancy. Practiced as decision cartography."
   description="Power In Numbers maps high-stakes decisions for sovereigns, enterprises, and founders. Decision cartography — a proprietary methodology, validated by VERIDEX, with thirty-two years of pattern recognition and six firm-built ventures."
+  jsonLd={homeSchema}
 >
   <Hero />
 

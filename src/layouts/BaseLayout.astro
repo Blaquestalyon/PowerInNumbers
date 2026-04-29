@@ -9,6 +9,12 @@ interface Props {
   ogImage?: string;
   canonical?: string;
   noindex?: boolean;
+  /**
+   * Page-specific JSON-LD object(s). Pass a single schema object or an array.
+   * The Organization schema is always emitted; this prop adds page-specific
+   * structured data (Article, Person, BreadcrumbList, etc.).
+   */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
@@ -17,10 +23,33 @@ const {
   ogImage = '/og-default.png',
   canonical,
   noindex = false,
+  jsonLd,
 } = Astro.props;
+
+const SITE_URL = (Astro.site ?? new URL('https://power-in-numbers.net')).toString().replace(/\/$/, '');
 
 const canonicalUrl =
   canonical ?? new URL(Astro.url.pathname, Astro.site ?? 'https://power-in-numbers.net').toString();
+
+// Always-emitted Organization schema. Page-specific schemas append to this.
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
+  name: 'Power In Numbers',
+  url: SITE_URL,
+  logo: `${SITE_URL}/og-default.png`,
+  description:
+    'A strategic consultancy practiced as decision cartography. Audit-grade analytical discipline for market-entry, capital-formation, and sovereign-tier decisions.',
+  foundingDate: '2011',
+  email: 'admin@power-in-numbers.net',
+  sameAs: [],
+};
+
+const additionalSchemas = jsonLd
+  ? Array.isArray(jsonLd) ? jsonLd : [jsonLd]
+  : [];
+const allSchemas = [organizationSchema, ...additionalSchemas];
 ---
 
 <!doctype html>
@@ -54,6 +83,10 @@ const canonicalUrl =
 
     <meta name="theme-color" content="#F5F1E8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0F1F2E" media="(prefers-color-scheme: dark)" />
+
+    {allSchemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to main content</a>

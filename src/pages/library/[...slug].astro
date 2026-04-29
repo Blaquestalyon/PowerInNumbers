@@ -46,11 +46,34 @@ const companions = all
   .slice(0, 3);
 
 const slugOf = (id: string) => id.replace(/\.md$/, '').replace(/^.*\//, '');
+
+// Article schema for library entries. Allows Google / LLMs to recognise
+// each entry as a publication with author, publisher, and dateline.
+const entrySlug = entry.id.replace(/\.md$/, '');
+const entryUrl = `https://power-in-numbers.net/library/${entrySlug}/`;
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': `${entryUrl}#article`,
+  headline: entry.data.title,
+  description: entry.data.summary,
+  url: entryUrl,
+  datePublished: new Date(entry.data.publishedAt).toISOString(),
+  author: (entry.data.authors ?? ['Jay Davis']).map((name: string) => ({
+    '@type': 'Person',
+    name,
+  })),
+  publisher: { '@id': 'https://power-in-numbers.net/#organization' },
+  inLanguage: 'en-US',
+  isAccessibleForFree: true,
+  ...(entry.data.tags ? { keywords: (entry.data.tags as string[]).join(', ') } : {}),
+};
 ---
 
 <BaseLayout
   title={`${entry.data.title} — Library · Power In Numbers`}
   description={entry.data.summary}
+  jsonLd={articleSchema}
 >
   <PageHero
     eyebrow={`Library · ${TYPE_LABEL[entry.data.type] ?? entry.data.type}`}
