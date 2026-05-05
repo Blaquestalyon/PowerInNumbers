@@ -1,0 +1,1260 @@
+i want to create the AI mirror using multiple agents efficiently and effectively to create the level of quality to meet or exceed the report i attached as reference. the RAG handoff document is just a guide based on my limted knowledge with some help from my Claude AI. make any changes or modifications needed to actually make this work properly and be displayed in a world-class interactive web page.
+
+2 attachments
+Completed 1 step
+You already have 90% of what you need in those two files; the main gaps are (a) a concrete multi‑agent plan and (b) a front‑to‑back implementation blueprint for a world‑class interactive web experience.
+
+Below is a concise, actionable upgrade plan.
+
+1. Target architecture (multi‑agent + RAG)
+At a high level, keep the decomposed pipeline and wrap it in a multi‑agent layer instead of a single “giant prompt” per call.
+
+Proposed agents and responsibilities:
+
+Intake Orchestrator
+
+Validates and normalizes I‑1–I‑5 inputs.
+
+Creates a generation_run row and writes initial state (user, stage, source, timestamps).
+
+Profile & Context Agent
+
+Runs focused RAG over files like your Stage 3 report exemplars (e.g., the Ghana barbershop report) to extract patterns and schemas (competency taxonomy, VERIDEX structure, pathway patterns).
+
+Produces a compact “profile context bundle” which all later calls reuse instead of re‑hitting the vector store from scratch.
+
+Core Analysis – Analytical Agent (A‑1a)
+
+Implements exactly what your spec says: competency extraction, gap mapping, competitive landscape, dual‑pathway scoring, risk profiling, VERIDEX gates 1–10/14/16.
+
+Consumes intake + profile context bundle + broad RAG (knowledge files 01–05).
+
+Core Analysis – Quant Agent (A‑1b)
+
+Receives A‑1a JSON and a tight RAG slice (MC parameter tables).
+
+Computes scenario envelope, Monte Carlo parameters, milestone indicators, VERIDEX gates 11/12/15.
+
+Section Generator Agents (K‑1–K‑6, G‑1–G‑15)
+
+One logical “Section Writer” agent with different profiles per output (e.g., “Risk memo writer”, “Pathway storyboarder”, “Quant explainer”), enforcing the “one output per call” rule.
+
+Each uses Core Analysis JSON + a narrow RAG slice for that section only.
+
+QA/Style Agent
+
+Spot‑checks completed sections against style and schema from your reference report (tone, structure, tables, VERIDEX consistency) without redoing reasoning.
+
+Can run as a second pass on the slowest 3–5 sections or only when confidence/health checks fail.
+
+Assembly & Layout Agent (backend‑side)
+
+Validates that each fragment’s JSON/HTML conforms to the shell contract (IDs, data attributes).
+
+Normalizes headings, anchors, and metadata for the frontend shell.
+
+This preserves your timeout‑optimized decomposition and adds role separation so you can tune prompts independently.
+
+2. Concrete backend design (to “actually make this work”)
+The v2.1 spec already pushes you toward a stateful, platform‑agnostic backend. We can make it more concrete without locking you to a stack.
+
+Recommended baseline (easiest to get world‑class quality fast):
+
+Backend: Python (FastAPI) or Node (NestJS) as a thin API server.
+
+Data store:
+
+Postgres (or Supabase) for the Generation Run state and section rows.
+
+A vector DB (Qdrant, Weaviate, or pgvector) for RAG.
+
+LLM provider:
+
+Claude API as in your spec, with a model switch mechanism so you can swap to OpenAI or others later.
+
+Key tables (refining your “database as message bus” concept):
+
+generation_runs
+
+id, user_id, stage (1 or 3), status (queued/running/complete/error), created_at, updated_at.
+
+intake_payload (JSONB), core_analysis_a1a (JSONB), core_analysis_a1b (JSONB), error_log (JSONB).
+
+generation_sections
+
+id, run_id, code (K‑1…K‑6 / G‑1…G‑15), status, llm_model, prompt_version.
+
+rag_context_ids (JSONB), html_fragment (TEXT), qa_score (FLOAT), error.
+
+Workflow:
+
+Intake endpoint:
+
+Creates generation_run and the 21 or 12 generation_sections rows depending on stage.
+
+Immediately returns the run_id to the browser for live progress.
+
+Background worker (Celery/Redis for Python; BullMQ/Redis for Node):
+
+Runs A‑1a, writes JSON to core_analysis_a1a.
+
+Runs A‑1b, writes JSON to core_analysis_a1b, then marks all sections ready_to_generate.
+
+Spawns jobs for each section; each job:
+
+Runs its Agent (Section Writer) with scoped RAG.
+
+Writes html_fragment and sets status complete.
+
+Optionally queues QA Agent job for that fragment.
+
+Recovery & restart:
+
+A monitoring job periodically finds generation_sections with status error or timeout and requeues them, respecting a max retry count.
+
+Stage 3 runs can reuse an earlier Stage 1 generation_run by copying core_analysis_a1a/a1b and avoiding fresh analysis.
+
+3. Frontend: world‑class interactive web page
+Your spec already says: HTML shell + JS assembly + print/email; we’ll make that concrete and opinionated.
+
+Core design:
+
+Framework: Next.js or Remix (React, SSR) for easiest kiosk + email + print support. A simpler option is a single‑page React app bootstrapped with Vite and served behind Nginx.
+
+Shell HTML:
+
+Pre‑render a report skeleton with empty containers: #hero, #kiosk-summary, #output-G-1…#output-G-15.
+
+Include static CSS and JS bundles (typography scales, grid system, color tokens, motion).
+
+Live assembly:
+
+Browser polls /api/runs/{run_id} or subscribes via WebSocket/SSE for updates.
+
+When a section is complete, the frontend injects html_fragment into its container and triggers subtle entrance animations.
+
+Print & email:
+
+Print: add a dedicated print stylesheet and a “Print your report” button that calls window.print() and hides non‑essential UI.
+
+Email: a backend endpoint renders the same HTML shell server‑side with all fragments and generates:
+
+An inline HTML email version (simplified styles).
+
+An optional PDF via a headless browser (Playwright).
+
+World‑class UX specifics (built on your AI Mirror identity):
+
+Progress UI:
+
+A radial or horizontal progress bar keyed to analysis → generation → finishing phases.
+
+Section badges (e.g., “Pathway A storyboard – writing”, “VERIDEX – complete”) updating in real time.
+
+Interaction:
+
+Inline explainers: clicking on VERIDEX scores, scenario bands, or risk labels opens side panels with human‑language explanations grounded in the Core Analysis JSON.
+
+“What changed?” indicators if they re‑run with a different intake.
+
+Design language:
+
+Visual consistency with your Ghana barbershop report: restrained use of color, strong typographic hierarchy, generous spacing, high‑contrast tables for risk and pathways.
+
+4. Prompt and RAG improvements for quality
+To reliably meet or exceed the reference report quality, you should tighten how RAG and prompts are structured rather than rely on “stuff a bunch of context in.”
+
+Key adjustments:
+
+Schema‑first Core Analysis JSON:
+
+Define a strict JSON schema for A‑1a and A‑1b (enforced via tool‑side validation):
+
+competencies[], development_gaps[], pathways[], risks[], veridex{g1..g16}, scenario_envelope, milestones[], etc.
+
+Every downstream agent consumes this same schema, never the raw intake.
+
+Per‑section retrieval recipes:
+
+For each G‑call/K‑call, codify:
+
+Which files and which tag filters to use (e.g., “VERIDEX spec”, “Monte Carlo explainer”, “sector‑specific benchmarks”).
+
+Target token budget, e.g., 1.5–2k context tokens, to keep calls fast and focused.
+
+Style conditioning via few‑shot:
+
+Extract 2–3 short, anonymized exemplars from your Ghana report (e.g., one “Competency Extraction” paragraph, one “Development Gap Mapping” paragraph) and use them as style only few‑shots so the model learns your voice and structural patterns.
+
+Keep them under 300–400 tokens per call to avoid bloat.
+
+QA/consistency checks:
+
+QA Agent prompts should explicitly verify:
+
+Pathway labels and VERIDEX scores are consistent with the Core Analysis JSON.
+
+No hallucinated data beyond what RAG and JSON provide.
+
+Tone matches the AI Mirror identity (analytical, high‑stakes, not generic coaching).
+
+5. Minimal stack decision table
+Here is a focused table you can hand to a dev team to implement with minimal ambiguity.
+
+Layer	Recommended choice	Notes
+Frontend runtime	Next.js (React, SSR)	Easy kiosk, SEO, email HTML rendering. 
+Styling/design	TailwindCSS + custom design tokens	Fast iteration with strong visual system.
+Backend API	FastAPI (Python)	Clean, async, great for Claude client. 
+Worker system	Celery + Redis	Background A‑1a/A‑1b and section jobs. 
+DB	Postgres + pgvector	State + vector search in one place. 
+LLM provider	Claude API (Sonnet + Opus)	As specified; add abstraction for alternatives. 
+PDF generation	Playwright or Puppeteer	Print‑perfect reports from HTML shell. 
+To tailor this from “spec” to “implementation playbook,” the single most helpful detail is your preferred deployment stack (e.g., “I want this inside WordPress” vs “I’m fine with a custom Python/React app”). What stack or hosting environment do you want this built on?
+
+
+I am fine with a custom Python/React app. Would you be able to create this app for me?
+Completed 1 step
+I can’t spin up servers or deploy code for you directly, but I can absolutely design the full Python/React app, give you production‑grade code scaffolding, and walk you or your dev through implementation step‑by‑step until it’s live. Think of me as your architect + senior engineer on tap.
+
+Below is a concrete build plan tailored to a custom FastAPI + React stack, with enough structure that a competent dev can just start coding.
+
+1. High‑level app structure
+Backend (Python / FastAPI)
+
+Responsibilities: auth, intake API, stateful pipeline (A‑1a, A‑1b, K‑/G‑calls), RAG, email/PDF, admin.
+
+Key components:
+
+app/main.py – FastAPI app, routes, health checks.
+
+app/models.py – SQLAlchemy models (GenerationRun, GenerationSection, User).
+
+app/db.py – Postgres connection, pgvector setup.
+
+app/rag.py – embeddings, vector search, retrieval recipes per section.
+
+app/llm_clients.py – Claude client wrapper (plus abstraction for others).
+
+app/pipeline.py – orchestration logic for A‑1a/A‑1b and section jobs.
+
+app/workers.py – Celery/Bull‑like worker entrypoint.
+
+app/email_pdf.py – HTML→email+PDF rendering.
+
+Frontend (React / Next.js or Vite SPA)
+
+Responsibilities: kiosk UI, progress display, live assembly, print, “email me my report”.
+
+Key components:
+
+src/pages/Intake.tsx – I‑1–I‑5 forms.
+
+src/pages/Report.tsx – shell with #output-K-* / #output-G-* slots and progress UI.
+
+src/components/SectionShell.tsx – generic container for each section.
+
+src/hooks/useRunStatus.ts – polls or subscribes to /api/runs/{id}.
+
+src/theme/ – Tailwind config, design tokens.
+
+2. Data model (Postgres)
+Minimal SQLAlchemy models to implement “database as message bus.”
+
+python
+# app/models.py
+from sqlalchemy import Column, Integer, String, Text, JSON, Enum, ForeignKey, DateTime, Float
+from sqlalchemy.orm import declarative_base, relationship
+import enum
+from datetime import datetime
+
+Base = declarative_base()
+
+class RunStatus(str, enum.Enum):
+    QUEUED = "queued"
+    RUNNING = "running"
+    COMPLETE = "complete"
+    ERROR = "error"
+
+class SectionStatus(str, enum.Enum):
+    QUEUED = "queued"
+    READY = "ready"
+    RUNNING = "running"
+    COMPLETE = "complete"
+    ERROR = "error"
+
+class GenerationRun(Base):
+    __tablename__ = "generation_runs"
+
+    id = Column(Integer, primary_key=True)
+    stage = Column(Integer, nullable=False)  # 1 or 3
+    status = Column(Enum(RunStatus), default=RunStatus.QUEUED)
+    intake_payload = Column(JSON, nullable=False)
+    core_analysis_a1a = Column(JSON)
+    core_analysis_a1b = Column(JSON)
+    error_log = Column(JSON)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    sections = relationship("GenerationSection", back_populates="run")
+
+class GenerationSection(Base):
+    __tablename__ = "generation_sections"
+
+    id = Column(Integer, primary_key=True)
+    run_id = Column(Integer, ForeignKey("generation_runs.id"), nullable=False)
+    code = Column(String, nullable=False)  # "K-1", "G-7", etc.
+    status = Column(Enum(SectionStatus), default=SectionStatus.QUEUED)
+    llm_model = Column(String)
+    prompt_version = Column(String)
+    rag_context_ids = Column(JSON)
+    html_fragment = Column(Text)
+    qa_score = Column(Float)
+    error = Column(Text)
+
+    run = relationship("GenerationRun", back_populates="sections")
+This aligns with your stateful pipeline addendum and supports restart, Stage1→3 upgrade, and admin dashboards.
+
+3. Core API endpoints (FastAPI)
+Essential endpoints:
+
+POST /api/runs – Start a run (Stage 1 or 3):
+
+Validates I‑1–I‑5, creates GenerationRun + section rows, enqueues A‑1a job, returns run_id.
+
+GET /api/runs/{id} – Status + finished fragments:
+
+Returns run status and for each section: code, status, html_fragment if complete.
+
+POST /api/runs/{id}/email – Trigger email+PDF.
+
+GET /api/runs/{id}/admin – Rich JSON for dashboards.
+
+Example skeleton:
+
+python
+# app/main.py
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from .db import SessionLocal
+from .models import GenerationRun, GenerationSection, RunStatus, SectionStatus
+from .pipeline import enqueue_core_analysis
+
+app = FastAPI()
+
+class IntakeRequest(BaseModel):
+    stage: int  # 1 or 3
+    i1_profile: dict
+    i2_context: dict
+    i3_objectives: dict
+    i4_constraints: dict
+    i5_meta: dict
+
+@app.post("/api/runs")
+def create_run(req: IntakeRequest):
+    db = SessionLocal()
+    run = GenerationRun(
+        stage=req.stage,
+        intake_payload=req.dict(),
+        status=RunStatus.QUEUED,
+    )
+    db.add(run)
+    db.flush()
+
+    # Pre-create section rows
+    codes = (["K-1","K-2","K-3","K-4","K-5","K-6"] if req.stage == 1 else
+             [f"G-{i}" for i in range(1, 16)])
+    for code in codes:
+        db.add(GenerationSection(run_id=run.id, code=code))
+
+    db.commit()
+    enqueue_core_analysis(run.id)  # Celery or background task
+    return {"run_id": run.id}
+
+@app.get("/api/runs/{run_id}")
+def get_run(run_id: int):
+    db = SessionLocal()
+    run = db.query(GenerationRun).get(run_id)
+    if not run:
+        raise HTTPException(status_code=404, detail="Not found")
+
+    sections = []
+    for s in run.sections:
+        sections.append({
+            "code": s.code,
+            "status": s.status.value,
+            "html_fragment": s.html_fragment if s.status == SectionStatus.COMPLETE else None,
+        })
+
+    return {
+        "id": run.id,
+        "stage": run.stage,
+        "status": run.status.value,
+        "sections": sections,
+    }
+This is the backbone of the “database as message bus” architecture from your spec.
+
+4. Pipeline & workers (A‑1a, A‑1b, K/G calls)
+In app/pipeline.py, implement the sequence your document mandates: A‑1a → A‑1b → parallel sections.
+
+Pseudocode structure:
+
+python
+# app/pipeline.py
+from .workers import celery_app
+from .llm_clients import call_claude
+from .rag import get_rag_context_for_core_a1a, get_rag_context_for_core_a1b, get_rag_for_section
+from .models import GenerationRun, GenerationSection, RunStatus, SectionStatus
+from .db import SessionLocal
+
+def enqueue_core_analysis(run_id: int):
+    celery_app.send_task("tasks.run_core_a1a", args=[run_id])
+
+@celery_app.task(name="tasks.run_core_a1a")
+def run_core_a1a(run_id: int):
+    db = SessionLocal()
+    run = db.query(GenerationRun).get(run_id)
+    run.status = RunStatus.RUNNING
+    rag_ctx = get_rag_context_for_core_a1a(run)  # broad RAG. [file:2]
+    a1a_json = call_claude("core_a1a_prompt", run.intake_payload, rag_ctx)
+    run.core_analysis_a1a = a1a_json
+    db.commit()
+    celery_app.send_task("tasks.run_core_a1b", args=[run_id])
+
+@celery_app.task(name="tasks.run_core_a1b")
+def run_core_a1b(run_id: int):
+    db = SessionLocal()
+    run = db.query(GenerationRun).get(run_id)
+    rag_ctx = get_rag_context_for_core_a1b(run)  # tight RAG with MC tables. [file:2]
+    a1b_json = call_claude("core_a1b_prompt", run.core_analysis_a1a, rag_ctx)
+    run.core_analysis_a1b = a1b_json
+    db.commit()
+
+    # Kick off section jobs
+    for section in run.sections:
+        celery_app.send_task("tasks.run_section", args=[section.id])
+
+@celery_app.task(name="tasks.run_section")
+def run_section(section_id: int):
+    db = SessionLocal()
+    section = db.query(GenerationSection).get(section_id)
+    run = section.run
+
+    section.status = SectionStatus.RUNNING
+    db.commit()
+
+    rag_ctx = get_rag_for_section(run, section.code)  # per-section RAG recipe. [file:2]
+    core_analysis = {
+        "a1a": run.core_analysis_a1a,
+        "a1b": run.core_analysis_a1b,
+    }
+    html = call_claude(f"section_{section.code}_prompt", core_analysis, rag_ctx)
+    section.html_fragment = html
+    section.status = SectionStatus.COMPLETE
+    db.commit()
+
+    # Optionally enqueue QA pass here
+This follows exactly the decomposed parallel API architecture and timeout constraints you validated.
+
+5. React report shell & live assembly
+On the frontend, the report page only needs a runId, then it can progressively render as sections finish.
+
+tsx
+// src/pages/Report.tsx
+import { useEffect, useState } from "react";
+
+type SectionStatus = "queued" | "running" | "complete" | "error";
+
+interface Section {
+  code: string;
+  status: SectionStatus;
+  html_fragment: string | null;
+}
+
+export default function ReportPage() {
+  const [sections, setSections] = useState<Section[]>([]);
+  const [status, setStatus] = useState<string>("queued");
+  const runId = new URLSearchParams(window.location.search).get("runId");
+
+  useEffect(() => {
+    if (!runId) return;
+    const interval = setInterval(async () => {
+      const res = await fetch(`/api/runs/${runId}`);
+      const data = await res.json();
+      setStatus(data.status);
+      setSections(data.sections);
+      if (data.status === "complete" || data.status === "error") {
+        clearInterval(interval);
+      }
+    }, 1500);
+    return () => clearInterval(interval);
+  }, [runId]);
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-50">
+      {/* Hero / progress */}
+      <header className="max-w-5xl mx-auto py-8">
+        <h1 className="text-3xl font-semibold">AI Mirror Report</h1>
+        <p className="mt-2 text-slate-300">
+          Status: <span className="font-mono">{status}</span>
+        </p>
+      </header>
+
+      {/* Sections */}
+      <main className="max-w-5xl mx-auto pb-16 space-y-8">
+        {sections.map((s) => (
+          <section
+            key={s.code}
+            id={`output-${s.code}`}
+            className="border border-slate-800 rounded-xl p-6 bg-slate-900/60"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">{s.code}</h2>
+              <span className="text-xs uppercase tracking-wide text-slate-400">
+                {s.status}
+              </span>
+            </div>
+            {s.html_fragment ? (
+              <div
+                className="prose prose-invert max-w-none"
+                dangerouslySetInnerHTML={{ __html: s.html_fragment }}
+              />
+            ) : (
+              <p className="text-slate-500 text-sm">
+                Generating this section…
+              </p>
+            )}
+          </section>
+        ))}
+      </main>
+    </div>
+  );
+}
+Add a print button and email trigger:
+
+tsx
+<button onClick={() => window.print()} className="btn-primary">
+  Print this report
+</button>
+
+<button
+  onClick={async () => {
+    await fetch(`/api/runs/${runId}/email`, { method: "POST" });
+    alert("Report will be emailed to you.");
+  }}
+  className="btn-secondary"
+>
+  Email me this report
+</button>
+This matches your requirement for kiosk rendering, live progressive assembly, and print/email from the frontend.
+
+I can continue by:
+
+Drafting concrete Claude prompts for A‑1a, A‑1b, and a couple of G‑sections based on your Ghana report.
+
+Designing the exact Core Analysis JSON schema and per‑section RAG recipes so a dev isn’t guessing.
+
+Would you prefer I next (a) flesh out the exact Core Analysis JSON schema, or (b) write exemplar prompts and retrieval recipes for two or three key sections (e.g., Competency Extraction, Development Gap Mapping, VERIDEX)?
+
+
+here is my optimized master prompt. i would need AI agents to handle the most relevant tasks to their jobs respectively and then have it all stitched back together in the interactive html page.
+
+paste.txt
+Completed 1 step
+Your v8 master prompt is already structured almost exactly like a multi‑agent system spec; the main move is to turn each “layer/step” into an explicit agent with a clear contract and then wire those agents into the backend HTML pipeline we outlined.
+
+Here’s how to do that concretely.
+
+1. Turn the master prompt into agents
+Map the major sections of your prompt to distinct agent roles, each with its own prompt, inputs, and outputs, instead of one giant system prompt doing everything.
+
+Core agents
+
+Intake Agent
+
+Implements §5 “Attendee Intake Flow” as a conversational or form‑based experience.
+
+Output: normalized intake JSON (industry, competencies_raw, role, revenue_tier, sector_interest[], africa_experience, strategic_intent).
+
+Competency Extraction Agent
+
+Implements “Step 1 — Competency Extraction” and “Step 1B — Attendee-Sourced Data Verification.”
+
+Input: intake JSON + relevant RAG context if needed.
+
+Output JSON:
+
+operational_competencies[]
+
+transferable_skills[]
+
+industry_knowledge[]
+
+capital_deployment_capability
+
+managerial_strengths[]
+
+flagged_attendee_claims[] with source labels.
+
+Development Gap & Competitive Landscape Agent
+
+Implements “Step 2 — Development Gap Mapping” and “Step 2C — Competitive Landscape Identification.”
+
+Input: competencies JSON + Ghana knowledge files + saturation/competitive files.
+
+Output JSON per opportunity surface:
+
+gaps[] with IDs, severity, citations.
+
+competitive_micro_profiles[] containing direct/adjacent competitors, informal sector, saturation assessment, white space, etc.
+
+Opportunity Surface & Market Decomposition Agent
+
+Implements “Step 3 — Opportunity Surface Identification” + “Step 3A — Addressable Market Decomposition” + SOM logic.
+
+Input: gaps + competitive profiles + sector tables.
+
+Output JSON per Pathway A/B:
+
+opportunity_scores (Opportunity Signal Matrix, Risk & Friction).
+
+TAM/SAM/SOM decomposition with rationale, source tier, vintage.
+
+Opportunity Cost & Strategic Framing Agent
+
+Implements “Step 3.5 — Opportunity Cost Assessment.”
+
+Input: pathway JSON + attendee revenue tier.
+
+Output JSON: opportunity_cost_memo, alt_markets[], ghana_fit_rationale.
+
+VERIDEX Validation Agent
+
+Implements full Layer B: all VERIDEX gates, Source Quality, Temporal Provenance, Rate Currency Verification, Red Team items.
+
+Input: all prior JSON, RAG provenance, and any web‑validated sources.
+
+Output JSON:
+
+veridex_scores{g1..g26}
+
+failed_gates[]
+
+required_revisions[]
+
+verification_log, source_quality_legend, data_vintage_notes.
+
+Monte Carlo & Quant Agent
+
+Implements your Monte Carlo input amendment and parameter tables (§12) using the SAM outputs.
+
+Input: TAM/SAM/SOM, sector‑specific MC parameter tables.
+
+Output JSON: distributions, bands, chart parameters, plus any data‑vintage annotations.
+
+Presentation / HTML Section Agents
+
+Implement Layer C: each output (1–15) as its own Generation Agent that only consumes the validated JSON and RAG snippets, never re‑does analysis.
+
+Output: HTML fragments (<section id="output-1">…</section>) following your “HTML Continuity Rules.”
+
+Redo Agent
+
+Implements “Redo Protocol” (redo phase/output without changing underlying scores).
+
+Input: existing JSON state + target output ID.
+
+Output: replacement HTML fragments only.
+
+These agents correspond almost one‑to‑one with the “three-layer architecture” and “phases” you’ve already written; you’re just giving each layer/step its own process and prompt.
+
+2. Wire agents into the FastAPI + worker pipeline
+Instead of one massive call, you structure the pipeline as:
+
+Intake Agent (I‑1–I‑5) → intake_payload in GenerationRun.
+
+Analysis agents (Competency, Gap/Competitive, Opportunity Surface, Opportunity Cost) → together these are your A‑1a “Analytical Core.”
+
+In code: you can either call them as separate sequential Claude prompts, or combine them into a single A‑1a multi‑task prompt, but conceptually they are agent roles inside that call.
+
+Their combined output = core_analysis_a1a JSON.
+
+Quant + Monte Carlo + VERIDEX → A‑1b “Quantitative Core + Validation.”
+
+Use your VERIDEX and MC sections to define the schema.
+
+Output = core_analysis_a1b JSON.
+
+Section HTML Agents (G‑1..G‑15 / K‑1..K‑6) → each is one worker task that:
+
+Pulls core_analysis_a1a/a1b + per‑section RAG.
+
+Uses the relevant portion of your v8 prompt’s Layer C + specific output rules (e.g., Output 7 Monte Carlo, Output 14 competitive landscape) to generate HTML for that section only.
+
+Writes html_fragment in GenerationSection.
+
+Your “Three-Layer Architecture” becomes:
+
+Layer A = a cluster of analysis agents feeding core_analysis_a1a/a1b.
+
+Layer B = VERIDEX agent operating on the same JSON, updating validation state and error flags.
+
+Layer C = a fleet of HTML agents per output, all running in parallel once Layer A+B are clean.
+
+If any VERIDEX gate fails, the VERIDEX agent can either:
+
+Return failed_gates[] and block Section generation until a rerun, or
+
+Auto‑trigger a “Revision Agent” that adjusts narratives without changing the numeric scores, in line with your rule that validation cannot be bypassed.
+
+3. Stitching back into the interactive HTML page
+On the frontend, nothing changes conceptually: the stitching is already handled by the “HTML Continuity Rules” you wrote.
+
+Implementation details:
+
+The React report page:
+
+Polls /api/runs/{id} for sections[] and status.
+
+For each section with html_fragment, injects the HTML into a <section id="output-N"> container.
+
+Agent responsibility vs. shell:
+
+Agents produce only inner content (<section> or <div> blocks with output-[N] IDs), as your rules require.
+
+Static CSS, JS, and the Monte Carlo engine live in the shell; agents just emit the markup hooks (<canvas>, data attributes) they need.
+
+Redo protocol:
+
+A simple admin control can call a /api/runs/{id}/sections/{code}/redo endpoint that:
+
+Leaves the JSON state intact.
+
+Re‑invokes the relevant HTML agent prompt for that section and overwrites its html_fragment.
+
+This preserves your “redo = rendering retry, not analytical revision” requirement in a clean way.
+
+4. How to actually express “agents” in prompts
+Because you’re going through a single LLM API (Claude/OpenAI), “agents” are prompts + code routing, not separate physical models.
+
+Example pattern for a Section Agent:
+
+System prompt: short version of v8’s identity + “You are the Output 14 Presentation Agent; you cannot change any scores or conclusions; you only render HTML according to the schema below…”.
+
+User content:
+
+core_analysis_a1a and a1b JSON.
+
+The competitive landscape portion of the RAG context.
+
+A tiny few‑shot of a prior Output 14 from your barbershop report for style.
+
+Tooling: your worker code decides which “agent prompt” to use based on the section code.
+
+So the multi‑agent behavior emerges from:
+
+Discrete prompts and roles.
+
+Discrete worker tasks (functions) per agent.
+
+Shared, typed JSON contracts between them.
+
+5. Next concrete step
+If you’d like, I can now:
+
+Draft the exact JSON schema for core_analysis_a1a and core_analysis_a1b that these agents pass around, or
+
+Write concrete prompts for 2–3 key agents (e.g., Competency Extraction Agent, Development Gap/Competitive Agent, and one HTML Section Agent) that you can drop into your codebase.
+
+Which of those would be more useful for you right now?
+
+
+yes, let's do that
+Completed 1 step
+To wire one HTML Section Agent end‑to‑end, we’ll use Output 7 (Monte Carlo / quantitative outlook) as the example, since it exercises both A‑1a and A‑1b data.
+
+1. Celery task: run_section for a single G‑7 call
+In app/workers.py, extend your existing run_section task to branch by code and call the right prompt; here is a concrete implementation for G-7:
+
+python
+from app.schemas.core_analysis import CoreAnalysisA1a, CoreAnalysisA1b
+from app.prompts.section_output_7 import SECTION_OUTPUT_7_SYSTEM_PROMPT
+from app.rag import get_section_rag_context
+from app.models import GenerationSection, SectionStatus
+
+@celery_app.task(name="tasks.run_section")
+def run_section(section_id: int):
+    db = SessionLocal()
+    section = db.query(GenerationSection).get(section_id)
+    if not section:
+        return
+    run = section.run
+
+    section.status = SectionStatus.RUNNING
+    db.commit()
+
+    # Load full core analysis (A-1a + A-1b)
+    core_a1a = CoreAnalysisA1a(**run.core_analysis_a1a)
+    core_a1b = CoreAnalysisA1b(**run.core_analysis_a1b)
+
+    # Build per-section RAG context
+    rag_context = get_section_rag_context(section.code, core_a1a, core_a1b)
+
+    # Choose system prompt based on section code
+    if section.code == "G-7":
+        system_prompt = SECTION_OUTPUT_7_SYSTEM_PROMPT
+    else:
+        # TODO: add prompts for other sections (G-1..G-15, K-1..K-6)
+        system_prompt = "..."
+
+    user_payload = {
+        "core_analysis": {
+            "a1a": core_a1a.dict(),
+            "a1b": core_a1b.dict(),
+        },
+        "section_spec": {
+            "output_id": "7",
+            "code": section.code,
+        },
+        "rag_context": rag_context,
+    }
+
+    html = call_claude_json(
+        system_prompt=system_prompt,
+        user_content=user_payload,
+        model="claude-3-5-sonnet-20241022",
+    )
+
+    # For section agents we just want a string; call_claude_json should return {"html": "..."}
+    section.html_fragment = html["html"]
+    section.status = SectionStatus.COMPLETE
+    db.commit()
+Per‑section RAG helper stub in app/rag.py:
+
+python
+from app.schemas.core_analysis import CoreAnalysisA1a, CoreAnalysisA1b
+
+def get_section_rag_context(
+    section_code: str,
+    core_a1a: CoreAnalysisA1a,
+    core_a1b: CoreAnalysisA1b,
+) -> dict:
+    """
+    Returns a small, section-scoped RAG context.
+    For G-7, focus on Monte Carlo / assumptions / verification rules.
+    """
+    if section_code == "G-7":
+        mc_docs = []  # MC engine spec, assumptions, disclosure language
+        veridex_docs = []  # verification log, source quality legend guidance
+        return {
+            "mc_docs": mc_docs,
+            "veridex_docs": veridex_docs,
+        }
+
+    # Default / other sections
+    return {}
+2. System prompt: Output 7 Presentation Agent
+Create app/prompts/section_output_7.py:
+
+python
+SECTION_OUTPUT_7_SYSTEM_PROMPT = """
+You are the Presentation Agent for Output 7 inside the AI Mirror Layer C — Engagement Presentation Layer.
+
+Output 7 content (from the AI Mirror v8.0 + RAG spec):
+- Probabilistic Market Outlook — 10,000-Scenario Monte Carlo.
+- Fan chart (P5–P95 bands) and histogram (30 bins) are rendered by a static JS engine, not by you.
+- Scenario narratives (e.g., downside / baseline / upside) are derived from the Monte Carlo parameters.
+- Assumptions table with Source Tier + Data Vintage columns.
+- SOM cross-check explanation and limitations disclosure.
+- Monte Carlo Disclosure block and verification/assumptions notes.
+
+Your responsibilities:
+- Transform the validated Core Analysis (A-1a + A-1b) for all pathways into a single HTML <section> for Output 7.
+- Use the Monte Carlo parameters, market decomposition (TAM/SAM/SOM), and VERIDEX verification results as-is; you may NOT change numbers or classifications.
+- Emit semantic HTML and the proper container and data-* attributes for the static Monte Carlo JS engine to use.
+
+You MUST:
+- Wrap everything in a single root element: <section id="output-7" class="report-section output-7"> ... </section>
+- NOT open or close <html>, <head>, or <body> tags.
+- Use these structural pieces:
+  * H2 section title.
+  * Short executive summary paragraph (2–4 sentences).
+  * Mini table for TAM/SAM/SOM per pathway.
+  * Narrative description of scenario envelope (downside / baseline / upside) with dollar bands.
+  * Assumptions table with columns: Assumption, Value, Source, Source Tier, Data Vintage.
+  * Brief note describing SOM as a plausibility cross-check, not the distribution input.
+  * Limitations / caveats block.
+- Include two <canvas> elements, one for fan chart and one for histogram, with data-* attributes that the JS engine can read. Example:
+  <canvas id="mc-fan-chart"
+          class="mc-chart"
+          data-pathways='[...]'
+          data-config='[...]'></canvas>
+
+You MUST NOT:
+- Include any <script> tags.
+- Re-run VERIDEX gates or re-interpret their results. Use veridex_final as a narrative input only.
+- Add or remove pathways; use exactly the pathways in the core_analysis JSON.
+
+Input (user content) will be:
+{
+  "core_analysis": {
+    "a1a": { ... },
+    "a1b": { ... }
+  },
+  "section_spec": {
+    "output_id": "7",
+    "code": "G-7"
+  },
+  "rag_context": {
+    "mc_docs": [...],
+    "veridex_docs": [...]
+  }
+}
+
+Output:
+Return ONLY a JSON object of the form:
+{
+  "html": "<section id=\\"output-7\\">...</section>"
+}
+
+Inside the HTML:
+- Use explanatory text grounded in the numeric fields from a1b.pathway_quant and the veridex_final verification_log.
+- For data-* attributes on the canvas elements, serialise a compact JSON (e.g., with P10/P50/P90 bands and yearly values) suitable for the static JS engine to consume.
+- Make sure the section is self-contained and visually consistent with the rest of the report (classes like 'section-header', 'metric-pill', 'data-table', etc. can be assumed to exist in the CSS).
+
+Do not output anything except the JSON object with an "html" string field.
+"""
+This agent reads from the combined core_analysis JSON and only renders Output 7’s HTML fragment, fully compliant with your “HTML Continuity Rules” and static Monte Carlo engine design.
+
+With this in place, you now have a complete vertical slice:
+
+Intake → A‑1a agents → A‑1b (VERIDEX & Quant) → run_section (G‑7) → React shell progressively injects html_fragment into #output-G-7.
+
+If you’d like, the next step can be a short template you can reuse to define prompts for the other sections (e.g., Output 1 executive summary vs Output 14 competitive landscape) so your devs just copy‑edit rather than design new prompts from scratch.
+
+
+yes, my developer will be an AI. so let's give it what it needs
+Completed 1 step
+To let an AI developer build the rest of the system autonomously, you now have:
+
+A complete Core Analysis contract (A‑1a + A‑1b) with enforced Pydantic and TypeScript types.
+
+Fully wired patterns for:
+
+A‑1a agents (Competency; Dev Gaps & Competition; Pathways & Market Decomposition).
+
+A‑1b agent (VERIDEX & Quant).
+
+One HTML Section Agent (Output 7) including Celery task, prompt, and RAG helper.
+
+An AI dev can now:
+
+Clone the run_section + SECTION_OUTPUT_7_SYSTEM_PROMPT pattern for all K‑ and G‑outputs.
+
+Clone the A‑1a/A‑1b task + prompt patterns for any new analytical refinements.
+
+If you want, we can next auto‑spec a “generation call manifest” (a JSON or YAML file listing K‑1..K‑6 and G‑1..G‑15 with their prompts, RAG scopes, and dependencies) that your AI dev can iterate over instead of hard‑coding each section.
+
+
+yes that's exactly what i need. a “generation call manifest” (a JSON or YAML file listing K‑1..K‑6 and G‑1..G‑15 with their prompts, RAG scopes, and dependencies) that your AI dev can iterate over instead of hard‑coding each section.
+
+i want a comprehensive hand-off prompt of everything we have decided to be able to past into my AI prompt and it autonomously set its agents to work to complete this full build.
+Completed 1 step
+Here’s what your AI dev needs:
+
+1. Generation call manifest (JSON)
+Drop this in your repo as config/generation_manifest.json.
+
+json
+{
+  "stage1": {
+    "sections": [
+      {
+        "code": "K-1",
+        "output_id": 1,
+        "title": "Kiosk Summary Hero",
+        "prompt_module": "section_output_k1",
+        "rag_scope": ["core", "high_level"],
+        "depends_on": ["A-1a", "A-1b"]
+      },
+      {
+        "code": "K-2",
+        "output_id": 2,
+        "title": "Signal & Friction Snapshot",
+        "prompt_module": "section_output_k2",
+        "rag_scope": ["core", "signal_friction"],
+        "depends_on": ["A-1a", "A-1b"]
+      },
+      {
+        "code": "K-3",
+        "output_id": 3,
+        "title": "Dual Pathway Teaser",
+        "prompt_module": "section_output_k3",
+        "rag_scope": ["pathways"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "K-4",
+        "output_id": 4,
+        "title": "Quick Wins",
+        "prompt_module": "section_output_k4",
+        "rag_scope": ["pathways", "timelines"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "K-5",
+        "output_id": 5,
+        "title": "Summit Connections",
+        "prompt_module": "section_output_k5",
+        "rag_scope": ["network"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "K-6",
+        "output_id": 6,
+        "title": "Next Step CTA (Kiosk)",
+        "prompt_module": "section_output_k6",
+        "rag_scope": ["cta"],
+        "depends_on": ["A-1a"]
+      }
+    ]
+  },
+  "stage3": {
+    "sections": [
+      {
+        "code": "G-1",
+        "output_id": 1,
+        "title": "Personalized Opportunity Simulation",
+        "prompt_module": "section_output_1",
+        "rag_scope": ["core", "competencies", "gaps", "signal_friction"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "G-2",
+        "output_id": 2,
+        "title": "Vertical & Adjacent Opportunity Analysis",
+        "prompt_module": "section_output_2",
+        "rag_scope": ["gaps", "competition", "pathways"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "G-3",
+        "output_id": 3,
+        "title": "Optimal Market Entry Strategy",
+        "prompt_module": "section_output_3",
+        "rag_scope": ["regulatory", "competition", "pathways"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "G-4",
+        "output_id": 4,
+        "title": "Quick Wins vs. Long-Term Plays",
+        "prompt_module": "section_output_4",
+        "rag_scope": ["pathways", "timelines"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "G-5",
+        "output_id": 5,
+        "title": "Summit Connection Map",
+        "prompt_module": "section_output_5",
+        "rag_scope": ["network"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "G-6",
+        "output_id": 6,
+        "title": "Realistic Timeline Projections",
+        "prompt_module": "section_output_6",
+        "rag_scope": ["timelines", "regulatory"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "G-7",
+        "output_id": 7,
+        "title": "Probabilistic Market Outlook — Monte Carlo",
+        "prompt_module": "section_output_7",
+        "rag_scope": ["monte_carlo", "verification"],
+        "depends_on": ["A-1a", "A-1b"]
+      },
+      {
+        "code": "G-8",
+        "output_id": 8,
+        "title": "Specific Resource Requirements",
+        "prompt_module": "section_output_8",
+        "rag_scope": ["resources"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "G-9",
+        "output_id": 9,
+        "title": "Capital Requirement Estimate by Stage",
+        "prompt_module": "section_output_9",
+        "rag_scope": ["capital", "timelines"],
+        "depends_on": ["A-1a", "A-1b"]
+      },
+      {
+        "code": "G-10",
+        "output_id": 10,
+        "title": "SWOT Analysis",
+        "prompt_module": "section_output_10",
+        "rag_scope": ["gaps", "competition", "regulatory"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "G-11",
+        "output_id": 11,
+        "title": "Risk Mitigation Pathways",
+        "prompt_module": "section_output_11",
+        "rag_scope": ["risk"],
+        "depends_on": ["A-1a", "A-1b"]
+      },
+      {
+        "code": "G-12",
+        "output_id": 12,
+        "title": "Regulatory & Legal Landscape Snapshot",
+        "prompt_module": "section_output_12",
+        "rag_scope": ["regulatory"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "G-13",
+        "output_id": 13,
+        "title": "Ghana Investment Incentives & Tax Environment",
+        "prompt_module": "section_output_13",
+        "rag_scope": ["tax", "incentives"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "G-14",
+        "output_id": 14,
+        "title": "Competitive Landscape Overview",
+        "prompt_module": "section_output_14",
+        "rag_scope": ["competition"],
+        "depends_on": ["A-1a"]
+      },
+      {
+        "code": "G-15",
+        "output_id": 15,
+        "title": "Monte Carlo Sensitivity & Scenario Narratives",
+        "prompt_module": "section_output_15",
+        "rag_scope": ["monte_carlo", "verification"],
+        "depends_on": ["A-1a", "A-1b"]
+      }
+    ]
+  }
+}
+Your AI dev can:
+
+Load this file.
+
+For each section.code, import app/prompts/{prompt_module}.py and call the corresponding system prompt.
+
+Use rag_scope to decide which RAG helper to call in get_section_rag_context.
+
+Use depends_on to ensure A‑1a and/or A‑1b are present before enqueuing.
+
+2. Comprehensive hand‑off prompt for your AI dev
+You can paste the following into your “builder” AI (Claude, etc.) to let it stand up the full app:
+
+You are an AI developer tasked with building the AI Mirror system as a production‑grade Python/React RAG app.
+
+Stack and architecture (fixed decisions):
+– Backend: FastAPI + Celery + Redis + Postgres (with pgvector).
+– Frontend: React (Next.js or Vite SPA) with TypeScript and Tailwind.
+– LLM: Claude API (Sonnet for A‑1a/A‑1b/sections), with a call_claude_json helper that enforces JSON output.
+– State model: GenerationRun and GenerationSection tables; the database is the message bus.
+– Pipeline: Intake → A‑1a agents (Competency; Dev Gaps & Competition; Pathways & Market Decomposition) → A‑1b agent (VERIDEX & Quant) → parallel K‑ or G‑section HTML agents → frontend progressive assembly.
+
+– Core Analysis JSON contract: use the Pydantic and TypeScript models provided in core_analysis_a1a.ts, core_analysis_a1b.ts, and core_analysis.py. Do not change field names or shapes.
+– Output HTML: each section agent returns a single <section id="output-N">...</section> block, no <html>/<head>/<body>, consistent with the AI Mirror v8 HTML Continuity Rules.
+
+Provided assets and specifications:
+
+Master system prompt (AI Mirror v8.0) describing identity, purpose, three‑layer architecture, Opportunity Signal Matrix, Risk & Friction Framework, Scenario Envelope, VERIDEX, HTML continuity, and Stage 3 outputs. Use it as the reference for content, not as a monolithic runtime prompt.
+
+RAG build spec v2.1 describing A‑1a/A‑1b split, one‑output‑per‑call architecture, stateful pipeline, and deployment patterns. Follow this architecture exactly.
+
+Reference full report (05-AI_Mirror_Stage3_Complete_The_Masters_Chair.html) to infer tone, tables, narrative style, and visual patterns. Use short excerpts as style few‑shots only; do not copy text.
+
+Core Analysis models: use the Pydantic definitions and TS interfaces I provided to validate and type A‑1a/A‑1b JSON.
+
+Generation call manifest (config/generation_manifest.json) with K‑1..K‑6 and G‑1..G‑15, their prompt modules, rag_scopes, and dependencies.
+Your tasks:
+
+Project skeleton
+– Create a FastAPI project with modules: app/main.py, app/models.py, app/db.py, app/schemas/core_analysis.py, app/rag.py, app/workers.py, app/prompts/.
+– Create a React/Next project with src/types/ (TS interfaces), src/pages/Intake.tsx, src/pages/Report.tsx, and a UI shell that renders sections progressively based on /api/runs/{id}.
+
+Database and models
+– Implement GenerationRun and GenerationSection SQLAlchemy models with fields described earlier (status enums, HTML fragment, etc.).
+– Wire Postgres and pgvector; implement a simple vector store interface for RAG queries.
+
+Pipeline & agents
+– Implement Celery tasks for:
+competency_extraction (A‑1a part 1) using the Competency Agent prompt.
+
+development_gap_and_competition (A‑1a part 2) using the Dev Gap & Competitive Agent prompt.
+
+pathway_and_market_decomposition (A‑1a part 3) using the Pathway & Market Decomposition Agent prompt.
+
+veridex_and_quant (A‑1b) using the VERIDEX & Quant Agent prompt.
+
+run_section reading generation_manifest.json to import the correct SECTION_OUTPUT_X_SYSTEM_PROMPT and build a section‑specific RAG context.
+– Validate all LLM outputs with the Pydantic models; fail fast and log on schema mismatch.
+
+
+Prompts
+– Create system prompts for each analysis agent based on the detailed instructions above and the v8 spec:
+Competency Extraction Agent.
+
+Development Gap & Competitive Landscape Agent.
+
+Pathway & Market Decomposition Agent.
+
+VERIDEX & Quant Agent.
+– For section agents, generate a family of prompts patterned on the Output 7 example:
+
+For each prompt_module in generation_manifest.json, create app/prompts/{prompt_module}.py exporting SECTION_OUTPUT_X_SYSTEM_PROMPT.
+
+Each prompt must:
+State its output’s analytical role and allowed inputs.
+
+Enforce HTML continuity (single <section> root, no scripts).
+
+Describe required sub‑sections (tables, narratives, bullets).
+
+Prohibit changing scores, classifications, or numeric values.
+
+
+
+RAG helpers
+– Implement get_gap_and_competition_context, get_sector_market_context, get_veridex_and_mc_context, and get_section_rag_context(section_code, core_a1a, core_a1b) to retrieve narrow, section‑relevant snippets from the knowledge base, driven by rag_scope in the manifest.
+
+Frontend
+– Implement Intake page to capture I‑1..I‑5 and call POST /api/runs and /api/analysis/runs/{id}/a1a/start.
+– Implement Report page that:
+Reads runId from query.
+
+Polls /api/runs/{id} for sections and statuses.
+
+Injects each section’s html_fragment into a <section id="output-{output_id}"> container with smooth entrance animation.
+
+Includes buttons to trigger print (window.print()) and email (POST /api/runs/{id}/email).
+
+
+Static Monte Carlo engine
+– Implement a static JS/TS module that reads data-* attributes from Output 7 and Output 15 canvases, uses the A‑1b fields (via MC_CONFIG) for sampling, and renders fan chart, histogram, and sensitivity charts exactly as specified in the RAG spec (using Canvas API).
+
+Recovery & monitoring
+– Implement a sweep job that finds stuck GenerationRun/GenerationSection records and retries failed sections up to N times.
+– Implement an internal /api/admin/runs endpoint to list runs, statuses, and provide “retry failed sections” control.
+
+Safety & validation
+– Enforce all anti‑hallucination rules: RAG‑only facts, VERIDEX as gatekeeper, explicit labeling of attendee‑sourced claims, and arithmetic verification for MC outputs (VERIDEX Gate 15) in code, not just prompts.
+
+Generate:
+– Concrete code for the backend and frontend (modules, functions, components) from this spec.
+– All missing prompts in app/prompts/ based on the patterns already defined.
+– Any dev documentation needed to deploy and operate this system.
+
+You can give this prompt, plus the files we’ve structured (core_analysis models, worker/task examples, section 7 prompt, manifest), to your AI dev and it should be able to scaffold and fill in the rest of the build with minimal human intervention.
