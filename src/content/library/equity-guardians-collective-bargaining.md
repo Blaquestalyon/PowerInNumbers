@@ -22,9 +22,11 @@ excerpt: >-
 Equity Guardians is a firm-built advocacy venture operating publicly at
 [equityguardians.com](https://equityguardians.com/). It organises American
 homeowners as a single collective financial demographic — a roster, not a
-list — and exercises the bargaining power that follows. The membership is
-priced at $28 per month and serves all fifty U.S. states through a network
-of one hundred lawyers nationwide.
+list — and exercises the bargaining power that follows. For homebuyers using an Equity Guardians qualified Realtor Partner, the
+membership costs the buyer nothing — it is funded out of the buyer’s
+Realtor’s commission, which is itself paid by the seller’s Realtor. The
+service is otherwise available as a direct-pay membership. It serves all
+fifty U.S. states through a network of one hundred lawyers nationwide.
 
 The full case study is at [/case-studies/equity-guardians/](/case-studies/equity-guardians/).
 This essay focuses on a single design choice in the venture: the
@@ -64,11 +66,13 @@ from how most homeowner-services products configure themselves, and the
 inversion is the venture's argument about what equity defence actually
 costs.
 
-The argument matters because it determines the unit economics. A $28
-monthly membership at 60% representation/intervention weighting is a
-different economic shape than a $28 membership at 30%
-representation/intervention. The former is a defended-equity product.
-The latter is an information product with a legal disclaimer.
+The argument matters because it determines the unit economics. A membership
+funded at 60% representation/intervention weighting is a different economic
+shape than one funded at 30% representation/intervention. The former is a
+defended-equity product. The latter is an information product with a legal
+disclaimer. For buyers accessing the service through an Equity Guardians
+qualified Realtor Partner, that economic shape comes at zero cost to the
+buyer — the commission structure absorbs it.
 
 ## Curated Savings as proof of method
 

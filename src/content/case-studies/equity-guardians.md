@@ -27,10 +27,12 @@ methodologyApplied: >-
   (40%), Intervention (20%), Consulting (15%), Education (15%) — totalling
   100% Protection.
 output: >-
-  An operating membership platform with a $28-per-month entry tier; a network
-  of 100 lawyers nationwide; foreclosure protection, foreclosure recovery,
-  curated savings and equity-acceleration benefits delivered to homeowners
-  across all fifty U.S. states.
+  An operating membership platform available at no cost to the buyer when
+  accessed through an Equity Guardians qualified Realtor Partner — funded
+  from the buyer’s Realtor’s commission, paid by the seller’s Realtor; a
+  network of 100 lawyers nationwide; foreclosure protection, foreclosure
+  recovery, curated savings and equity-acceleration benefits delivered to
+  homeowners across all fifty U.S. states.
 counterfactual: >-
   Two counterfactuals were rejected. (1) The reactive crisis-response model —
   intervene only after a foreclosure notice has issued. (2) The discount-club
@@ -45,8 +47,10 @@ Equity Guardians is a firm-built advocacy venture organising American
 homeowners as a single collective demographic in order to defend, deploy and
 grow the equity in their homes. The site states the mission directly: *"to
 empower homeowners by helping them protect and utilize their home's most
-valuable asset."* The platform delivers four service pillars under a single
-$28-per-month membership: **Foreclosure Protection**, **Foreclosure
+valuable asset."* The platform delivers four service pillars under a membership that costs
+the buyer nothing when accessed through an Equity Guardians qualified
+Realtor Partner — funded out of the buyer’s Realtor’s commission, which
+is paid by the seller’s Realtor: **Foreclosure Protection**, **Foreclosure
 Recovery**, **Curated Savings**, and an **Equity Acceleration / Credit
 Acceleration / Surplus Recovery** benefit suite. The venture operates across
 all fifty U.S. states, with a network of one hundred lawyers nationwide and
@@ -108,18 +112,24 @@ alone.
 
 ## Pricing and access
 
-The membership is $28 per month. Each member is assigned a Dedicated Account
-Manager. The lawyer network covers all fifty states. The phone line — *(888)
-954-0999*, Monday — Friday, 9 am – 5 pm Eastern — is the human-contact
-fallback to the digital onboarding.
+For homebuyers working with an Equity Guardians qualified Realtor Partner,
+the membership costs the buyer nothing. The service is funded out of the
+buyer’s Realtor’s commission — which is itself paid by the seller’s
+Realtor, not the buyer. The only requirement is that the buyer use a
+qualified Equity Guardians Realtor Partner for the transaction. The service
+is otherwise available as a direct-pay membership.
 
-The pricing posture is deliberate. The unit cost is low enough that the
-membership can be defended on the merits of the discount layer alone; the
-foreclosure-protection and recovery layers are, structurally, the high-value
-benefits that get triggered in the small minority of months where they are
-needed. The $28 price clears at the consulting-tier weighting (15%) and
-funds the intervention and representation tiers (60% combined) — the
-weighting on the homepage is, in practice, also a unit-economics chart.
+Each member is assigned a Dedicated Account Manager. The lawyer network
+covers all fifty states. The phone line — *(888) 954-0999*, Monday–Friday,
+9 am–5 pm Eastern — is the human-contact fallback to the digital
+onboarding.
+
+The commission-funded access model is structurally significant: it removes
+the cost barrier at the point of entry most relevant to the equity-defence
+mission — the moment a homeowner acquires the property. A buyer who
+activates the service at closing begins the representation and intervention
+layers before the equity is ever at risk, rather than sourcing protection
+reactively.
 
 ## The two counterfactuals the firm rejected
 
@@ -148,7 +158,7 @@ Every claim made above is verifiable directly on the live property:
   (Texas).
 - **Address.** One World Trade Center, 85th Floor, New York, NY 10007.
 - **Phone.** +1 (888) 954-0999 · Monday — Friday, 9 am – 5 pm EST.
-- **Pricing.** $28 per month for the published membership.
+- **Pricing.** No cost to the buyer when accessed through an Equity Guardians qualified Realtor Partner — funded from the buyer’s Realtor’s commission, paid by the seller’s Realtor. Direct-pay membership also available.
 - **Operating entity.** S4TF, LTD / Tax2Go Desoto Joint Partnership DBA, with
   a copyright assertion of *"© 2000 — 2026."*
 - **Earliest dated FAQ content.** November 15, 2023 — the property's earliest
