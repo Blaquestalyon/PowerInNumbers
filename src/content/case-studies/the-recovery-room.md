@@ -1,10 +1,10 @@
 ---
 title: "The Recovery Room — Cash-Pay Medical Receivables Strategy"
-tier: compliance
+tier: firm-built
 classification: "IRS compliance framework · Texas healthcare practitioners"
 deck: "Compliance Framework v3.1 · IRC §166 · §1001 · HIPAA · GAAP"
 engagedAt: "2026"
-status: active
+status: operational
 order: 4
 featured: true
 veridexGates: "CROWD POWERED · Partnership"
@@ -53,8 +53,6 @@ counterfactual: >-
   with $50,000–$200,000 in annual cash-pay receivables generating $20,000 or
   more in deductible losses, year over year, that are instead reported as
   unrealised income.
-partners: "Tax2Go DeSoto · The 144K Collective LLC"
-complianceStandard: "IRC §166, §1001, §7701(o) · HIPAA 45 C.F.R. Parts 160 & 164 · GAAP accrual method · Texas Business and Commerce Code Article 9 · Texas Finance Code Chapter 392 · FDCPA 15 U.S.C. §1692"
 ---
 
 ## What this framework is
