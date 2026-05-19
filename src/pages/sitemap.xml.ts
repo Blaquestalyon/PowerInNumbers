@@ -27,6 +27,7 @@ const STATIC_ROUTES: { path: string; priority: string; changefreq: string }[] = 
   { path: '/artifacts/foundation/',                       priority: '0.6', changefreq: 'yearly'  },
   { path: '/artifacts/case-studies/ghana/',               priority: '0.6', changefreq: 'yearly'  },
   { path: '/artifacts/case-studies/masters-chair/',       priority: '0.6', changefreq: 'yearly'  },
+  { path: '/the-recovery-room/',                           priority: '0.8', changefreq: 'monthly' },
 ];
 
 function fmtDate(d: Date | string | undefined): string {

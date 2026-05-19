@@ -176,6 +176,13 @@ declare module 'astro:content' {
   collection: "case-studies";
   data: any
 } & { render(): Render[".md"] };
+"the-recovery-room.md": {
+	id: "the-recovery-room.md";
+  slug: "the-recovery-room";
+  body: string;
+  collection: "case-studies";
+  data: any
+} & { render(): Render[".md"] };
 "us-market-entry.md": {
 	id: "us-market-entry.md";
   slug: "us-market-entry";
