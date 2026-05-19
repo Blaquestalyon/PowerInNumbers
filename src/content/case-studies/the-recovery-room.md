@@ -73,9 +73,17 @@ Every portfolio submission is segmented at the Phase 3.5 screening stage into th
 
 **Bucket 3 — Buyer Commercial Declines.** Accounts The 144K Collective declines on commercial grounds are retained by the provider, who may continue collection independently, sell to another buyer, or claim a §166 deduction where independently supportable.
 
-## Why this works on a W-2
+## Three paths, one strategy
 
-The prior-inclusion rule of Treas. Reg. §1.166-1(e) — which limits §166 deductions for services-rendered receivables to amounts previously included in income — is satisfied because the provider operates on the accrual method: income was recognised at invoicing, and the receivable represents a basis in that previously recognised income. The strategy applies whether the practitioner is compensated on a W-2, a 1099, or both.
+The framework applies across all three practitioner compensation structures — direct-bill, 1099, and W-2 — but the execution path is different for each, and the paths are not equally straightforward.
+
+**Direct-bill** practitioners invoice patients directly and originate the receivable themselves. The accrual-method recognition, the portfolio sale to The 144K Collective LLC, and the §166 / §1001 deduction mechanics apply most directly to this structure. The path from receivable to tax position is the most direct of the three.
+
+**1099** practitioners have flexibility in how receivables are structured and reported. The strategy applies, with specific mechanics dependent on how the practitioner’s business is organised.
+
+**W-2** practitioners do not originate receivables in the same manner as direct-bill or 1099 practitioners. Offsetting W-2 income is not a direct write-off — it requires additional steps and a different implementation sequence. The strategy still applies through this path, but the prior-inclusion rule of Treas. Reg. §1.166-1(e) — which limits §166 deductions to amounts previously included in taxable income — and the mechanics of reaching W-2 income specifically are addressed through a distinct sequence documented in full in the written action plan.
+
+Every combination — W-2 plus 1099, direct-bill plus W-2, or any other — is also addressed. No compensation structure is excluded; each is handled through its appropriate path. All paths are documented in the written action plan delivered to each seminar attendee and available through the remote materials delivery option.
 
 ## The compliance perimeter
 

@@ -77,7 +77,7 @@ const pageSchema = {
       <div class="rr-two-col" data-reveal>
         <div class="rr-col-body">
           <h2 class="rr-h2">Built for operating-room practitioners.</h2>
-          <p data-reveal>Surgeons. Anesthesiologists. Nurse practitioners. Certified Registered Nurse Anesthetists. Doctors of Nurse Anesthesia Practice. Whether you are compensated on a W-2, a 1099, or both, this seminar addresses your situation directly.</p>
+          <p data-reveal>Surgeons. Anesthesiologists. Nurse practitioners. Certified Registered Nurse Anesthetists. Doctors of Nurse Anesthesia Practice. Whether you are compensated on a W-2, a 1099, direct-bill, or any combination of the three, this seminar addresses your situation directly.</p>
           <p data-reveal>The strategy is grounded in two sections of the Internal Revenue Code — §166 and §1001 — that almost no CPA is discussing with this audience. The reason is not that the strategy is unavailable. It is that the compliance framework required to implement it correctly has not existed in a form that practitioners can access and act on.</p>
           <p data-reveal>Power In Numbers assembled that framework. Tax2Go DeSoto provides the tax-preparation and documentation infrastructure to implement it. The Recovery Room is how it is taught.</p>
         </div>
@@ -133,10 +133,24 @@ const pageSchema = {
       <SectionMarker num="§ 03" tag="The most common question" />
       <div class="rr-pullquote-block" data-reveal>
         <p class="rr-pullquote">"Can I do this if I am a W-2 employee?"</p>
-        <p class="rr-pullquote-answer">Yes.</p>
+        <p class="rr-pullquote-answer">Yes &mdash; through a different path.</p>
       </div>
-      <p data-reveal>Whether you are paid on a W-2, a 1099, or a combination of both, the strategy applies. The operative rule — Treas. Reg. §1.166-1(e) — limits deductions to amounts previously included in taxable income. Because accrual-basis providers recognise income at invoicing, the receivable represents a basis in income that was already reported. The deduction is available. The mechanics of how it applies to your specific compensation structure are covered in the seminar.</p>
-      <p data-reveal>Do not self-disqualify on the basis of how your paystub is structured before you understand the framework. That determination belongs in the room.</p>
+      <p data-reveal>The same underlying strategy applies across all three practitioner structures: W-2, 1099, and direct-bill (charging the patient directly). The execution path is different for each, and the paths are not equally straightforward.</p>
+      <div class="rr-path-grid" data-reveal>
+        <div class="rr-path-card">
+          <div class="rr-path-card__label">Direct-bill</div>
+          <p class="rr-path-card__body">Practitioners who invoice patients directly originate the receivable themselves. The accrual-method recognition, the portfolio sale, and the &sect;166&nbsp;/&nbsp;&sect;1001 deduction mechanics apply most directly to this structure. The path from receivable to tax position is the most direct of the three.</p>
+        </div>
+        <div class="rr-path-card">
+          <div class="rr-path-card__label">1099</div>
+          <p class="rr-path-card__body">Independent contractors compensated on a 1099 basis have flexibility in how receivables are structured and reported. The strategy applies, with specific mechanics that depend on how the practitioner&#8217;s business is organised. The action plan addresses this path explicitly.</p>
+        </div>
+        <div class="rr-path-card rr-path-card--flagged">
+          <div class="rr-path-card__label">W-2 &mdash; <span class="rr-path-note">additional steps required</span></div>
+          <p class="rr-path-card__body">W-2 employees do not originate receivables in the same manner as direct-bill or 1099 practitioners. The path to offsetting W-2 income is not a direct write-off &mdash; it involves additional steps and a different implementation sequence. The strategy still applies, and that sequence is fully documented in the written action plan and explained in the seminar. Do not self-disqualify before you understand the path.</p>
+        </div>
+      </div>
+      <p data-reveal>All three paths use the same underlying strategy, executed in a manner appropriate to each compensation structure. Every path &mdash; including any combination of W-2, 1099, and direct-bill &mdash; is covered in the seminar and documented in the written action plan delivered to each attendee.</p>
     </div>
   </section>
 
@@ -162,7 +176,7 @@ const pageSchema = {
         <li class="rr-deliverable">
           <span class="rr-deliverable__num">03</span>
           <div>
-            <strong>The implementation path for your situation.</strong> W-2, 1099, or both. Accrual-basis or transitioning. Texas-based or multi-state receivable mix. The seminar addresses the variables that apply to the practitioners in the room.
+            <strong>The implementation path for your situation.</strong> W-2, 1099, direct-bill, or any combination. Each path uses the same strategy executed differently &mdash; and W-2 practitioners face additional steps that are documented explicitly in the action plan. Accrual-basis or transitioning. Texas-based or multi-state receivable mix. No path is left undocumented.
           </div>
         </li>
         <li class="rr-deliverable">
@@ -386,6 +400,66 @@ const pageSchema = {
   }
 
   .rr-compliance-card__body {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  /* ── path grid ── */
+  .rr-path-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin: 32px 0 36px;
+  }
+  @media (max-width: 900px) {
+    .rr-path-grid { grid-template-columns: 1fr; }
+  }
+
+  .rr-path-card {
+    padding: 32px 28px;
+    border-right: 1px solid var(--rule);
+  }
+  .rr-path-card:last-child { border-right: none; }
+  @media (max-width: 900px) {
+    .rr-path-card { border-right: none; border-bottom: 1px solid var(--rule); }
+    .rr-path-card:last-child { border-bottom: none; }
+  }
+
+  .rr-path-card--flagged {
+    border-left: 3px solid var(--oxblood);
+    background: var(--paper-deep);
+  }
+  @media (max-width: 900px) {
+    .rr-path-card--flagged { border-left: none; border-top: 3px solid var(--oxblood); }
+  }
+
+  .rr-path-card__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .rr-path-note {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--oxblood);
+    padding: 2px 8px;
+    font-weight: 500;
+  }
+
+  .rr-path-card__body {
     font-size: 15px;
     line-height: 1.65;
     color: var(--ink-soft);
