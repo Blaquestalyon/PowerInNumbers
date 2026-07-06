@@ -44,8 +44,8 @@ counterfactual: >-
 ## What Equity Guardians is, in one paragraph
 
 Equity Guardians is a firm-built advocacy venture organising American
-homeowners as a single collective demographic in order to defend, deploy and
-grow the equity in their homes. The site states the mission directly: *"to
+homeowners as a single collective demographic in order to defend and actively
+deploy the equity in their homes. The site states the mission directly: *"to
 empower homeowners by helping them protect and utilize their home's most
 valuable asset."* The platform delivers four service pillars under a membership that costs
 the buyer nothing when accessed through an Equity Guardians qualified
@@ -65,11 +65,8 @@ and one of the most poorly defended. The conventional pattern — a foreclosure
 threat triggers a scramble for representation, a discount card sits in a
 drawer until forgotten, equity gets accessed only through cash-out refinance
 or the auction block — was the firm's starting point. The development
-question, named at the front of the engagement:
-
-*Can the discipline behind CROWD POWERED — collective representation,
-negotiated terms, audit-defensible process — convert passive home equity
-into an actively defended asset, at the scale of a residential membership?*
+question, named at the front of the engagement, is stated in the frontmatter
+above. The body of this case study is its answer.
 
 ## The four pillars
 
@@ -80,7 +77,7 @@ actually defend equity.
 | # | Pillar | What it is |
 | --- | --- | --- |
 | 1 | **Foreclosure Protection** | Legal counsel and intervention to prevent foreclosure during a financial-hardship event. |
-| 2 | **Foreclosure Recovery** | An attempt to recover a member's home at or before auction and refinance it back to them. Currently in beta on the live property. |
+| 2 | **Foreclosure Recovery** | An attempt to recover a member's home at or before auction and refinance it back to them. Operating through an exclusive, limited network of Realtor Partners; not yet at full scale. |
 | 3 | **Curated Savings** | Negotiated group-rate discounts on the products and services homeowners actually buy: home improvement, lawn care, HVAC, pest control, utilities, solar, home and auto and life insurance, financial services, home security, travel, dining. |
 | 4 | **Equity / Credit / Surplus** | Equity Acceleration, Credit Acceleration and Surplus Recovery benefits — the offence layer to the first three pillars' defence. |
 
@@ -96,12 +93,8 @@ The order matters.
 ## Curated Savings as proof of method
 
 Of the four pillars, **Curated Savings** is the most legible expression of
-the CROWD POWERED idea on this venture. The argument goes like this:
-
-> *"By representing a large group of homeowners, we can negotiate better
-> deals."*
-
-A single homeowner walking into a vendor relationship cannot extract the
+the CROWD POWERED idea on this venture. The premise is straightforward: a
+single homeowner walking into a vendor relationship cannot extract the
 discount that a roster of hundreds of thousands of homeowners can. The
 membership is the negotiating instrument. Crucially, the demographic is
 *specific* — homeowners are higher-average-income, more financially stable
@@ -109,6 +102,34 @@ and more predictable in their spending than a generic consumer base, which
 makes the demographic a more attractive counterparty in negotiation than a
 generic cohort would be. The firm leans on the specificity, not on volume
 alone.
+
+## Market context
+
+The Equity Guardians engagement began in 2023. Two subsequent market
+developments confirm the conditions the model was structured to address.
+
+**Commission restructuring.** On March 15, 2024, the National Association of
+Realtors reached a settlement resolving antitrust litigation over buyer-agent
+compensation. The practice changes took effect August 17, 2024: buyer-agent
+commission can no longer be advertised in MLS databases, buyers must sign a
+written representation agreement before touring a home, and sellers are no
+longer required to offer buyer-agent compensation — though they may do so as
+a concession. The effect is that how buyer-agent commissions are structured,
+negotiated and disclosed is now an explicit, transaction-by-transaction
+decision rather than a bundled industry default. The Equity Guardians
+access model — membership funded from the buyer's Realtor commission,
+with the buyer's written agreement — operates precisely within this
+post-settlement framework. The model anticipated the structural direction
+before the settlement defined it.
+
+**Rising foreclosure pressure.** U.S. properties with a foreclosure filing
+reached nearly 119,000 in Q1 2026 — a 26% increase over Q1 2025, according
+to ATTOM property data. The equity-defence posture the venture was built
+around is not a cyclical bet. It is a structural one: the gap between passive
+equity and defended equity exists in every market condition, and widens when
+financial pressure on homeowners increases.
+
+Neither development required a change to the model. Both confirmed it.
 
 ## Pricing and access
 
@@ -161,8 +182,7 @@ Every claim made above is verifiable directly on the live property:
 - **Pricing.** No cost to the buyer when accessed through an Equity Guardians qualified Realtor Partner — funded from the buyer’s Realtor’s commission, paid by the seller’s Realtor. Direct-pay membership also available.
 - **Operating entity.** S4TF, LTD / Tax2Go Desoto Joint Partnership DBA, with
   a copyright assertion of *"© 2000 — 2026."*
-- **Earliest dated FAQ content.** November 15, 2023 — the property's earliest
-  audit-defensible launch marker.
+- **Earliest verifiable content date.** November 15, 2023 — the property's earliest audit-defensible publication marker.
 
 ## Cross-references
 
