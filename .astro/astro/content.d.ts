@@ -320,6 +320,20 @@ declare module 'astro:content' {
   collection: "track-record";
   data: any
 } & { render(): Render[".md"] };
+"2023-equity-guardians.md": {
+	id: "2023-equity-guardians.md";
+  slug: "2023-equity-guardians";
+  body: string;
+  collection: "track-record";
+  data: any
+} & { render(): Render[".md"] };
+"2025-imused.md": {
+	id: "2025-imused.md";
+  slug: "2025-imused";
+  body: string;
+  collection: "track-record";
+  data: any
+} & { render(): Render[".md"] };
 };
 
 	};
