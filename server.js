@@ -77,11 +77,19 @@ function notFound(res) {
 }
 
 const server = http.createServer((req, res) => {
-  const parsed = url.parse(req.url);
-  let pathname = decodeURIComponent(parsed.pathname || '/');
+  // An unparseable target (GET http://[/), a malformed escape (/%), a decoded NUL (/%00) or a decoded
+  // control character in the redirect below each threw and stopped this process — reproduced locally
+  // 2026-10-26. They answer 404 now.
+  let parsed, pathname;
+  try {
+    parsed = url.parse(req.url);
+    pathname = decodeURIComponent(parsed.pathname || '/');
+  } catch {
+    return notFound(res);
+  }
 
   // Reject malformed paths
-  const target = safeJoin(ROOT, pathname);
+  const target = pathname.includes('\0') ? null : safeJoin(ROOT, pathname);
   if (!target) return notFound(res);
 
   fs.stat(target, (err, stat) => {
@@ -93,7 +101,8 @@ const server = http.createServer((req, res) => {
       // Force trailing slash for directories so relative links resolve correctly.
       if (!pathname.endsWith('/')) {
         const qs = parsed.search || '';
-        res.writeHead(301, { Location: pathname + '/' + qs });
+        // One leading slash: //evil.example/..%2fabout redirected off-site (live, 2026-10-26).
+        res.writeHead(301, { Location: (parsed.pathname || '/').replace(/^\/+/, '/') + '/' + qs });
         return res.end();
       }
       const indexPath = path.join(target, 'index.html');
