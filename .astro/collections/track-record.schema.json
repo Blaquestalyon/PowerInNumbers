@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "year": {
+      "type": "string"
+    },
+    "yearSort": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "order": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "pinImplementation": {
+      "type": "string"
+    },
+    "mainstreamEmergence": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "publishedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "artifacts": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "pdf",
+              "image",
+              "youtube",
+              "link",
+              "document"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "src": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          },
+          "dated": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "label",
+          "src"
+        ]
+      }
+    },
+    "foilCompany": {
+      "type": "string"
+    },
+    "foilYear": {
+      "type": "string"
+    },
+    "yearsAhead": {
+      "type": "string"
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "year",
+    "yearSort",
+    "pinImplementation",
+    "mainstreamEmergence",
+    "evidence"
+  ]
+}

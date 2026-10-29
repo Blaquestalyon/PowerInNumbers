@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "white-paper",
+        "framework",
+        "press-essay",
+        "track-record-essay",
+        "firm-built-essay",
+        "methodology-note"
+      ]
+    },
+    "publishedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "deck": {
+      "type": "string"
+    },
+    "readingMinutes": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "authors": {
+      "default": [
+        "Jay Davis"
+      ],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "foundational": {
+      "default": false,
+      "type": "boolean"
+    },
+    "unlisted": {
+      "default": false,
+      "type": "boolean"
+    },
+    "series": {
+      "type": "string"
+    },
+    "seriesOrder": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "type",
+    "publishedAt",
+    "summary"
+  ]
+}

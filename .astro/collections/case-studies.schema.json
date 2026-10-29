@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "sovereign",
+        "enterprise",
+        "firm-built"
+      ]
+    },
+    "classification": {
+      "type": "string"
+    },
+    "deck": {
+      "type": "string"
+    },
+    "engagedAt": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "operational",
+        "pre-launch",
+        "completed",
+        "ongoing"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "publishedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "order": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "featured": {
+      "default": false,
+      "type": "boolean"
+    },
+    "developmentQuestion": {
+      "type": "string"
+    },
+    "methodologyApplied": {
+      "type": "string"
+    },
+    "output": {
+      "type": "string"
+    },
+    "counterfactual": {
+      "type": "string"
+    },
+    "veridexGates": {
+      "type": "string"
+    },
+    "fiscalScale": {
+      "type": "string"
+    },
+    "attribution": {
+      "type": "string"
+    },
+    "stats": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value",
+          "label"
+        ]
+      }
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "tier",
+    "classification",
+    "deck",
+    "engagedAt",
+    "status",
+    "summary",
+    "developmentQuestion",
+    "methodologyApplied",
+    "output",
+    "counterfactual"
+  ]
+}
